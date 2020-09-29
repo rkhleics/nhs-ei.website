@@ -84,6 +84,11 @@
 
   {% block bodyEnd %}{% endblock %}
 
+  <script>
+    window.NHSUK_SETTINGS = {
+      "SUGGESTIONS_TEST_HOST": 'https://nhs.funnelback.co.uk/s/suggest.json'
+    }
+  </script>
   {% block extra_js %}
   {# Override this in templates to add extra javascript #}
   {% endblock %}
