@@ -19,11 +19,11 @@ Use any method you like best
 ```
 pip install -r requirements/dev.txt
 
-./manange.py migrate
+python manange.py migrate
 
-./manange.py createsuperuser
+python anange.py createsuperuser
 
-./manage.py runserver
+python manage.py runserver
 ```
 Keep the above running in it's own terminal
 
