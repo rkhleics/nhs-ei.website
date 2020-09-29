@@ -18,6 +18,20 @@ urlpatterns = [
 
 ]
 
+# views to test static pages
+from django.views.generic import TemplateView
+urlpatterns += [
+    path('nav-static', TemplateView.as_view(
+        template_name='prototype_pages/nav_prototype.html'), 
+        name='nav-static'),
+    path('search-results-static', TemplateView.as_view(
+        template_name='prototype_pages/search_results_prototype.html'),
+        name='search-static'),
+    path('content-page-static', TemplateView.as_view(
+        template_name='prototype_pages/content_page_prototype.html'),
+        name='content-static'),
+]
+
 
 if settings.DEBUG:
     from django.conf.urls.static import static
@@ -26,25 +40,13 @@ if settings.DEBUG:
 
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
     # views for testing 404 and 500 templates
     urlpatterns += [
         path('test-404/', TemplateView.as_view(template_name='404.html')),
         path('test-500/', TemplateView.as_view(template_name='500.html')),
-    ]
-
-    # views to test static pages
-    urlpatterns += [
-        path('nav-prototype', TemplateView.as_view(
-            template_name='prototype_pages/nav_prototype.html'), 
-            name='nav-prototype'),
-        path('search-results-prototype', TemplateView.as_view(
-            template_name='prototype_pages/search_results_prototype.html'),
-            name='search-prototype'),
-        path('content-page-prototype', TemplateView.as_view(
-            template_name='prototype_pages/content_page_prototype.html'),
-            name='content-prototype'),
     ]
 
 urlpatterns = urlpatterns + [
