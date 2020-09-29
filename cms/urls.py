@@ -22,10 +22,30 @@ urlpatterns = [
 if settings.DEBUG:
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    from django.views.generic import TemplateView
 
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # views for testing 404 and 500 templates
+    urlpatterns += [
+        path('test-404/', TemplateView.as_view(template_name='404.html')),
+        path('test-500/', TemplateView.as_view(template_name='500.html')),
+    ]
+
+    # views to test static pages
+    urlpatterns += [
+        path('nav-prototype', TemplateView.as_view(
+            template_name='prototype_pages/nav_prototype.html'), 
+            name='nav-prototype'),
+        path('search-results-prototype', TemplateView.as_view(
+            template_name='prototype_pages/search_results_prototype.html'),
+            name='search-prototype'),
+        path('content-page-prototype', TemplateView.as_view(
+            template_name='prototype_pages/content_page_prototype.html'),
+            name='content-prototype'),
+    ]
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to

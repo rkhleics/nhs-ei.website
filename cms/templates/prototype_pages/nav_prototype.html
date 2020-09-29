@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{# === block title comment: this won't be needed when served by wagtail #}
+{% block title %}
+Nav Prototype
+{% endblock title %}
+{# === #}
+
+{% block body_class %}template__content-page{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    <!-- Change the page title here -->
+    <h1>
+      Homepage headline
+    </h1>
+
+    <!-- Add your content here -->
+    <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
+
+    <p class="nhsuk-body">
+      Featured text content
+    </p>
+
+  </div>
+</div>
+<div class="nhsuk-grid-row nhsei-featured-section nhsuk-u-padding-bottom-1">
+  <div class="nhsuk-grid-column-two-thirds">
+    <figure class="nhsuk-image">
+      <img src="//placehold.it/630x360.png?text=Featured+Image" alt="Featured photo">
+    </figure>
+
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <h2 class="nhsuk-heading-m"><a href="#">Featured promoted section</a></h2>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row nhsuk-u-padding-bottom-7">
+  <div class="nhsuk-grid-column-one-third">
+    <figure class="nhsuk-image">
+      <img src="//placehold.it/299x215.png?text=Featured+Image" alt="">
+    </figure>
+    <h3 class="nhsuk-heading-m"><a href="#">Promoted section</a></h3>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <figure class="nhsuk-image">
+      <img src="//placehold.it/299x215.png?text=Featured+Image" alt="">
+    </figure>
+    <h3 class="nhsuk-heading-m"><a href="#">Promoted section</a></h3>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <figure class="nhsuk-image">
+      <img src="//placehold.it/299x215.png?text=Featured+Image" alt="">
+    </figure>
+    <h3 class="nhsuk-heading-m"><a href="#">Promoted section</a></h3>
+  </div>
+</div>
+
+<div class="nhsei-full-wrap nhsei-latest-news">
+  <div class="nhsuk-grid-row nhsuk-u-padding-bottom-7 nhsuk-u-padding-top-7 wrapped-section">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-heading-l">Latest news and alerts</h2>
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter">
+      <figure class="nhsuk-image">
+        <img src="//placehold.it/216x216.png?text=Featured+Image" alt="">
+      </figure>
+
+      <h4 class="nhsuk-heading-s"><a href="#">News story</a></h4>
+      <p class="nhsuk-body">This is a brief description telling what to expect</p>
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter">
+      <figure class="nhsuk-image">
+        <img src="//placehold.it/216x216.png?text=Featured+Image" alt="">
+      </figure>
+
+      <h4 class="nhsuk-heading-s"><a href="#">News story</a></h4>
+      <p class="nhsuk-body">This is a brief description telling what to expect</p>
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter">
+      <figure class="nhsuk-image">
+        <img src="//placehold.it/216x216.png?text=Featured+Image" alt="">
+      </figure>
+
+      <h4 class="nhsuk-heading-s"><a href="#">News story</a></h4>
+      <p class="nhsuk-body">This is a brief description telling what to expect</p>
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter">
+      <figure class="nhsuk-image">
+        <img src="//placehold.it/216x216.png?text=Featured+Image" alt="">
+      </figure>
+
+      <h4 class="nhsuk-heading-s"><a href="#">News story</a></h4>
+      <p class="nhsuk-body">This is a brief description telling what to expect</p>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="nhsuk-grid-row nhsuk-u-padding-top-7">
+  <div class="nhsuk-grid-column-full nhsuk-u-padding-bottom-5">
+    <h2 class="nhsuk-heading-l">Policy and guidance updates</h2>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <ul class="nhsuk-list">
+      <li>
+        <h3><a href="#">NHS policy document</a></h3>
+        <p><small>Updated: 01 January 2020</small> <br> <small>Type: policy</small></p>
+      </li>
+      <li>
+        <h3><a href="#">NHS policy document</a></h3>
+        <p><small>Updated: 01 January 2020</small> <br> <small>Type: policy</small></p>
+      </li>
+    </ul>
+
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <ul class="nhsuk-list">
+      <li>
+        <h3><a href="#">NHS policy document</a></h3>
+        <p><small>Updated: 01 January 2020</small> <br> <small>Type: policy</small></p>
+      </li>
+      <li>
+        <h3><a href="#">NHS policy document</a></h3>
+        <p><small>Updated: 01 January 2020</small> <br> <small>Type: policy</small></p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

@@ -44,3 +44,37 @@ compile for production
 ```
 npm run build
 ```
+
+# NOTES
+
+Has prototype added in https://github.com/rkhleics/nhs-ei.website to achieve running as a development package
+
+### Can Be Removed In The Future
+---
+cms/urls.py
+
+provides the urls to be able to view the current static prototype pages
+
+```
+# views to test static pages
+    urlpatterns += [
+        path('nav-prototype', TemplateView.as_view(
+            template_name='prototype_pages/nav_prototype.html'), 
+            name='nav-prototype'),
+        path('search-results-prototype', TemplateView.as_view(
+            template_name='prototype_pages/search_results_prototype.html'),
+            name='search-prototype'),
+        path('content-page-prototype', TemplateView.as_view(
+            template_name='prototype_pages/content_page_prototype.html'),
+            name='content-prototype'),
+    ]
+```
+---
+static prototype templates
+
+    templates/prototype_pages/*
+    templates/prototype_pages/content_page_prototype.html
+    templates/prototype_pages/nav_prototype.html
+    templates/prototype_pages/search_results_prototype.html
+
+reworked to enable django template parsing
