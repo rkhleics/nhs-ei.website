@@ -1,4 +1,4 @@
-output "id" {
+output "cluster_id" {
   value = azurerm_kubernetes_cluster.cluster.id
 }
 
@@ -32,4 +32,8 @@ output "dbpassword" {
 
 output "databasefqdn" {
   value = azurerm_postgresql_server.database.fqdn
+}
+
+output "dburl" {
+  value = "psql://${azurerm_postgresql_server.database.administrator_login}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
 }

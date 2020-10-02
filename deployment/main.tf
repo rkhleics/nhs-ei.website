@@ -97,3 +97,11 @@ resource "azurerm_postgresql_server" "database" {
   public_network_access_enabled    = false
   ssl_enforcement_enabled      = true
 }
+
+resource "azurerm_postgresql_database" "db1" {
+  name                = "${var.prefix}-db"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.database.name
+  charset             = "UTF8"
+  collation           = "en_GB.utf8"
+}
