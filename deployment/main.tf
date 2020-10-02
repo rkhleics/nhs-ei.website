@@ -103,5 +103,40 @@ resource "azurerm_postgresql_database" "db1" {
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
   charset             = "UTF8"
-  collation           = "en_GB.utf8"
+  collation           = "en-GB"
+}
+
+provider "helm" {
+    kubernetes {
+        load_config_file = false
+        host     = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+        client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+        client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+        cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+    }  
+}
+
+resource "helm_release" "ingress-nginx" {
+    name      = "ingress-nginx"
+    repository = "https://kubernetes.github.io/ingress-nginx/"
+    chart     = "ingress-nginx"
+    namespace = "ingress-nginx"
+    create_namespace = true
+
+    set {
+      name = "controller.service.externalTrafficPolicy"
+      value = "Local"
+    }
+
+    set {
+      name = "controller.nodeSelector.beta\\.kubernetes\\.io/os"
+      value = "linux"
+      type = "string"
+    }
+
+    set {
+      name = "defaultBackend.nodeSelector.beta\\.kubernetes\\.io/os"
+      value = "linux"
+      type = "string"
+    }
 }
