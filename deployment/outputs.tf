@@ -37,3 +37,7 @@ output "databasefqdn" {
 output "dburl" {
   value = "psql://${azurerm_postgresql_server.database.administrator_login}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
 }
+
+output "load_balancer_ip" {
+  value = data.kubernetes_service.ingress-load-balancer.load_balancer_ingress.0.ip
+}

@@ -116,6 +116,14 @@ provider "helm" {
     }  
 }
 
+provider "kubernetes" {
+        load_config_file = false
+        host     = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+        client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+        client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+        cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+}
+
 resource "helm_release" "ingress-nginx" {
     name      = "ingress-nginx"
     repository = "https://kubernetes.github.io/ingress-nginx/"
@@ -139,4 +147,11 @@ resource "helm_release" "ingress-nginx" {
       value = "linux"
       type = "string"
     }
+}
+
+data "kubernetes_service" "ingress-load-balancer" {
+  metadata {
+    name = "${helm_release.ingress-nginx.name}-controller"
+    namespace = helm_release.ingress-nginx.namespace
+  }
 }
