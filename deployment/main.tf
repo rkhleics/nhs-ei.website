@@ -20,6 +20,13 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
+# Azure CDN needs a location to store metadata for the profile
+# not all regions are supported so we choose one here we know is
+resource "azurerm_resource_group" "cdn" {
+  name     = "${var.prefix}-cdn-resources"
+  location = "northeurope"
+}
+
 resource "azurerm_kubernetes_cluster" "cluster" {
   name = "${var.prefix}-k8s"
   location = azurerm_resource_group.rg.location
@@ -151,7 +158,28 @@ resource "helm_release" "ingress-nginx" {
 
 data "kubernetes_service" "ingress-load-balancer" {
   metadata {
-    name = "${helm_release.ingress-nginx.name}-controller"
+    name      = "${helm_release.ingress-nginx.name}-controller"
     namespace = helm_release.ingress-nginx.namespace
   }
+  depends_on = [helm_release.ingress-nginx]
+}
+
+resource "azurerm_cdn_profile" "cdn" {
+  name                = "${var.prefix}-cdn"
+  location            = azurerm_resource_group.cdn.location
+  resource_group_name = azurerm_resource_group.cdn.name
+  sku                 = "Standard_Microsoft"
+}
+
+resource "azurerm_cdn_endpoint" "endpoint" {
+  name                = "${var.prefix}-cdn-endpoint"
+  location            = azurerm_cdn_profile.cdn.location
+  resource_group_name = azurerm_cdn_profile.cdn.resource_group_name
+  profile_name        = azurerm_cdn_profile.cdn.name
+
+  origin {
+    name      = "${var.prefix}-ingress-load-balancer"
+    host_name = data.kubernetes_service.ingress-load-balancer.load_balancer_ingress.0.ip
+  }
+  origin_host_header = "www.england.nhs.uk"
 }
