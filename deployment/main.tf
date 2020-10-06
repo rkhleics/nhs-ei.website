@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = ">= 2.26"
     }
   }
@@ -28,15 +28,15 @@ resource "azurerm_resource_group" "cdn" {
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
-  name = "${var.prefix}-k8s"
-  location = azurerm_resource_group.rg.location
+  name                = "${var.prefix}-k8s"
+  location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix = "${var.prefix}-k8s"
+  dns_prefix          = "${var.prefix}-k8s"
 
   default_node_pool {
-    name = "default"
+    name       = "default"
     node_count = 1
-    vm_size = "Standard_DS2_v2"
+    vm_size    = "Standard_DS2_v2"
   }
 
   identity {
@@ -57,29 +57,51 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     }
 
     kube_dashboard {
-      enabled = true
+      enabled = false
     }
 
     oms_agent {
-      enabled = false
+      enabled                    = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.oms.id
     }
   }
 }
 
+resource "azurerm_log_analytics_workspace" "oms" {
+  name                = "${var.prefix}-oms"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+resource "azurerm_log_analytics_solution" "example" {
+  solution_name         = "Containers"
+  workspace_resource_id = azurerm_log_analytics_workspace.oms.id
+  workspace_name        = azurerm_log_analytics_workspace.oms.name
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/Containers"
+  }
+}
+
 resource "random_string" "dbusername" {
-  length = 8
+  length  = 8
   special = false
-  
+
   keepers = {
     dbname = "${var.prefix}-postgresql"
   }
 }
 
 resource "random_password" "dbpassword" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "_%@"
-  
+
   keepers = {
     dbname = "${var.prefix}-postgresql"
   }
@@ -101,8 +123,8 @@ resource "azurerm_postgresql_server" "database" {
   administrator_login_password = random_password.dbpassword.result
   version                      = "11"
 
-  public_network_access_enabled    = false
-  ssl_enforcement_enabled      = true
+  public_network_access_enabled = false
+  ssl_enforcement_enabled       = true
 }
 
 resource "azurerm_postgresql_database" "db1" {
@@ -114,46 +136,51 @@ resource "azurerm_postgresql_database" "db1" {
 }
 
 provider "helm" {
-    kubernetes {
-        load_config_file = false
-        host     = azurerm_kubernetes_cluster.cluster.kube_config.0.host
-        client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
-        client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
-        cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
-    }  
+  kubernetes {
+    load_config_file       = false
+    host                   = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+    client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+    client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+  }
 }
 
 provider "kubernetes" {
-        load_config_file = false
-        host     = azurerm_kubernetes_cluster.cluster.kube_config.0.host
-        client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
-        client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
-        cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+  load_config_file       = false
+  host                   = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+  client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
 }
 
 resource "helm_release" "ingress-nginx" {
-    name      = "ingress-nginx"
-    repository = "https://kubernetes.github.io/ingress-nginx/"
-    chart     = "ingress-nginx"
-    namespace = "ingress-nginx"
-    create_namespace = true
+  name             = "ingress-nginx"
+  repository       = "https://kubernetes.github.io/ingress-nginx/"
+  chart            = "ingress-nginx"
+  namespace        = "ingress-nginx"
+  create_namespace = true
 
-    set {
-      name = "controller.service.externalTrafficPolicy"
-      value = "Local"
-    }
+  set {
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Local"
+  }
 
-    set {
-      name = "controller.nodeSelector.beta\\.kubernetes\\.io/os"
-      value = "linux"
-      type = "string"
-    }
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-dns-label-name"
+    value = var.prefix
+  }
 
-    set {
-      name = "defaultBackend.nodeSelector.beta\\.kubernetes\\.io/os"
-      value = "linux"
-      type = "string"
-    }
+  set {
+    name  = "controller.nodeSelector.beta\\.kubernetes\\.io/os"
+    value = "linux"
+    type  = "string"
+  }
+
+  set {
+    name  = "defaultBackend.nodeSelector.beta\\.kubernetes\\.io/os"
+    value = "linux"
+    type  = "string"
+  }
 }
 
 data "kubernetes_service" "ingress-load-balancer" {
