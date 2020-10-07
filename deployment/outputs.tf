@@ -41,3 +41,7 @@ output "dburl" {
 output "load_balancer_ip" {
   value = data.kubernetes_service.ingress-load-balancer.load_balancer_ingress.0.ip
 }
+
+output "load_balancer_dns" {
+  value = "${var.prefix}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
+}

@@ -15,9 +15,18 @@ provider "azurerm" {
   features {}
 }
 
+locals {
+  default_tags = {
+    managedby: "terraform",
+    project : "nhsei-website",
+    environment : var.environment,
+  }
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${var.prefix}-k8s-resources"
   location = var.location
+  tags     = local.default_tags
 }
 
 # Azure CDN needs a location to store metadata for the profile
@@ -25,6 +34,7 @@ resource "azurerm_resource_group" "rg" {
 resource "azurerm_resource_group" "cdn" {
   name     = "${var.prefix}-cdn-resources"
   location = "northeurope"
+  tags     = local.default_tags
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
@@ -32,6 +42,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "${var.prefix}-k8s"
+  tags                = local.default_tags
 
   default_node_pool {
     name       = "default"
@@ -73,9 +84,10 @@ resource "azurerm_log_analytics_workspace" "oms" {
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
+  tags                = local.default_tags
 }
 
-resource "azurerm_log_analytics_solution" "example" {
+resource "azurerm_log_analytics_solution" "containers" {
   solution_name         = "Containers"
   workspace_resource_id = azurerm_log_analytics_workspace.oms.id
   workspace_name        = azurerm_log_analytics_workspace.oms.name
@@ -111,6 +123,7 @@ resource "azurerm_postgresql_server" "database" {
   name                = "${var.prefix}-postgresql"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  tags                = local.default_tags
 
   sku_name = "GP_Gen5_2"
 
@@ -191,11 +204,13 @@ data "kubernetes_service" "ingress-load-balancer" {
   depends_on = [helm_release.ingress-nginx]
 }
 
+
 resource "azurerm_cdn_profile" "cdn" {
   name                = "${var.prefix}-cdn"
   location            = azurerm_resource_group.cdn.location
   resource_group_name = azurerm_resource_group.cdn.name
   sku                 = "Standard_Microsoft"
+  tags                = local.default_tags
 }
 
 resource "azurerm_cdn_endpoint" "endpoint" {
@@ -203,10 +218,11 @@ resource "azurerm_cdn_endpoint" "endpoint" {
   location            = azurerm_cdn_profile.cdn.location
   resource_group_name = azurerm_cdn_profile.cdn.resource_group_name
   profile_name        = azurerm_cdn_profile.cdn.name
+  tags                = local.default_tags
 
   origin {
     name      = "${var.prefix}-ingress-load-balancer"
-    host_name = data.kubernetes_service.ingress-load-balancer.load_balancer_ingress.0.ip
+    host_name = "${var.prefix}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
   }
   origin_host_header = "www.england.nhs.uk"
 }
