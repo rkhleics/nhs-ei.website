@@ -10,3 +10,7 @@ variable "environment" {
   description = "The environment this infrastructure is for, eg staging, production"
 }
 
+variable "ssl_email_address" {
+  description = "The email address to use with Letsencrypt. This will receive emails from Letsencrypt when certs are due for renewal."
+}
+
