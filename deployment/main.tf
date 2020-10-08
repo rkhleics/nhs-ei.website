@@ -17,7 +17,7 @@ provider "azurerm" {
 
 locals {
   default_tags = {
-    managedby: "terraform",
+    managedby : "terraform",
     project : "nhsei-website",
     environment : var.environment,
   }
@@ -166,12 +166,28 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
 }
 
+provider "kubernetes-alpha" {
+  # at the time of writing the kubernetes_manifest resource has not been merged into the kubernetes provider so we need the alpha
+  host                   = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+  client_key             = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+}
+
+resource "kubernetes_namespace" "ingress-nginx" {
+  metadata {
+    name = "ingress-nginx"
+    labels = {
+      "cert-manager.io/disable-validation" = true
+    }
+  }
+}
+
 resource "helm_release" "ingress-nginx" {
-  name             = "ingress-nginx"
-  repository       = "https://kubernetes.github.io/ingress-nginx/"
-  chart            = "ingress-nginx"
-  namespace        = "ingress-nginx"
-  create_namespace = true
+  name       = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx/"
+  chart      = "ingress-nginx"
+  namespace  = kubernetes_namespace.ingress-nginx.metadata.0.name
 
   set {
     name  = "controller.service.externalTrafficPolicy"
@@ -193,6 +209,61 @@ resource "helm_release" "ingress-nginx" {
     name  = "defaultBackend.nodeSelector.beta\\.kubernetes\\.io/os"
     value = "linux"
     type  = "string"
+  }
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  namespace  = kubernetes_namespace.ingress-nginx.metadata.0.name
+
+  set {
+    name  = "controller.nodeSelector.beta\\.kubernetes\\.io/os"
+    value = "linux"
+    type  = "string"
+  }
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
+
+resource "kubernetes_manifest" "clusterissuer" {
+  provider = kubernetes-alpha
+  depends_on = [helm_release.cert-manager]
+  manifest = {
+    "apiVersion" = "cert-manager.io/v1alpha2"
+    "kind"       = "ClusterIssuer"
+    "metadata" = {
+      "name" = "letsencrypt"
+    }
+    "spec" = {
+      "acme" = {
+        "email" = var.ssl_email_address
+        "privateKeySecretRef" = {
+          "name" = "letsencrypt"
+        }
+        "server" = "https://acme-v02.api.letsencrypt.org/directory"
+        "solvers" = [
+          {
+            "http01" = {
+              "ingress" = {
+                "class" = "nginx"
+                "podTemplate" = {
+                  "spec" = {
+                    "nodeSelector" = {
+                      "kubernetes.io/os" = "linux"
+                    }
+                  }
+                }
+              }
+            }
+          },
+        ]
+      }
+    }
   }
 }
 
