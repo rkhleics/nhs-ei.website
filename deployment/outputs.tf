@@ -45,3 +45,7 @@ output "load_balancer_ip" {
 output "load_balancer_dns" {
   value = "${var.prefix}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
 }
+
+output "azure_cdn_endpoint" {
+  value = "${azurerm_cdn_endpoint.endpoint.name}.azureedge.net"
+}
