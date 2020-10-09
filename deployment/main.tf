@@ -44,10 +44,21 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   dns_prefix          = "${var.prefix}-k8s"
   tags                = local.default_tags
 
+  lifecycle {
+    ignore_changes = [
+      default_node_pool.0.node_count,
+    ]
+  }
+
   default_node_pool {
-    name       = "default"
-    node_count = 1
-    vm_size    = "Standard_DS2_v2"
+    name                = "default"
+    node_count          = 2
+    vm_size             = "Standard_DS2_v2"
+    type                = "VirtualMachineScaleSets"
+    enable_auto_scaling = true
+    availability_zones  = [1, 2, 3]
+    min_count           = 1
+    max_count           = 4
   }
 
   identity {
@@ -110,7 +121,7 @@ resource "random_string" "dbusername" {
 }
 
 resource "random_password" "dbpassword" {
-  length           = 16
+  length           = 20
   special          = true
   override_special = "_%@"
 
