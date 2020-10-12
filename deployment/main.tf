@@ -6,6 +6,8 @@ terraform {
       version = ">= 2.26"
     }
   }
+
+  backend "azurerm" {}
 }
 
 provider "azurerm" {
@@ -16,15 +18,16 @@ provider "azurerm" {
 }
 
 locals {
+  project = "${var.prefix}-${terraform.workspace}"
   default_tags = {
     managedby : "terraform",
     project : "nhsei-website",
-    environment : var.environment,
+    environment : terraform.workspace,
   }
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.prefix}-k8s-resources"
+  name     = "${local.project}-k8s-resources"
   location = var.location
   tags     = local.default_tags
 }
@@ -32,16 +35,16 @@ resource "azurerm_resource_group" "rg" {
 # Azure CDN needs a location to store metadata for the profile
 # not all regions are supported so we choose one here we know is
 resource "azurerm_resource_group" "cdn" {
-  name     = "${var.prefix}-cdn-resources"
+  name     = "${local.project}-cdn-resources"
   location = "northeurope"
   tags     = local.default_tags
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
-  name                = "${var.prefix}-k8s"
+  name                = "${local.project}-k8s"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "${var.prefix}-k8s"
+  dns_prefix          = "${local.project}-k8s"
   tags                = local.default_tags
 
   lifecycle {
@@ -90,7 +93,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 }
 
 resource "azurerm_log_analytics_workspace" "oms" {
-  name                = "${var.prefix}-oms"
+  name                = "${local.project}-oms"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "PerGB2018"
@@ -116,7 +119,7 @@ resource "random_string" "dbusername" {
   special = false
 
   keepers = {
-    dbname = "${var.prefix}-postgresql"
+    dbname = "${local.project}-postgresql"
   }
 }
 
@@ -126,12 +129,12 @@ resource "random_password" "dbpassword" {
   override_special = "_%@"
 
   keepers = {
-    dbname = "${var.prefix}-postgresql"
+    dbname = "${local.project}-postgresql"
   }
 }
 
 resource "azurerm_postgresql_server" "database" {
-  name                = "${var.prefix}-postgresql"
+  name                = "${local.project}-postgresql"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   tags                = local.default_tags
@@ -152,7 +155,7 @@ resource "azurerm_postgresql_server" "database" {
 }
 
 resource "azurerm_postgresql_database" "db1" {
-  name                = "${var.prefix}-db"
+  name                = "${local.project}-db"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
   charset             = "UTF8"
@@ -199,7 +202,7 @@ resource "helm_release" "ingress-nginx" {
 
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-dns-label-name"
-    value = var.prefix
+    value = local.project
   }
 
   set {
@@ -243,7 +246,7 @@ data "kubernetes_service" "ingress-load-balancer" {
 
 
 resource "azurerm_cdn_profile" "cdn" {
-  name                = "${var.prefix}-cdn"
+  name                = "${local.project}-cdn"
   location            = azurerm_resource_group.cdn.location
   resource_group_name = azurerm_resource_group.cdn.name
   sku                 = "Standard_Microsoft"
@@ -251,15 +254,15 @@ resource "azurerm_cdn_profile" "cdn" {
 }
 
 resource "azurerm_cdn_endpoint" "endpoint" {
-  name                = "${var.prefix}-cdn-endpoint"
+  name                = "${local.project}-cdn-endpoint"
   location            = azurerm_cdn_profile.cdn.location
   resource_group_name = azurerm_cdn_profile.cdn.resource_group_name
   profile_name        = azurerm_cdn_profile.cdn.name
   tags                = local.default_tags
 
   origin {
-    name      = "${var.prefix}-ingress-load-balancer"
-    host_name = "${var.prefix}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
+    name      = "${local.project}-ingress-load-balancer"
+    host_name = "${local.project}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
   }
   origin_host_header = "www.england.nhs.uk"
 }
