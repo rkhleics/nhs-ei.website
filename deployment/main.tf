@@ -20,6 +20,7 @@ provider "azurerm" {
 locals {
   project = "${var.prefix}-${terraform.workspace}"
   default_tags = {
+    prefix: project,
     managedby : "terraform",
     project : "nhsei-website",
     environment : terraform.workspace,
