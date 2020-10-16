@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-yaml
+        exclude: deployment/*
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-byte-order-marker
+      - id: debug-statements
+      - id: check-json
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: v1.0.4
+    hooks:
+      - id: python-bandit-vulnerability-check
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.1.3
+    hooks:
+      - id: python-safety-dependencies-check
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: v0.1.0
+    hooks:
+      - id: dockerfilelint
+        stages: [commit]
+  - repo: https://github.com/prettier/prettier
+    rev: "2.1.2" # Use the sha or tag you want to point at
+    hooks:
+      - id: prettier
+        exclude: deployment/*
