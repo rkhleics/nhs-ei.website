@@ -26,8 +26,3 @@ repos:
     hooks:
       - id: dockerfilelint
         stages: [commit]
-  - repo: https://github.com/prettier/prettier
-    rev: "2.1.2" # Use the sha or tag you want to point at
-    hooks:
-      - id: prettier
-        exclude: deployment/*
