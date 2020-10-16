@@ -26,3 +26,8 @@ repos:
     hooks:
       - id: dockerfilelint
         stages: [commit]
+  - repo: git://github.com/BloomBoard-Research/pre-commit-standardjs
+    rev: 634a6c00b95e4d677472036df96a8418764e6670
+    hooks:
+      - id: standard
+        args: ["--parser babel-eslint"]
