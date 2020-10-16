@@ -386,7 +386,7 @@ Find out more about the checkboxes component and when to use it in the [NHS digi
         <label class="nhsuk-label nhsuk-checkboxes__label" for="contact-1">
           Email
         </label>
-      </div>  
+      </div>
       <div class="nhsuk-checkboxes__conditional nhsuk-checkboxes__conditional--hidden" id="conditional-contact-1">
         <div class="nhsuk-form-group">
           <label class="nhsuk-label" for="email">
@@ -466,7 +466,7 @@ Find out more about the checkboxes component and when to use it in the [NHS digi
     }
   }) }}
 {% endset -%}
-  
+
 {{ checkboxes({
   "idPrefix": "contact",
   "name": "contact",

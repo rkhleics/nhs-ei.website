@@ -11,7 +11,7 @@ Find out more about the error message component and when to use it in the [NHS d
 
 ```html
 <span class="nhsuk-error-message">
-  <span class="nhsuk-u-visually-hidden">Error:</span> 
+  <span class="nhsuk-u-visually-hidden">Error:</span>
   Error message about full name goes here
 </span>
 ```

@@ -819,7 +819,7 @@ compiled JavaScript for all components `nhsuk.min.js` or the individual componen
 
 [Preview the header organisational with white header and navigation component](https://nhsuk.github.io/nhsuk-frontend/components/header/header-org-white-nav.html)
 
-#### HTML markup 
+#### HTML markup
 
 ```html
 <header class="nhsuk-header nhsuk-header--organisation nhsuk-header--white nhsuk-header--white-nav" role="banner">

@@ -111,7 +111,7 @@ Find out more about the card component and when to use it in the [NHS digital se
 <h2>Halves</h2>
 
 <ul class="nhsuk-grid-row nhsuk-card-group">
-  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">      
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -123,7 +123,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">   
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -135,7 +135,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">       
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -164,7 +164,7 @@ Find out more about the card component and when to use it in the [NHS digital se
 <h2>Thirds</h2>
 
 <ul class="nhsuk-grid-row nhsuk-card-group">
-  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">    
+  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -176,7 +176,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">  
+  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -188,7 +188,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">        
+  <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable ">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">
@@ -205,7 +205,7 @@ Find out more about the card component and when to use it in the [NHS digital se
 <h2>Quarters</h2>
 
 <ul class="nhsuk-grid-row nhsuk-card-group">
-  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">   
+  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable">
       <div class="nhsuk-card__content">
         <p class="nhsuk-heading-xl nhsuk-u-font-size-64 nhsuk-u-margin-bottom-1">91 <span class="nhsuk-u-visually-hidden">Applicants</span></p>
@@ -213,7 +213,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">  
+  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable">
       <div class="nhsuk-card__content">
         <p class="nhsuk-heading-xl nhsuk-u-font-size-64 nhsuk-u-margin-bottom-1">23 <span class="nhsuk-u-visually-hidden">Jobs</span></p>
@@ -221,7 +221,7 @@ Find out more about the card component and when to use it in the [NHS digital se
       </div>
     </div>
   </li>
-  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">   
+  <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
     <div class="nhsuk-card nhsuk-card--clickable">
       <div class="nhsuk-card__content">
         <p class="nhsuk-heading-xl nhsuk-u-font-size-64 nhsuk-u-margin-bottom-1">8 <span class="nhsuk-u-visually-hidden">Services</span></p>

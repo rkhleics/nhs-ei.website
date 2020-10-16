@@ -518,7 +518,7 @@ Find out more about the radios component and when to use it in the [NHS digital 
         <label class="nhsuk-label nhsuk-radios__label" for="contact-2">
           Phone
         </label>
-      </div>  
+      </div>
       <div class="nhsuk-radios__conditional nhsuk-radios__conditional--hidden" id="conditional-contact-2">
         <div class="nhsuk-form-group">
           <label class="nhsuk-label" for="phone">
@@ -526,7 +526,7 @@ Find out more about the radios component and when to use it in the [NHS digital 
           </label>
           <input class="nhsuk-input nhsuk-u-width-two-thirds" id="phone" name="phone" type="text">
         </div>
-      </div>  
+      </div>
       <div class="nhsuk-radios__item">
         <input class="nhsuk-radios__input" id="contact-3" name="contact" type="radio" value="text" aria-controls="conditional-contact-3" aria-expanded="false">
         <label class="nhsuk-label nhsuk-radios__label" for="contact-3">
