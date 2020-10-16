@@ -21,7 +21,7 @@ pip install -r requirements/dev.txt
 
 python manange.py migrate
 
-python anange.py createsuperuser
+python manage.py createsuperuser
 
 python manage.py runserver
 ```
