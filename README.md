@@ -1,6 +1,6 @@
 # NHS-EI Website
 
-NHS-EI Website:  Wagtail CMS contains the code to get a basic site up and runing with asset compilation using gulp.
+NHS-EI Website: Wagtail CMS contains the code to get a basic site up and runing with asset compilation using gulp.
 
 ## How to install
 
@@ -25,6 +25,7 @@ python anange.py createsuperuser
 
 python manage.py runserver
 ```
+
 Keep the above running in it's own terminal
 
 ### Install NPM dependancies
@@ -36,11 +37,13 @@ npm install
 ### Run NPM
 
 development with reload
+
 ```
 npm start
 ```
 
 compile for production
+
 ```
 npm run build
 ```
@@ -50,7 +53,9 @@ npm run build
 Has prototype added in https://github.com/rkhleics/nhs-ei.website to achieve running as a development package
 
 ### Can Be Removed In The Future
+
 ---
+
 cms/urls.py
 
 provides the urls to be able to view the current static prototype pages
@@ -59,7 +64,7 @@ provides the urls to be able to view the current static prototype pages
 # views to test static pages
     urlpatterns += [
         path('nav-prototype', TemplateView.as_view(
-            template_name='prototype_pages/nav_prototype.html'), 
+            template_name='prototype_pages/nav_prototype.html'),
             name='nav-prototype'),
         path('search-results-prototype', TemplateView.as_view(
             template_name='prototype_pages/search_results_prototype.html'),
@@ -69,7 +74,9 @@ provides the urls to be able to view the current static prototype pages
             name='content-prototype'),
     ]
 ```
+
 ---
+
 static prototype templates
 
     templates/prototype_pages/*
