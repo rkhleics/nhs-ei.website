@@ -57,13 +57,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -90,6 +91,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "cms.wsgi.application"
 # Set a SECRET_KEY in the environment when running multiple instances
 SECRET_KEY = env("SECRET_KEY", default=utils.get_random_secret_key())
+
+# Set the environment variable to the correct host when deployed
+# https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-ALLOWED_HOSTS
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[".localhost", "127.0.0.1"])
 
 
 # Database
@@ -148,7 +153,7 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # Javascript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = BASE_DIR / "compiledassets"
 STATIC_URL = "/static/"
