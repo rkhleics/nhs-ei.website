@@ -10,11 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+from pathlib import Path
+
+import environ
+from django.core.management import utils
+
+# Get variables from the environment
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env()
+DEBUG = env("DEBUG")
+
+# Build paths inside the project like this: BASE_DIR / 'name_of_path'
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+BASE_DIR = PROJECT_DIR.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -64,7 +73,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PROJECT_DIR, "templates"),
+            PROJECT_DIR / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -79,16 +88,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "cms.wsgi.application"
+# Set a SECRET_KEY in the environment when running multiple instances
+SECRET_KEY = env("SECRET_KEY", default=utils.get_random_secret_key())
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
+    "default": env.db(default=f"sqlite://{BASE_DIR}/db.sqlite3"),
 }
 
 
@@ -134,7 +142,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    PROJECT_DIR / "static",
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
@@ -142,10 +150,10 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = BASE_DIR / "compiledassets"
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 
