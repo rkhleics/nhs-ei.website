@@ -63,4 +63,4 @@ RUN npm run build
 RUN python manage.py collectstatic --noinput --clear
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD gunicorn cms.wsgi:application
+CMD gunicorn --access-logfile - cms.wsgi:application
