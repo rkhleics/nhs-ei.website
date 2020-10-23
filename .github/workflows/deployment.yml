@@ -23,11 +23,22 @@ jobs:
           username: ${{ secrets.AZURE_CLIENTID }}
           password: ${{ secrets.AZURE_SECRET }}
           registry: ${{ secrets.ACR_URL }}
+      - name: Prepare tags
+        id: prep
+        run: |
+          DOCKER_IMAGE=${{ secrets.ACR_URL }}/nhsei-website
+          VERSION=edge
+          if [[ $GITHUB_REF == refs/pull/* ]]; then
+            VERSION=pr-${{ github.event.number }}
+          fi
+          TAGS="${DOCKER_IMAGE}:${VERSION}
+          TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA}"
+          echo ::set-output name=tags::${TAGS}
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: |
-            ${{ secrets.ACR_URL }}/nhsei-website:latest
+          tags: ${{ steps.prep.outputs.tags }}
