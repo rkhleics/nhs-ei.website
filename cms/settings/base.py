@@ -101,7 +101,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[".localhost", "127.0.0.1"])
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db(default=f"sqlite://{BASE_DIR}/db.sqlite3"),
+    "default": env.db(default=f"sqlite:///{BASE_DIR}/db.sqlite3"),
 }
 
 
