@@ -49,3 +49,7 @@ output "load_balancer_dns" {
 output "azure_cdn_endpoint" {
   value = "${azurerm_cdn_endpoint.endpoint.name}.azureedge.net"
 }
+
+output "azure_storage_media_connection_string" {
+  value = azurerm_storage_account.media.primary_connection_string
+}

@@ -20,7 +20,7 @@ provider "azurerm" {
 locals {
   project = "${var.prefix}-${terraform.workspace}"
   default_tags = {
-    prefix: var.prefix,
+    prefix : var.prefix,
     managedby : "terraform",
     project : "nhsei-website",
     environment : terraform.workspace,
@@ -267,3 +267,13 @@ resource "azurerm_cdn_endpoint" "endpoint" {
   }
   origin_host_header = "www.england.nhs.uk"
 }
+
+resource "azurerm_storage_account" "media" {
+  name                     = replace("${local.project}-media", "/[^a-z0-9]+/", "")
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}
+
+
