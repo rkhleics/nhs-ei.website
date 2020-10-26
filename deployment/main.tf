@@ -274,6 +274,12 @@ resource "azurerm_storage_account" "media" {
   resource_group_name      = azurerm_resource_group.rg.name
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  allow_blob_public_access = true
+  tags                     = local.default_tags
 }
 
-
+resource "azurerm_storage_container" "media" {
+  name                  = "website-media"
+  storage_account_name  = azurerm_storage_account.media.name
+  container_access_type = "blob"
+}
