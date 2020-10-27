@@ -151,8 +151,17 @@ resource "azurerm_postgresql_server" "database" {
   administrator_login_password = random_password.dbpassword.result
   version                      = "11"
 
-  public_network_access_enabled = false
+  public_network_access_enabled = true
   ssl_enforcement_enabled       = true
+}
+
+resource "azurerm_postgresql_firewall_rule" "cluster" {
+  name                = "cluster-ip-${count.index}"
+  resource_group_name = azurerm_postgresql_server.database.resource_group_name
+  server_name         = azurerm_postgresql_server.database.name
+  count               = length(data.azurerm_public_ips.kubernetes.public_ips)
+  start_ip_address    = data.azurerm_public_ips.kubernetes.public_ips[count.index].ip_address
+  end_ip_address      = data.azurerm_public_ips.kubernetes.public_ips[count.index].ip_address
 }
 
 resource "azurerm_postgresql_database" "db1" {
@@ -243,6 +252,16 @@ data "kubernetes_service" "ingress-load-balancer" {
     namespace = helm_release.ingress-nginx.namespace
   }
   depends_on = [helm_release.ingress-nginx]
+}
+
+data "azurerm_kubernetes_cluster" "cluster" {
+  name                = "${local.project}-k8s"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+data "azurerm_public_ips" "kubernetes" {
+  resource_group_name = azurerm_kubernetes_cluster.cluster.node_resource_group
+  attached            = true
 }
 
 
