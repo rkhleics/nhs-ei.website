@@ -138,6 +138,14 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Media files (User uploaded images and documents)
+AZURE_CONNECTION_STRING = env("AZURE_CONNECTION_STRING", default=None)
+if AZURE_CONNECTION_STRING:
+    AZURE_CONTAINER = env("AZURE_CONTAINER")
+    DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
+else:
+    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_URL = "/media/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -157,9 +165,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = BASE_DIR / "compiledassets"
 STATIC_URL = "/static/"
-
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "/media/"
 
 
 # Wagtail settings
