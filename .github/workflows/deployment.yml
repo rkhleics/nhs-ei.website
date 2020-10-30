@@ -59,5 +59,6 @@ jobs:
           release: "nhsei-website"
           chart: deployment/helm/nhsei-website
           namespace: default
+          helm: helm3
           values: |
             image.tag: ${{ needs.build.outputs.deploy-version }}
