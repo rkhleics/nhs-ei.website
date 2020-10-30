@@ -57,5 +57,6 @@ jobs:
       - uses: azure/setup-helm@v1
       - name: Install with Helm
         run: |
+          ls deployment/*
           helm upgrade --install nhsei-website deployment/helm/nhsei-website \
             --set-string image.tag=${{ needs.build.outputs.deploy-version }}
