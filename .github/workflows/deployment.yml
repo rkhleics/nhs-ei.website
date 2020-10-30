@@ -6,13 +6,11 @@ on:
       - main
       - feature/start
 
-  pull_request:
-    branches:
-      - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      deploy-version: ${{ steps.prep.outputs.deploy-version }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Docker Buildx
@@ -46,3 +44,18 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ steps.prep.outputs.tags }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          resource-group: ${{ secrets.AZURE_CLUSTER_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
+      - uses: deliverybot/helm@v1
+        with:
+          release: "nhsei-website"
+          chart: deployment/helm/nhsei-website
+          values: |
+            image.tag: ${{ needs.build.outputs.deploy-version }}
