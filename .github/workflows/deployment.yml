@@ -54,10 +54,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           resource-group: ${{ secrets.AZURE_CLUSTER_RESOURCE_GROUP }}
           cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
-      - uses: deliverybot/helm@v1
-        with:
-          release: nhsei-website
-          namespace: default
-          chart: deployment/helm/nhsei-website
-          values: |
-            image.tag: ${{ needs.build.outputs.deploy-version }}
+      - uses: azure/setup-helm@v1
+      - name: Install with Helm
+        run: |
+          ls deployment/*
+          helm upgrade --install nhsei-website deployment/helm/nhsei-website \
+            --set-string image.tag=${{ needs.build.outputs.deploy-version }}
