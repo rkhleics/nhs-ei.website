@@ -46,6 +46,7 @@ jobs:
           tags: ${{ steps.prep.outputs.tags }}
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v2
       - uses: azure/aks-set-context@v1
@@ -53,6 +54,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           resource-group: ${{ secrets.AZURE_CLUSTER_RESOURCE_GROUP }}
           cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
+          namespace: default
       - uses: deliverybot/helm@v1
         with:
           release: "nhsei-website"
