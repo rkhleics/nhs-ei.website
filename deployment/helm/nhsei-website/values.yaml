@@ -49,6 +49,12 @@ service:
   type: ClusterIP
   port: 8000
 
+environment:
+  allowed_hosts: ""
+  database_url: ""
+  azure_connection_string: ""
+  azure_container: ""
+
 ingress:
   enabled: true
   annotations:
