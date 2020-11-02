@@ -27,6 +27,13 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+    - host: www.england.nhs.uk
+      http:
+        paths:
+        - path: /(.*)
+          backend:
+            serviceName: {{ $fullName }}
+            servicePort: {{ $svcPort }}
     {{- range .Values.ingress.hostnames }}
     - host: {{ . | quote }}
       http:

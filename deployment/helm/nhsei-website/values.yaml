@@ -63,8 +63,8 @@ ingress:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     cert-manager.io/cluster-issuer: letsencrypt
-  hostnames:
-    - www.england.nhs.uk
+  #hostnames:
+  #- www.england.nhs.uk
   #tls:
   #- secretName: tls-secret
   #hosts:
