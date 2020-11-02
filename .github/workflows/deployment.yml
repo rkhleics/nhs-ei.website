@@ -62,9 +62,9 @@ jobs:
             --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
             --set-string imageCredentials.username=${{ secrets.AZURE_CLIENTID }} \
             --set-string imageCredentials.password=${{ secrets.AZURE_SECRET }} \
-            --set ingress.tls.hosts="{${{ secrets.ALLOWED_HOSTS }}}" \
-            --set ingress.hostnames="{${{ secrets.ALLOWED_HOSTS }}}" \
-            --set-string environment.allowed_hosts="www.england.nhs.uk, ${{ secrets.ALLOWED_HOSTS }}" \
+            --set ingress.tls.hosts="{join(${{ secrets.ALLOWED_HOSTS }})}" \
+            --set ingress.hostnames="{join(${{ secrets.ALLOWED_HOSTS }})}" \
+            --set-string environment.allowed_hosts="www.england.nhs.uk\,join(${{ secrets.ALLOWED_HOSTS }}, '\,')" \
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
