@@ -58,7 +58,7 @@ jobs:
       - name: Install with Helm
         run: |
           HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',' | sed 's/,$//g')"
-          ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\\,/g')"
+          ALLOWED_HOSTS="$(echo www.england.nhs.uk,${HOSTNAMES} | sed 's/,/\\,/g')"
           helm upgrade --install nhsei-website deployment/helm/nhsei-website \
             --set-string image.tag=${{ needs.build.outputs.deploy-version }} \
             --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
@@ -67,7 +67,7 @@ jobs:
             --set ingress.tls[0].hosts="{${HOSTNAMES}}" \
             --set ingress.tls[0].secretName="tls-secret" \
             --set ingress.hostnames="{${HOSTNAMES}}" \
-            --set-string environment.allowed_hosts="www.england.nhs.uk\,${HOSTNAMES}" \
+            --set-string environment.allowed_hosts="${ALLOWED_HOSTS}" \
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
