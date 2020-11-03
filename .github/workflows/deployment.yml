@@ -57,7 +57,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - name: Install with Helm
         run: |
-          HOSTNAMES="$(echo ${{ secrets.ALLOWED_HOSTS }} | tr '[:space:]' ',')"
+          HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',')"
           ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\,/g')"
           echo "deploying to ${HOSTNAMES}"
           helm upgrade --install nhsei-website deployment/helm/nhsei-website \
@@ -68,7 +68,7 @@ jobs:
             --set ingress.tls[0].hosts="{${HOSTNAMES}}" \
             --set ingress.tls[0].secretName="tls-secret" \
             --set ingress.hostnames="{${HOSTNAMES}}" \
-            --set-string environment.allowed_hosts="www.england.nhs.uk\,${ALLOWED_HOSTS}" \
+            --set-string environment.allowed_hosts="www.england.nhs.uk\,${HOSTNAMES}" \
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
