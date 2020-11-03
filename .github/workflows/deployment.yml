@@ -57,23 +57,17 @@ jobs:
       - uses: azure/setup-helm@v1
       - name: Install with Helm
         run: |
-          HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',')"
+          HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',' | sed 's/,$//g')"
           ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\\,/g')"
-          echo "deploying to ${HOSTNAMES}" > output.txt
-          echo "allowed ${ALLOWED_HOSTS}" >> output.txt
-          #helm upgrade --install nhsei-website deployment/helm/nhsei-website \
-            #--set-string image.tag=${{ needs.build.outputs.deploy-version }} \
-            #--set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
-            #--set-string imageCredentials.username=${{ secrets.AZURE_CLIENTID }} \
-            #--set-string imageCredentials.password=${{ secrets.AZURE_SECRET }} \
-            #--set ingress.tls[0].hosts="{${HOSTNAMES}}" \
-            #--set ingress.tls[0].secretName="tls-secret" \
-            #--set ingress.hostnames="{${HOSTNAMES}}" \
-            #--set-string environment.allowed_hosts="www.england.nhs.uk\,${HOSTNAMES}" \
-            #--set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
-            #--set-string environment.azure_container="website-media" \
-            #--set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
-      - uses: actions/upload-artifact@v2
-        with:
-          name: debug
-          path: output.txt
+          helm upgrade --install nhsei-website deployment/helm/nhsei-website \
+            --set-string image.tag=${{ needs.build.outputs.deploy-version }} \
+            --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
+            --set-string imageCredentials.username=${{ secrets.AZURE_CLIENTID }} \
+            --set-string imageCredentials.password=${{ secrets.AZURE_SECRET }} \
+            --set ingress.tls[0].hosts="{${HOSTNAMES}}" \
+            --set ingress.tls[0].secretName="tls-secret" \
+            --set ingress.hostnames="{${HOSTNAMES}}" \
+            --set-string environment.allowed_hosts="www.england.nhs.uk\,${HOSTNAMES}" \
+            --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
+            --set-string environment.azure_container="website-media" \
+            --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
