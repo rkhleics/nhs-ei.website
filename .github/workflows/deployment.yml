@@ -59,7 +59,8 @@ jobs:
         run: |
           HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',')"
           ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\\,/g')"
-          echo "deploying to ${HOSTNAMES}"
+          echo "deploying to ${HOSTNAMES}" > output.txt
+          echo "allowed ${ALLOWED_HOSTS}" >> output.txt
           helm upgrade --install nhsei-website deployment/helm/nhsei-website \
             --set-string image.tag=${{ needs.build.outputs.deploy-version }} \
             --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
@@ -72,3 +73,7 @@ jobs:
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: debug
+          path: output.txt
