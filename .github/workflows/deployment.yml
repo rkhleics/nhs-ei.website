@@ -58,7 +58,7 @@ jobs:
       - name: Install with Helm
         run: |
           HOSTNAMES="$(echo "${{ secrets.ALLOWED_HOSTS }}" | tr '[:space:]' ',')"
-          ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\,/g')"
+          ALLOWED_HOSTS="$(echo ${HOSTNAMES} | sed 's/,/\\,/g')"
           echo "deploying to ${HOSTNAMES}"
           helm upgrade --install nhsei-website deployment/helm/nhsei-website \
             --set-string image.tag=${{ needs.build.outputs.deploy-version }} \
