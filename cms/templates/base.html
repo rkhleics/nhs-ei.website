@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar nhsukfrontend_tags nhsukfrontendsettings_tags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="ie8" lang="en"><![endif]-->
@@ -62,18 +62,23 @@
 
   <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
 
+  {% header %}
   {% block header %}
-  {% include 'partials/header-v1.html' %}
+  {% comment %}{% include 'partials/header-v1.html' %}{% endcomment %}
   {% endblock %}
 
+  {% breadcrumb %}
   {% block beforeContent %}
-  {% include 'partials/before_content.html' %}
   {% endblock %}
 
   {% block main %}
+  {% include "wagtailnhsukfrontend/hero.html" %}
   <div class="nhsuk-width-container {{ containerClasses }}">
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
-      {% block content %}{% endblock %}
+      {% block content %}
+        {{ page.body}}
+        {% include "wagtailnhsukfrontend/review_date.html" %}
+      {% endblock %}
     </main>
   </div>
   {% endblock %}
