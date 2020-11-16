@@ -46,3 +46,5 @@ class DemoPage(HeroMixin, ReviewDateMixin, Page):
             StreamFieldPanel("body"),
         ]
     )
+
+    settings_panels = Page.settings_panels + ReviewDateMixin.settings_panels
