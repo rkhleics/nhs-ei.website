@@ -60,12 +60,8 @@
   <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
   {% block bodyStart %}{% endblock %}
 
-  <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
-
+  {% include 'wagtailnhsukfrontend/skip_link.html' %}
   {% header %}
-  {% block header %}
-  {% comment %}{% include 'partials/header-v1.html' %}{% endcomment %}
-  {% endblock %}
 
   {% breadcrumb %}
   {% block beforeContent %}
