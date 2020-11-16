@@ -15,6 +15,11 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if .Values.ingress.auth }} 
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: {{ .Values.ingress.auth.secret }}
+    nginx.ingress.kubernetes.io/auth-realm: {{ .Values.ingress.auth.realm }}
+  {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:

@@ -57,6 +57,9 @@ environment:
 
 ingress:
   enabled: true
+  #auth:
+  #secret: secretname
+  #realm: 'Authentication required'
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
