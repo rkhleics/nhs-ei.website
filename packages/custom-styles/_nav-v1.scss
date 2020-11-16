@@ -1,0 +1,537 @@
+// example from https://medium.com/swlh/building-a-css-only-responsive-multi-level-mega-menu-ee0a3781cc3f
+// CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
+// needs restyling
+
+$color-accent:                      $color_nhsuk-blue;
+$color-light:                       $color_nhsuk-white;
+$color-dark:                        $color_nhsuk-black;
+$menu-link-padding:                 20px 25px;
+$breakpoint:                        950px;
+$mega-menu-multiLevel-colWidth:     100/3 + 0%;
+$mobile-menu-back-height:           calc(1.4em + 40px);
+$mobile-menu-back-offset:           calc(0px - (1.4em + 40px));
+$menu-mobile-width:                 350px;
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+//  background: #fafafa;
+  padding: 0;
+  margin: 0;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+// ------------------ SHARED STYLES
+
+nav {
+   ul, li {
+     list-style: none;
+     padding: 0;
+     margin: 0;
+  }
+  a {
+    display: block;
+    text-decoration: none;
+    &:hover, &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.menu-bar {
+  background: $color-light;
+  display: flex;
+}
+
+.menu-link {
+  padding: $menu-link-padding;
+  background: $color-light;
+  color: $color-accent;
+  transition: background .2s, color .2s;
+  position: relative;
+  z-index: 1;
+  &[aria-haspopup="true"] {
+    padding-right: 40px;
+    &:after {
+      content: "";
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg#accent');
+      background-size: 14px;
+      width: 14px;
+      height: 14px;
+      font-size:12px;
+      position: absolute;
+      right: 10px;
+      top:50%;
+      transform: translateY(-50%);
+    }
+  }
+  &:visited {
+    color: $color-accent;
+  }
+}
+
+.mega-menu-header {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: darken($color-accent, 5%);
+}
+
+.mega-menu {
+  background: $color-light;
+  z-index: 10;
+}
+
+.mega-menu--multiLevel {
+  flex-direction: column;
+}
+
+
+// ------------------ MEDIA QUERIES
+
+@media all and (min-width: $breakpoint + 1px) {
+  // Desktop only
+
+  .nav {
+    margin-top: 50px;
+    background: $color-light;
+    > nav {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  .menu {
+    [aria-haspopup="true"] {
+      ~ ul {
+        display: none;
+      }
+    }
+  }
+
+  .menu-bar {
+    position: relative;
+    > li {
+      > [aria-haspopup="true"] {
+        // STYLING: Down arrow on desktop
+        &:after {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#accent');
+        }
+        &:hover {
+          &:after {
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#light');
+          }
+        }
+
+        // FUNCTIONALITY: Open mega menu
+        &:focus {
+          ~ ul {
+            display: flex;
+            transform-origin: top;
+            animation: dropdown .2s ease-out;
+          }
+        }
+        // FUNCTIONALITY: Keep mega menu open
+        ~ ul {
+          &:hover {
+            display: flex;
+          }
+        }
+      }
+
+      // FUNCTIONALITY: Keep mega menu open
+      &:focus-within {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: flex;
+          }
+        }
+      }
+
+      // STYLING: Hover/Active state
+      > [aria-haspopup="true"]:focus,
+      &:focus-within > [aria-haspopup="true"],
+      &:hover > a {
+        background: $color-accent;
+        color: $color-light;
+        &:after {
+          background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowTop.svg#light');
+        }
+      }
+    }
+  }
+
+  .mega-menu {
+    // LAYOUT: Mega menu
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    // FUNCTIONALITY: Keep mega menu open
+    &:hover {
+      display: flex;
+    }
+    a {
+      &:hover {
+        background: tint($color-accent, 85%);
+        color: darken($color-accent, 5%);
+      }
+      &:visited {
+        //background: $color-accent;
+        color: $color-accent;
+      }
+    }
+  }
+
+
+  .mega-menu--multiLevel {
+    // LAYOUT: Multi level columns
+    > li {
+      width: $mega-menu-multiLevel-colWidth;
+      > [aria-haspopup="true"] {
+        ~ ul {
+          left: $mega-menu-multiLevel-colWidth;
+          width: $mega-menu-multiLevel-colWidth;
+          ul {
+            width: 100%;
+            left: 100%;
+          }
+        }
+      }
+    }
+
+    li {
+      // FUNCTIONALITY: Opening flyouts
+      &:hover {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: block;
+            transform-origin: left;
+            animation: flyout .2s ease-out;
+          }
+        }
+      }
+
+      // FUNCTIONALITY: Keeping flyouts open
+      &:focus-within {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: block;
+          }
+        }
+      }
+
+      // STYLING: Flyout link active states
+      &:hover, &:focus-within {
+        > [aria-haspopup="true"], > a {
+          background: tint($color-accent, 85%);
+          color: darken($color-accent, 5%);
+        }
+      }
+    }
+    [aria-haspopup="true"] {
+      ~ ul, & {
+        border-left: 1px solid #f0f0f0;
+        // FUNCTIONALITY: Keeping flyouts open
+        &:hover {
+          display: block;
+        }
+      }
+      // LAYOUT: Flyouts
+      ~ ul {
+        position: absolute;
+        top: 0;
+        height: 100%;
+      }
+    }
+  }
+
+
+  // STYLING: Flat mega menu columns
+  .mega-menu--flat {
+    > * {
+      flex: 1;
+    }
+  }
+
+  // Hide mobile specific elements
+  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
+    display: none;
+  }
+
+}
+
+@media all and (max-width: $breakpoint) {
+
+  .nav {
+    padding: 20px;
+  }
+
+  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
+    display: block;
+  }
+
+  .mobile-menu-trigger {
+    background: $color-accent;
+    color: $color-light;
+    border: 0;
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 4px;
+  }
+
+  .mobile-menu-header {
+    order: -1;
+    background: grey;
+    a {
+      padding: $menu-link-padding;
+      color: $color-light;
+      visibility: visible;
+    }
+  }
+
+  .menu-bar {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100vh;
+    width: $menu-mobile-width;
+    max-width: $menu-mobile-width;
+    max-width: 90%;
+    overflow-x: hidden;
+    transition: left .3s;
+    box-shadow: 1px 0px 2px 0px rgba(0,0,0,0.25);
+    > li {
+      > [aria-haspopup="true"] {
+        ~ ul {
+          display: flex;
+          flex-direction: column;
+          background: $color-light;
+          position: absolute;
+          left: 100%;
+          top: 0;
+          max-height: 100vh;
+          width: 100%;
+          transition: left .3s;
+          // Second level
+          > li {
+            > [aria-haspopup="true"] {
+              font-size: 1.2em;
+              ~ ul {
+                a {
+                  padding-left: 40px;
+                }
+                // Third level
+                > li {
+                  > [aria-haspopup="true"] {
+                    ~ ul {
+                      a {
+                        padding-left: 80px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          [aria-haspopup="true"] {
+            color: $color-dark;
+            &:after {
+              content: "+";
+              background: none;
+              font-size: 1em;
+              font-weight: normal;
+              height: 20px;
+              line-height: 1;
+            }
+            ~ ul {
+              max-height: 0px;
+              transform-origin: top;
+              transform: scaleY(0);
+              transition: max-height .1s;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  .mega-menu-content {
+    padding: $menu-link-padding;
+  }
+
+  .mobile-menu-back-item {
+    order: -1;
+    a {
+      background: tint(grey, 70%);
+      color: $color-dark;
+      max-height: $mobile-menu-back-height;
+      margin-top: $mobile-menu-back-offset;
+      pointer-events: none;
+      &:before {
+        content: "";
+        width: 14px;
+        height: 12px;
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowLeft.svg#default');
+        background-size: 14px;
+        margin-right: 10px;
+        display: inline-block;
+      }
+    }
+  }
+
+  // ------------------------ ALL DEVICES
+
+  .mobile-menu-trigger {
+    // FUNCTIONALITY: Open mobile menu
+    &:focus {
+      ~ ul {
+        left: 0;
+      }
+    }
+  }
+
+  .menu-bar {
+    // FUNCTIONALITY: Keep menu open
+    &:hover, &:focus-within {
+      left: 0;
+    }
+    > li {
+      > [aria-haspopup="true"] {
+        // FUNCTIONALITY: Open mega menu
+        &:focus {
+          ~ ul {
+            left: 0;
+          }
+        }
+        ~ ul {
+          // STYLING: Back button offset
+          margin-top: $mobile-menu-back-height;
+
+          // FUNCTIONALITY: Keep mega menu open
+          &:hover, &:focus-within {
+            left: 0;
+          }
+          // FUNCTIONALITY: Open dropdowns
+          [aria-haspopup="true"] {
+            &:focus {
+              ~ ul {
+                max-height: 500px;
+                animation: dropdown .3s forwards;
+              }
+            }
+          }
+          // FUNCTIONALITY: Keep dropdowns open
+          li {
+            &:focus-within {
+              > [aria-haspopup="true"] {
+                ~ ul {
+                  max-height: 500px;
+                  transform: scaleY(1);
+                }
+              }
+            }
+          }
+
+        }
+      }
+      // FUNCTIONALITY: Prevent clicks on link behind back button
+      &:focus-within ~ .mobile-menu-header a {
+        visibility: hidden;
+      }
+    }
+  }
+
+  // ------------------------ TOUCH DEVICES
+
+  @media (hover: none) {
+
+    // FUNCTIONALITY: Open mobile menu
+    .mobile-menu-trigger {
+      &:hover {
+        ~ ul {
+          left: 0;
+        }
+      }
+    }
+
+    // FUNCTIONALITY: Open mega menu
+    .menu-bar {
+      > li {
+        > [aria-haspopup="true"] {
+          &:hover {
+            ~ ul {
+              left: 0;
+            }
+          }
+          ~ ul {
+            &:hover {
+              left: 0;
+            }
+            // FUNCTIONALITY: Open dropdowns
+            [aria-haspopup="true"] {
+              &:hover {
+                ~ ul {
+                  max-height: 500px;
+                  animation: dropdown .3s forwards;
+                }
+              }
+              ~ ul {
+                &:hover {
+                  max-height: 500px;
+                  transform: scaleY(1);
+                }
+              }
+            }
+          }
+        }
+        &:hover ~ .mobile-menu-header {
+          a {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// ------------------ ANIMATIONS
+
+@keyframes dropdown {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes flyout {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.menu-link {
+  small {
+    color: $color-dark;
+
+  }
+}

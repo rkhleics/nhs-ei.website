@@ -1,0 +1,70 @@
+// Import NHS.UK frontend library
+// @import 'node_modules/nhsuk-frontend/packages/nhsuk';
+
+// Components that are not in the NHS.UK frontend library
+// @import 'components/panel-confirmation';
+// @import 'components/phase-banner';
+// @import 'components/related-nav';
+// @import 'components/tag';
+
+// @import 'components/tabs';
+
+// @import 'components/nav-v1';
+
+///////////////////////////////////////////
+// Add your custom CSS/Sass styles below...
+///////////////////////////////////////////
+
+.nhsuk-image {
+  width: 100%;
+}
+
+.nhsei-featured-section {
+  .nhsuk-image {
+    margin-top: 0;
+  }
+}
+
+.nhsei-full-wrap {
+  overflow-x: hidden;
+  margin-left: -1000px;
+  margin-right: -1000px;
+
+   .wrapped-section {
+     padding-left: 1000px;
+     padding-right: 1000px;
+   }
+}
+
+.nhsei-latest-news {
+  background-color: $color_nhsuk-grey-4;
+}
+
+.nhsuk-footer__list.nhsie-footer-menu {
+  border-bottom: 1px solid $color_nhsuk-grey-1;
+  @include nhsuk-responsive-padding(4, 'bottom');
+  @include nhsuk-responsive-margin(4, 'bottom');
+
+  .nhsuk-footer__list-item {
+    @include nhsuk-typography-responsive(19);
+    .nhsuk-footer__list-item-link {
+      @include nhsuk-link-style-default;
+      &:visited {
+        // color:
+      }
+    }
+  }
+}
+
+.nhsuk-breadcrumb {
+  border-top: 2px solid  $color_nhsuk-blue;
+}
+
+.nhsie-search-result-item {
+  background-color: $color_nhsuk-white;
+  padding: 1em 1em 0.25em 1em;
+
+  .nhsie-result-meta {
+    padding-right: 0.5em;
+  }
+}

@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-yaml
+        exclude: deployment/*
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-byte-order-marker
+      - id: debug-statements
+      - id: check-json
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: v1.0.4
+    hooks:
+      - id: python-bandit-vulnerability-check
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.1.3
+    hooks:
+      - id: python-safety-dependencies-check
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: v0.1.0
+    hooks:
+      - id: dockerfilelint
+        stages: [commit]
+  - repo: git://github.com/BloomBoard-Research/pre-commit-standardjs
+    rev: 634a6c00b95e4d677472036df96a8418764e6670
+    hooks:
+      - id: standard
+        args: ["--parser babel-eslint"]

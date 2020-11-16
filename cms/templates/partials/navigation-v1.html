@@ -1,0 +1,466 @@
+<!-- raw example from https://medium.com/swlh/building-a-css-only-responsive-multi-level-mega-menu-ee0a3781cc3f
+CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
+-->
+<!-- needs refining and styling -->
+<div class="nav">
+    <nav>
+        <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
+        <ul class="menu menu-bar">
+
+            <li><!-- Link 1 -->
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Publications</a>
+                <ul class="mega-menu mega-menu--multiLevel">
+
+                    <li><!-- Link 1.1 -->
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Resources
+                        </a>
+                        <ul class="menu menu-list">
+                            <li><!-- Link 1.1.1 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Research<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+
+                            <li><!-- Link 1.1.2 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Templates and forms<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+                            <li><!-- Link 1.1.3 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Data and statistics<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+                        </ul>
+                        <ul class="">
+                          <li>
+                              <a href="#" class="">Latest resources</a>
+                        </ul>
+                    </li>
+                    <li><!-- Link 1.2 -->
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Guidance
+                        </a>
+                        <ul class="menu menu-list">
+                            <li><!-- Link 1.2.1 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Report<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+                            <li><!-- Link 1.2.2 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Letter<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+                            <li><!-- Link 1.2.3 -->
+                              <a href="#" class="menu-link menu-list-link">
+                                  Guidance<br />
+                                  <small>Short decription of link</small>
+                              </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><!-- Link 1.3 -->
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Best practice</a>
+                        <ul class="menu menu-list">
+                          <li><!-- Link 1.3.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Case studies<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 1.3.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Leadership Academy<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                        </ul>
+                    </li>
+                    <li><!-- Link 1.4 -->
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Policy</a>
+                        <ul class="menu menu-list">
+                          <li><!-- Link 1.4.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Policy and strategy<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 1.4.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                NHS Standard contract<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 1.4.3 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Service specification<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 1.4.4 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Standard operating procedure<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a href="/page" class="menu-link mega-menu-link">1.4 Page link</a>
+                    </li> -->
+                    <li class="mobile-menu-back-item">
+                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li><!-- Link 2 -->
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Our work</a>
+                <ul class="mega-menu mega-menu--multiLevel">
+                  <li><!-- Link 2.1 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Priority areas</a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 2.1.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Cancer<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.1.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Mental health<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.1.3 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Urgent and emergency care<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.1.4 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Primary care<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.1.5 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Integrated care<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 2.2 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Professions</a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 2.2.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                GPs<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.2.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Nurses<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.2.3 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Midwifes<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.2.4 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Care<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.2.5 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Dentists<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.2.6 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                ETC<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 2.3 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Policy
+                      </a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 2.3.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                NHS Long Term Plan<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 2.3.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Clinical policy<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="mobile-menu-back-item"><!-- Mobile back -->
+                      <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                  </li>
+                </ul>
+            </li>
+
+            <li><!-- Link 3 -->
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Commissioning</a>
+                <ul class="mega-menu mega-menu--multiLevel">
+                  <li><!-- Link 3.1 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">About NHS commissioning
+                      </a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 3.1.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                What is commissioning?<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 3.1.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Who commissions NHS services?<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 3.2 -->
+                      <a href="#" class="menu-link mega-menu-link">Commissioned services
+                      </a>
+                  </li>
+                  <li><!-- Link 3.3 -->
+                      <a href="#" class="menu-link mega-menu-link">Specialised commissioning
+                      </a>
+                  </li>
+                  <li><!-- Link 3.4 -->
+                      <a href="#" class="menu-link mega-menu-link">Supporting commissioners
+                      </a>
+                  </li>
+                  <li><!-- Link 3.5 -->
+                      <a href="#" class="menu-link mega-menu-link">Commissioning regulation
+                      </a>
+                  </li>
+                  <li><!-- Link 3.6 -->
+                      <a href="#" class="menu-link mega-menu-link">Commissioning policies
+                      </a>
+                  </li>
+                  <li class="mobile-menu-back-item">
+                      <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                  </li>
+                </ul>
+            </li>
+
+            <li><!-- Link 4 -->
+                <a href="#" class="menu-link menu-bar-link">Statistics</a>
+            </li>
+
+            <li><!-- Link 5 -->
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Patient involvement</a>
+                <ul class="mega-menu mega-menu--multiLevel">
+                  <li><!-- Link 5.1 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Get involved</a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 5.1.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                About the Involvement Hub<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 5.1.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Why get involved<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 5.1.3 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                How to get involved<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 5.1.4 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Current opportunities<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 5.2 -->
+                      <a href="#" class="menu-link mega-menu-link">Information for commissioners
+                      </a>
+                  </li>
+                  <li><!-- Link 5.3 -->
+                      <a href="#" class="menu-link mega-menu-link">Surveys and consultations
+                      </a>
+                  </li>
+                  <li><!-- Link 5.4 -->
+                      <a href="#" class="menu-link mega-menu-link">Learning and development
+                      </a>
+                  </li>
+                  <li><!-- Link 5.5 -->
+                      <a href="#" class="menu-link mega-menu-link">Good practice and case studies
+                      </a>
+                  </li>
+                  <li><!-- Link 5.6 -->
+                      <a href="#" class="menu-link mega-menu-link">Resources and bite-sized guides
+                      </a>
+                  </li>
+                  <li class="mobile-menu-back-item">
+                      <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                  </li>
+                </ul>
+            </li>
+
+            <li><!-- Link 6 -->
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">News and events</a>
+                <ul class="mega-menu mega-menu--multiLevel">
+                  <li><!-- Link 6.1 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">News
+                          link</a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 6.1.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                News<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 6.1.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Alerts<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 6.2 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Blogs
+                      </a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 6.2.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Latest posts section here<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 6.2.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                All posts<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li><!-- Link 6.3 -->
+                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Events
+                      </a>
+                      <ul class="menu menu-list">
+                          <li><!-- Link 6.3.1 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                Latest events section here<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                          <li><!-- Link 6.3.2 -->
+                            <a href="#" class="menu-link menu-list-link">
+                                All events<br />
+                                <small>Short decription of link</small>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="mobile-menu-back-item">
+                      <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                  </li>
+                </ul>
+            </li>
+
+
+<!-- Example 3 -->
+            <!-- <li>
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">3. Flat mega menu (2
+                    cols)</a>
+                <ul class="mega-menu mega-menu--flat">
+                    <li>
+                        <a href="#" class="menu-link mega-menu-link mega-menu-header">3.1 Page link header</a>
+                        <ul class="menu menu-list">
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">
+                                    3.1.1 Page link<br />
+                                    <small>Short decription of link</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">
+                                    3.1.2 Page link<br />
+                                    <small>Short decription of link</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">
+                                    3.1.2 Page link<br />
+                                    <small>Short decription of link</small>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu-content">
+                        <p class="mega-menu-header">3.2 Page link header</p>
+                        <p>This is just static content. You can add anything here. Images, text, buttons, your grandma's
+                            secrect
+                            recipe.</p>
+                    </li>
+                    <li class="mobile-menu-back-item">
+                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="/page" class="menu-link menu-bar-link">Static link</a>
+            </li> -->
+
+            <li class="mobile-menu-header">
+                <a href="/home" class="">
+                    <span>Home</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation" aria-labelledby="label-navigation">
+  <div class="nhsuk-width-container">
+    <p class="nhsuk-header__navigation-title"><span id="label-navigation">Menu</span>
+      <button class="nhsuk-header__navigation-close" id="close-menu">
+        <svg class="nhsuk-icon nhsuk-icon__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M13.41 12l5.3-5.29a1 1 0 1 0-1.42-1.42L12 10.59l-5.29-5.3a1 1 0 0 0-1.42 1.42l5.3 5.29-5.3 5.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l5.29-5.3 5.29 5.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"></path>
+        </svg>
+        <span class="nhsuk-u-visually-hidden">Close menu</span>
+      </button>
+    </p>
+    <button aria-haspopup="true" aria-expanded="false">Publications
+    <span aria-hidden="true">&#x25be;</span>
+    </button>
+  </div>
+
+</nav> -->

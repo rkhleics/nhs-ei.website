@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}template__homepage{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <!-- Change the page title here -->
+      <h1>
+        NHS England and Improvement
+      </h1>
+
+      <!-- Add your content here -->
+      <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
+
+      <p class="nhsuk-lede-text">
+        Testing navigation options
+      </p>
+
+      <hr>
+
+      <h2>
+        <a href="{% url 'nav-static' %}">Navigation prototype</a>
+      </h2>
+
+      <hr>
+
+      <h2>
+        <a href="{% url 'search-static' %}">Search results</a>
+      </h2>
+
+      <hr>
+
+      <h2>
+        <a href="{% url 'content-static' %}">Content page prototype</a>
+      </h2>
+
+      <hr>
+
+      <!-- End of content -->
+
+    </div>
+  </div>
+
+{% endblock content %}

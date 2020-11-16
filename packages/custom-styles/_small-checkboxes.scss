@@ -1,0 +1,130 @@
+// =========================================================
+  // Small checkboxes
+  // =========================================================
+
+  .govuk-checkboxes--small {
+
+    $input-offset: ($govuk-touch-target-size - $govuk-small-checkboxes-size) / 2;
+    $label-offset: $govuk-touch-target-size - $input-offset;
+
+    .govuk-checkboxes__item {
+      // @include govuk-clearfix;
+      min-height: 0;
+      margin-bottom: 0;
+      padding-left: $label-offset;
+      float: left;
+    }
+
+    // Shift the touch target into the left margin so that the visible edge of
+    // the control is aligned
+    //
+    //   ┆What colours do you like?
+    //  ┌┆───┐
+    //  │┆[] │ Purple
+    //  └┆▲──┘
+    //  ▲┆└─ Check box pseudo element, aligned with margin
+    //  └─── Touch target (invisible input), shifted into the margin
+    .govuk-checkboxes__input {
+      @include govuk-not-ie8 {
+        left: $input-offset * -1;
+      }
+
+      @include govuk-if-ie8 {
+        margin-left: $govuk-small-checkboxes-size * -1;
+      }
+    }
+
+    // Adjust the size and position of the label.
+    //
+    // Unlike larger checkboxes, we also have to float the label in order to
+    // 'shrink' it, preventing the hover state from kicking in across the full
+    // width of the parent element.
+    .govuk-checkboxes__label {
+      margin-top: -2px;
+      padding: 13px govuk-spacing(3) 13px 1px;
+      float: left;
+
+      @include govuk-media-query($from: tablet) {
+        padding: 11px govuk-spacing(3) 10px 1px;
+      }
+    }
+
+    // [ ] Check box
+    //
+    // Reduce the size of the check box [1], vertically center it within the
+    // touch target [2]
+    .govuk-checkboxes__label::before {
+      top: $input-offset - $govuk-border-width-form-element; // 2
+      width: $govuk-small-checkboxes-size; // 1
+      height: $govuk-small-checkboxes-size; // 1
+    }
+
+    // ✔ Check mark
+    //
+    // Reduce the size of the check mark and re-align within the checkbox
+    .govuk-checkboxes__label::after {
+      top: 15px;
+      left: 6px;
+      width: 12px;
+      height: 6.5px;
+      border-width: 0 0 3px 3px;
+    }
+
+    // Fix position of hint with small checkboxes
+    //
+    // Do not use hints with small checkboxes – because they're within the input
+    // wrapper they trigger the hover state, but clicking them doesn't actually
+    // activate the control.
+    //
+    // (If you do use them, they won't look completely broken... but seriously,
+    // don't use them)
+    .govuk-checkboxes__hint {
+      padding: 0;
+      clear: both;
+    }
+
+    // Align conditional reveals with small checkboxes
+    .govuk-checkboxes__conditional {
+      $margin-left: ($govuk-small-checkboxes-size / 2) - ($conditional-border-width / 2);
+      margin-left: $margin-left;
+      padding-left: $label-offset - ($margin-left + $conditional-border-width);
+      clear: both;
+    }
+
+    // Hover state for small checkboxes.
+    //
+    // We use a hover state for small checkboxes because the touch target size
+    // is so much larger than their visible size, and so we need to provide
+    // feedback to the user as to which checkbox they will select when their
+    // cursor is outside of the visible area.
+    .govuk-checkboxes__item:hover .govuk-checkboxes__input:not(:disabled) + .govuk-checkboxes__label::before {
+      box-shadow: 0 0 0 $govuk-hover-width $govuk-hover-colour;
+    }
+
+    // Because we've overridden the border-shadow provided by the focus state,
+    // we need to redefine that too.
+    //
+    // We use two box shadows, one that restores the original focus state [1]
+    // and another that then applies the hover state [2].
+    .govuk-checkboxes__item:hover .govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
+      // sass-lint:disable indentation
+      box-shadow: 0 0 0 $govuk-focus-width $govuk-focus-colour, // 1
+                  0 0 0 $govuk-hover-width $govuk-hover-colour; // 2
+    }
+
+    // For devices that explicitly don't support hover, don't provide a hover
+    // state (e.g. on touch devices like iOS).
+    //
+    // We can't use `@media (hover: hover)` because we wouldn't get the hover
+    // state in browsers that don't support `@media (hover)` (like Internet
+    // Explorer) – so we have to 'undo' the hover state instead.
+    @media (hover: none), (pointer: coarse) {
+      .govuk-checkboxes__item:hover .govuk-checkboxes__input:not(:disabled) + .govuk-checkboxes__label::before {
+        box-shadow: initial;
+      }
+
+      .govuk-checkboxes__item:hover .govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
+        box-shadow: 0 0 0 $govuk-focus-width $govuk-focus-colour;
+      }
+    }
+  }
