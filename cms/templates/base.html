@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar nhsukfrontend_tags nhsukfrontendsettings_tags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="ie8" lang="en"><![endif]-->
@@ -60,26 +60,27 @@
   <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
   {% block bodyStart %}{% endblock %}
 
-  <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
+  {% include 'wagtailnhsukfrontend/skip_link.html' %}
+  {% header %}
 
-  {% block header %}
-  {% include 'partials/header-v1.html' %}
-  {% endblock %}
-
+  {% breadcrumb %}
   {% block beforeContent %}
-  {% include 'partials/before_content.html' %}
   {% endblock %}
 
   {% block main %}
+  {% include "wagtailnhsukfrontend/hero.html" %}
   <div class="nhsuk-width-container {{ containerClasses }}">
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
-      {% block content %}{% endblock %}
+      {% block content %}
+        {{ page.body}}
+        {% include "wagtailnhsukfrontend/review_date.html" %}
+      {% endblock %}
     </main>
   </div>
   {% endblock %}
 
   {% block footer %}
-  {% include 'partials/footer.html' %}
+  {% footer %}
   {% endblock %}
 
   {% block bodyEnd %}{% endblock %}
