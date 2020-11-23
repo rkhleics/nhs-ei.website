@@ -306,3 +306,25 @@ resource "azurerm_storage_container" "media" {
   storage_account_name  = azurerm_storage_account.media.name
   container_access_type = "blob"
 }
+
+resource "azurerm_traffic_manager_profile" "tm" {
+  name                   = "${local.project}-traffic-manager"
+  resource_group_name    = azurerm_resource_group.rg.name
+  traffic_routing_method = "Priority"
+  tags                   = local.default_tags
+
+  dns_config {
+    relative_name = replace("${local.project}-traffic", "/[^a-z0-9-]+/", "")
+    ttl           = 60
+  }
+
+  monitor_config {
+    protocol                     = "http"
+    port                         = 80
+    path                         = "/"
+    interval_in_seconds          = 30
+    timeout_in_seconds           = 9
+    tolerated_number_of_failures = 3
+  }
+
+}

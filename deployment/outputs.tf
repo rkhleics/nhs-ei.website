@@ -62,3 +62,7 @@ output "azure_storage_media_primary_web_endpoint" {
   value = azurerm_storage_account.media.primary_web_endpoint
 }
 
+output "traffic_manager_fqdn" {
+  value = azurerm_traffic_manager_profile.tm.fqdn
+}
+
