@@ -35,6 +35,13 @@ BASE_DIR = PROJECT_DIR.parent
 INSTALLED_APPS = [
     "cms.home",
     "cms.search",
+    'cms.categories',
+    'cms.posts',
+    'cms.blogs',
+    'cms.pages',
+    'cms.publications',
+    'cms.atlascasestudies',
+    'cms.core',
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",

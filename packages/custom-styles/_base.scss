@@ -68,3 +68,9 @@
     padding-right: 0.5em;
   }
 }
+
+// added by nick to temp fix image widths
+.nhsuk-promo__img, img {
+  max-width: 100%;
+  height: auto;
+}

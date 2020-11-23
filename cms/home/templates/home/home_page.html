@@ -1,48 +1,28 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static posts_tags blog_tags wagtailcore_tags %}
 
-{% block body_class %}template__homepage{% endblock %}
+{% block body_class %}template-homepage{% endblock %}
+
 
 {% block content %}
+    <div class="nhsuk-panel">
 
-<div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+    <h1>{{ self.title }}</h1>
 
-      <!-- Change the page title here -->
-      <h1>
-        NHS England and Improvement
-      </h1>
+    {% if self.body %}
+    {{ self.body|richtext }}
+    {% else %}
+    <p>
+        This is the body content, currently empty...
+    </p>
+    {% endif %}
+    <p>{{ self.first_published_at|date }}</p>
+    <hr>
 
-      <!-- Add your content here -->
-      <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
 
-      <p class="nhsuk-lede-text">
-        Testing navigation options
-      </p>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'nav-static' %}">Navigation prototype</a>
-      </h2>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'search-static' %}">Search results</a>
-      </h2>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'content-static' %}">Content page prototype</a>
-      </h2>
-
-      <hr>
-
-      <!-- End of content -->
-
-    </div>
-  </div>
-
+    <p>The pages below are the pages that currently have children pages to form a starter navigation.</p>
+    {% for child in component_pages %}
+    <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+    {% endfor %}
+</div>
 {% endblock content %}

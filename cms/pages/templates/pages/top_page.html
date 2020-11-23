@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+<div class="content text-component margin-y-sm">
+
+    <div class="flex@sm gap-md">
+        <div class="col-8@sm">
+            <p>{{ self.first_published_at|date }}</p>
+            <p>{{ self.excerpt }}</p>
+            {{ self.body|richtext }}
+        </div>
+        <div class="col-4@sm">
+            <div class="margin-y-sm">
+                <a class="btn btn--accent btn--sm" href="https://www.england.nhs.uk/?page_id={{self.wp_id}}"
+                    target="_blank">Live On Site</a>
+                <span class="text-sm block">NEEDS A FIX 😤: This link won't always work becuse the redirects on
+                    wordpress page id's are wonky... </span>
+            </div>
+            <div class="margin-y-sm">
+                <a class="btn btn--subtle btn--sm" href="{{ self.get_parent.url}}">back</a>
+            </div>
+            <div class="text-sm margin-y-sm">
+                <div class="border-bottom bg-contrast-lower padding-xxs">Children Pages</div>
+                {% for child in children %}
+                <div class="margin-y-xxs">
+                    <a href="{{ child.url }}">{{ child }}</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="margun-y-sm text-xs">
+                <div class="border-bottom bg-contrast-lower padding-xxs">Sibling Pages</div>
+                {% for sibling in self.get_siblings %}
+                <div class="margin-y-xxs">
+                    <a href="{{ sibling.url }}">{{ sibling }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

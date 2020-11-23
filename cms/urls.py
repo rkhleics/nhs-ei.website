@@ -16,29 +16,29 @@ urlpatterns = [
 ]
 
 # views to test static pages
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 
-urlpatterns += [
-    path(
-        "nav-static",
-        TemplateView.as_view(template_name="prototype_pages/nav_prototype.html"),
-        name="nav-static",
-    ),
-    path(
-        "search-results-static",
-        TemplateView.as_view(
-            template_name="prototype_pages/search_results_prototype.html"
-        ),
-        name="search-static",
-    ),
-    path(
-        "content-page-static",
-        TemplateView.as_view(
-            template_name="prototype_pages/content_page_prototype.html"
-        ),
-        name="content-static",
-    ),
-]
+# urlpatterns += [
+#     path(
+#         "nav-static",
+#         TemplateView.as_view(template_name="prototype_pages/nav_prototype.html"),
+#         name="nav-static",
+#     ),
+#     path(
+#         "search-results-static",
+#         TemplateView.as_view(
+#             template_name="prototype_pages/search_results_prototype.html"
+#         ),
+#         name="search-static",
+#     ),
+#     path(
+#         "content-page-static",
+#         TemplateView.as_view(
+#             template_name="prototype_pages/content_page_prototype.html"
+#         ),
+#         name="content-static",
+#     ),
+# ]
 
 
 if settings.DEBUG:

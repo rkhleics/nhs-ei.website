@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+<h1>{{ self.title }}</h1>
+{% if self.body %}
+{{ self.body|richtext }}
+{% else %}
+<p>
+    This is the body content, currently empty...
+</p>
+{% endif %}
+<div>
+<i>Filtering: currently it's search by one filter only we will need to work on combining filters for a search</i>
+</div>
+<hr>
+
+
+<div class="nhsuk-grid-row nhsuk-panel">
+
+    <div class="nhsuk-grid-column-one-third">
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Settings</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for setting in settings %}
+            <li style="margin:0"><a href="?setting={{setting.id}}">{{ setting }}</a></li>
+            {% endfor %}
+        </ul>
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Regions</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for region in regions %}
+            <li style="margin:0"><a href="?region={{region.id}}">{{ region }}</a></li>
+            {% endfor %}
+        </ul>
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Topics</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for category in categories %}
+            <li style="margin:0"><a href="?category={{category.id}}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+        {% for atlas_case_study in atlas_case_studies %}
+        <div>
+            <h4><a href="{{ atlas_case_study.url }}">{{ atlas_case_study.title }}</a></h4>
+            {{ atlas_case_study.first_published_at|date }} | By: {{ self.author }} this content comes from a custom field (coming soon)
+            <div>
+                {{ atlas_case_study.body|truncatewords_html:"40"|striptags|safe }}
+                <div>
+                {% if atlas_case_study.atlas_case_study_category_relationship.all %}
+                    Topics:
+                    {% for category in atlas_case_study.atlas_case_study_category_relationship.all %}
+                    <a href="?category={{ category.category.id }}">{{ category.category }}</a>
+                    {% endfor %} <br>
+                {% endif %}
+                {% if atlas_case_study.atlas_case_study_setting_relationship.all %}
+                    Settings:
+                    {% for setting in atlas_case_study.atlas_case_study_setting_relationship.all %}
+                    <a href="?setting={{ setting.setting.id }}">{{ setting.setting }}</a>
+                    {% endfor %} <br>
+                {% endif %}
+                {% if atlas_case_study.atlas_case_study_region_relationship.all %}
+                    Regions:
+                    {% for region in atlas_case_study.atlas_case_study_region_relationship.all %}
+                    <a href="?region={{ region.region.id }}">{{ region.region }}</a>
+                    {% endfor %}
+                {% endif %}
+                </div>
+
+            </div>
+        
+        </div>
+        <hr>
+        {% endfor %}
+        
+        
+        <div aria-label="Pagination">
+        
+            {% if atlas_case_studies.has_previous %}
+        
+            <a href="?page={{ atlas_case_studies.previous_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to previous page">
+                <span>Prev</span>
+            </a>
+        
+            {% endif %}
+        
+            {% for page_num in atlas_case_studies.paginator.page_range %}
+        
+            <a href="?page={{ page_num }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item {% if page_num == blogs.number %}pagination__item--selected{% endif %}"
+                aria-label="Go to page 1">{{ page_num }}</a>
+        
+            {% endfor %}
+        
+            {% if atlas_case_studies.has_next %}
+        
+            <a href="?page={{ atlas_case_studies.next_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to next page">
+                <span>Next</span>
+            </a>
+        
+            {% endif %}
+        
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}

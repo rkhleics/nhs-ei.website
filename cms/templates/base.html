@@ -1,4 +1,4 @@
-{% load static wagtailuserbar nhsukfrontend_tags nhsukfrontendsettings_tags %}
+{% load static wagtailuserbar frontend_tags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="ie8" lang="en"><![endif]-->
@@ -34,12 +34,14 @@
 
   {% block headCSS %}
   <link href="{% static 'css/nhsuk.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'wagtailnhsukfrontend/css/wagtail-nhsuk-frontend.min.css' %}">
   {% endblock %}
   {% block extra_css %}
   {# Override this in templates to add extra stylesheets #}
   {% endblock %}
 
   <script src="{% static 'js/nhsuk.js' %}" defer></script>
+  <script type="text/javascript" src="{% static 'wagtailnhsukfrontend/js/nhsuk-3.0.4.min.js' %}" defer></script>
 
   {% block headIcons %}
   <link rel="shortcut icon" href="{% static 'assets/favicons/favicon.ico' %}" type="image/x-icon">
@@ -56,43 +58,46 @@
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+    {% include "partials/skip_link.html" %}
+    {% block bodyStart %}{% endblock %}
 
-  <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-  {% block bodyStart %}{% endblock %}
+    <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
 
-  {% include 'wagtailnhsukfrontend/skip_link.html' %}
-  {% header %}
+    {% block header %}
+    {% include 'partials/header-v1.html' %}
+    {% endblock %}
 
-  {% breadcrumb %}
-  {% block beforeContent %}
-  {% endblock %}
+    {% block breadcrumb %}
+      {% breadcrumb %}
+    {% endblock %}
 
-  {% block main %}
-  {% include "wagtailnhsukfrontend/hero.html" %}
-  <div class="nhsuk-width-container {{ containerClasses }}">
+    {% block beforeContent %}
+    {% include 'partials/before_content.html' %}
+    {% endblock %}
+
+    {% block main %}
+    <div class="nhsuk-width-container {{ containerClasses }}">
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
-      {% block content %}
-        {{ page.body}}
-        {% include "wagtailnhsukfrontend/review_date.html" %}
-      {% endblock %}
+        {% block content %}{% endblock %}
     </main>
-  </div>
-  {% endblock %}
+    </div>
+    {% endblock %}
 
-  {% block footer %}
-  {% footer %}
-  {% endblock %}
+    {% block footer %}
+    {% include 'partials/footer.html' %}
+    {% endblock %}
 
-  {% block bodyEnd %}{% endblock %}
+    {% block bodyEnd %}{% endblock %}
 
-  <script>
+    <script>
     window.NHSUK_SETTINGS = {
-      "SUGGESTIONS_TEST_HOST": 'https://nhs.funnelback.co.uk/s/suggest.json'
+        "SUGGESTIONS_TEST_HOST": 'https://nhs.funnelback.co.uk/s/suggest.json'
     }
-  </script>
-  {% block extra_js %}
-  {# Override this in templates to add extra javascript #}
-  {% endblock %}
+    </script>
+    {% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+    {% endblock %}
 
 </body>
 

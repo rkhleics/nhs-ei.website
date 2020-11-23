@@ -6985,3 +6985,7 @@ nav a {
   padding: 1em 1em 0.25em 1em; }
   .nhsie-search-result-item .nhsie-result-meta {
     padding-right: 0.5em; }
+
+.nhsuk-promo__img, img {
+  max-width: 100%;
+  height: auto; }

@@ -1,38 +1,155 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags frontend_tags %}
 
 {% block body_class %}template-searchresults{% endblock %}
 
 {% block title %}Search{% endblock %}
 
 {% block content %}
+
+<div>
     <h1>Search</h1>
 
+    <div class="nhsuk-panel">
+    {% if search_results %}
+    Filter results:
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=pages">Pages</a>
+    &nbsp;
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=news">News</a>
+    &nbsp;
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=blogs">Blogs</a>
+    &nbsp;
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=publications">Publications</a>
+    &nbsp;
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=atlas_case_studies">Atlas Case Studies</a>
+    &nbsp;
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}">All</a>
+    &nbsp;
+    {% endif %}
     <form action="{% url 'search' %}" method="get">
-        <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-        <input type="submit" value="Search" class="button">
+        <div class="nhsuk-form-group  nhsuk-header__search-form--search-results">
+            <input class="nhsuk-input nhsuk-search__input" type="search" name="query" minlength="3" required
+                {% if search_query %} value="{{ search_query }}" {% endif %} style="width:95%">
+            <button class="nhsuk-search__submit" type="submit">
+                <span class="nhsuk-u-visually-hidden">
+                    Submit
+                </span>
+                <svg class="nhsuk-icon nhsuk-icon__search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    aria-hidden="true" focusable="false">
+                    <path
+                        d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z">
+                    </path>
+                </svg>
+            </button>
+
     </form>
 
-    {% if search_results %}
-        <ul>
-            {% for result in search_results %}
-                <li>
-                    <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-                    {% if result.search_description %}
-                        {{ result.search_description }}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+</div>
 
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-        {% endif %}
+<hr>
+{% if search_results.paginator.num_pages > 1 %}
+<div aria-label="Pagination">
 
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
-    {% elif search_query %}
-        No results found
+    {% if search_results.has_previous %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}{{ search_params }}"
+        aria-label="Go to previous page">
+        <span>Prev</span>
+    </a>
+
     {% endif %}
+
+    {% for page in search_results.paginator.page_range %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ page }}{{ search_params }}"
+        aria-label="Go to page {{ page }}">{{ page }}</a>
+
+    {% endfor %}
+
+    {% if search_results.has_next %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}{{ search_params }}"
+        aria-label="Go to next page">
+        <span>Next</span>
+    </a>
+
+    {% endif %}
+
+</div>
+{% endif %}
+<hr>
+{% if search_query %}
+<h4>
+    {{ results_count }} results for search | {{ search_query }} | {% if search_type %}in {{ search_type }}{% endif %}
+</h4>
+{% endif %}
+{% if search_results %}
+
+
+<div>
+
+    {% for result in search_results %}
+    <div>
+        <h4>
+            <a href="{% pageurl result %}">{{ result.title|truncatewords:"16" }}</a></h4>
+        <div>{{ result.specific.body|truncatewords_html:"20"|richtext|striptags }}</div>
+        <div><a href="{{ result.url }}">{{ result.url }}</a></div>
+    </div>
+    <hr>
+    {% endfor %}
+
+</div>
+
+{% if search_results.paginator.num_pages > 1 %}
+<div aria-label="Pagination">
+
+    {% if search_results.has_previous %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}{{ search_params }}"
+        aria-label="Go to previous page">
+        <span>Prev</span>
+    </a>
+
+    {% endif %}
+
+    {% for page in search_results.paginator.page_range %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ page }}{{ search_params }}"
+        aria-label="Go to page {{ page }}">{{ page }}</a>
+
+    {% endfor %}
+
+    {% if search_results.has_next %}
+
+    <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}{{ search_params }}"
+        aria-label="Go to next page">
+        <span>Next</span>
+    </a>
+
+    {% endif %}
+
+</div>
+{% endif %}
+<hr>
+<p style="background-color: black; color:white;padding: 3px;">Anything below this line is for development only...</p>
+<div>
+    <div style="opacity:0.5">
+        some wordpress pages have this excerpt, do we still need it?
+    </div>
+    {{ self.excerpt }}
+</div>
+<div>
+    The search is carried out on page titles only just now but could be expanded. <br>
+    Wagtail search generates a list of search result/s which can be filtered. <br>
+    The indiviual results, titles and description, are trunucated form of the Page Title and Page Body. <br>
+    Ordered By first_published_at so the newest pages come first pages not live are not shown <br>
+</div>
+
+{% elif search_query %}
+
+<div>No results found</div>
+
+{% endif %}
+
+</div>
 {% endblock %}

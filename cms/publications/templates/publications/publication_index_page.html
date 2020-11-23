@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+<h1>{{ self.title }}</h1>
+{% if self.body %}
+{{ self.body|richtext }}
+{% else %}
+<p>
+    This is the body content, currently empty...
+</p>
+{% endif %}
+
+<div class="nhsuk-grid-row nhsuk-panel">
+
+    <div class="nhsuk-grid-column-one-third">
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Publication Type</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for publication_type in publication_types %}
+            <li style="margin:0"><a href="?publication_type={{ publication_type.id }}">{{ publication_type.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Topic</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for category in categories %}
+            <li style="margin:0"><a href="?category={{ category.id }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <div>The dates and alpha search coming soon</div>
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+        {% for publication in publications %}
+        <div>
+            <h4><a href="{{ publication.url }}">{{ publication.title }}</a></h4>
+            <div><i>a custom field provides this text coming soon</i></div>
+            {{ publication.first_published_at|date }} | Author: {{ publication.author }}
+            <div>
+                {% comment %} {{ publication.body|truncatewords_html:"40"|striptags|safe }} {% endcomment %}
+                {% if publication.publication_publication_type_relationship.all %}
+                <div>
+                    Publication Type:
+                    {% for publication_type in publication.publication_publication_type_relationship.all %}
+                    &nbsp;<a href="?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
+                    {% endfor %}
+                    {% if publication.publication_category_relationship.all %}
+                    
+                        &nbsp;Topic:
+                        {% for publication_type in publication.publication_category_relationship.all %}
+                        &nbsp;<a href="?category={{ publication_type.category.id }}">{{ publication_type.category }}</a>
+                        {% endfor %}
+                    
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <hr>
+        {% endfor %}
+
+        <div>
+
+            {% if publications.has_previous %}
+
+            <a href="?page={{ publications.previous_page_number }}{% if publication_type_id %}&publication_type={{ publication_type_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to previous page">
+                <span>Prev</span>
+            </a>
+
+            {% endif %}
+
+            {% for page_num in publications.paginator.page_range %}
+
+            <a href="?page={{ page_num }}{% if publication_type_id %}&publication_type={{ publication_type_id }}{% endif %}"
+                class="pagination__item {% if page_num == posts.number %}pagination__item--selected{% endif %}"
+                aria-label="Go to page 1">{{ page_num }}</a>
+
+            {% endfor %}
+
+            {% if publications.has_next %}
+
+            <a href="?page={{ publications.next_page_number }}{% if publication_type_id %}&publication_type={{ publication_type_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to next page">
+                <span>Next</span>
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

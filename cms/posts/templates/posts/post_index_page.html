@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+<h1>{{ self.title }}</h1>
+{% if self.body %}
+{{ self.body|richtext }}
+{% else %}
+<p>
+    This is the body content, currently empty...
+</p>
+{% endif %}
+
+<div class="nhsuk-grid-row nhsuk-panel">
+
+    <div class="nhsuk-grid-column-one-third">
+        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Topics</h2>
+        <ul class="nhsuk-u-margin-bottom-6">
+            {% for c in categories %}
+            <li style="margin:0"><a href="?category={{c.id}}">{{ c }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="nhsuk-grid-column-two-thirds">
+        {% for post in posts %}
+        <div>
+            <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+            {{ post.first_published_at|date }} | <i>Author: {{ post.author }} we are missing the ability to match ID to a name</i>
+            <div>
+                {{ post.body|truncatewords_html:"40"|striptags|safe }}
+                {% if post.post_category_relationship.all %}
+                <div>
+                    Topics:
+                    {% for category in post.post_category_relationship.all %}
+                    &nbsp;<a href="?category={{ category.category.id }}">{{ category.category }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <hr>
+        {% endfor %}
+
+        <div>
+
+            {% if posts.has_previous %}
+
+            <a href="?page={{ posts.previous_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to previous page">
+                <span>Prev</span>
+            </a>
+
+            {% endif %}
+
+            {% for page_num in posts.paginator.page_range %}
+
+            <a href="?page={{ page_num }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item {% if page_num == posts.number %}pagination__item--selected{% endif %}"
+                aria-label="Go to page 1">{{ page_num }}</a>
+
+            {% endfor %}
+
+            {% if posts.has_next %}
+
+            <a href="?page={{ posts.next_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
+                class="pagination__item" aria-label="Go to next page">
+                <span>Next</span>
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}
