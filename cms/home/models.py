@@ -1,6 +1,7 @@
+from cms.pages.models import ComponentsPage
 from django.db import models
-from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 from wagtailnhsukfrontend.blocks import (ActionLinkBlock, CareCardBlock,
                                          DetailsBlock, DoBlock, DontBlock,
@@ -14,7 +15,24 @@ from wagtailnhsukfrontend.mixins import HeroMixin, ReviewDateMixin
 
 
 class HomePage(Page):
-    pass
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body')
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request)
+        context['component_pages'] =  ComponentsPage.objects.live().descendant_of(HomePage.objects.get(id=self.id))
+        return context
+
+    @property
+    def next_sibling(self):
+        return self.get_next_siblings().live().first()
+
+    @property
+    def prev_sibling(self):
+        return self.get_prev_siblings().live().first()
 
 
 class DemoPage(HeroMixin, ReviewDateMixin, Page):
