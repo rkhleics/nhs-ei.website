@@ -20,7 +20,7 @@ provider "azurerm" {
 locals {
   project = "${var.prefix}-${terraform.workspace}"
   default_tags = {
-    prefix: var.prefix,
+    prefix : var.prefix,
     managedby : "terraform",
     project : "nhsei-website",
     environment : terraform.workspace,
@@ -151,8 +151,17 @@ resource "azurerm_postgresql_server" "database" {
   administrator_login_password = random_password.dbpassword.result
   version                      = "11"
 
-  public_network_access_enabled = false
+  public_network_access_enabled = true
   ssl_enforcement_enabled       = true
+}
+
+resource "azurerm_postgresql_firewall_rule" "cluster" {
+  name                = "cluster-ip-${count.index}"
+  resource_group_name = azurerm_postgresql_server.database.resource_group_name
+  server_name         = azurerm_postgresql_server.database.name
+  count               = length(data.azurerm_public_ips.kubernetes.public_ips)
+  start_ip_address    = data.azurerm_public_ips.kubernetes.public_ips[count.index].ip_address
+  end_ip_address      = data.azurerm_public_ips.kubernetes.public_ips[count.index].ip_address
 }
 
 resource "azurerm_postgresql_database" "db1" {
@@ -245,6 +254,16 @@ data "kubernetes_service" "ingress-load-balancer" {
   depends_on = [helm_release.ingress-nginx]
 }
 
+data "azurerm_kubernetes_cluster" "cluster" {
+  name                = "${local.project}-k8s"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+data "azurerm_public_ips" "kubernetes" {
+  resource_group_name = azurerm_kubernetes_cluster.cluster.node_resource_group
+  attached            = true
+}
+
 
 resource "azurerm_cdn_profile" "cdn" {
   name                = "${local.project}-cdn"
@@ -266,4 +285,20 @@ resource "azurerm_cdn_endpoint" "endpoint" {
     host_name = "${local.project}.${azurerm_kubernetes_cluster.cluster.location}.cloudapp.azure.com"
   }
   origin_host_header = "www.england.nhs.uk"
+}
+
+resource "azurerm_storage_account" "media" {
+  name                     = replace("${local.project}-media", "/[^a-z0-9]+/", "")
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+  allow_blob_public_access = true
+  tags                     = local.default_tags
+}
+
+resource "azurerm_storage_container" "media" {
+  name                  = "website-media"
+  storage_account_name  = azurerm_storage_account.media.name
+  container_access_type = "blob"
 }
