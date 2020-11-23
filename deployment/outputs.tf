@@ -35,7 +35,7 @@ output "databasefqdn" {
 }
 
 output "dburl" {
-  value = "psql://${azurerm_postgresql_server.database.administrator_login}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
+  value = "psql://${azurerm_postgresql_server.database.administrator_login}@${azurerm_postgresql_server.database.name}:${azurerm_postgresql_server.database.administrator_login_password}@${azurerm_postgresql_server.database.fqdn}:5432/${azurerm_postgresql_database.db1.name}"
 }
 
 output "load_balancer_ip" {
