@@ -319,12 +319,30 @@ resource "azurerm_traffic_manager_profile" "tm" {
   }
 
   monitor_config {
-    protocol                     = "http"
-    port                         = 80
+    protocol                     = "https"
+    port                         = 443
     path                         = "/"
     interval_in_seconds          = 30
     timeout_in_seconds           = 9
     tolerated_number_of_failures = 3
   }
 
+}
+
+resource "azurerm_traffic_manager_endpoint" "main" {
+  name                = "${local.project}-endpoint-main"
+  resource_group_name = azurerm_resource_group.rg.name
+  profile_name        = azurerm_traffic_manager_profile.tm.name
+  type                = "externalEndpoints"
+  weight              = 1
+  target              = "${azurerm_cdn_endpoint.endpoint.name}.azureedge.net"
+}
+
+resource "azurerm_traffic_manager_endpoint" "failover" {
+  name                = "${local.project}-endpoint-failover"
+  resource_group_name = azurerm_resource_group.rg.name
+  profile_name        = azurerm_traffic_manager_profile.tm.name
+  type                = "externalEndpoints"
+  weight              = 2
+  target              = azurerm_storage_account.media.primary_web_host
 }
