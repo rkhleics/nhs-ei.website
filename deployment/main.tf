@@ -295,6 +295,10 @@ resource "azurerm_storage_account" "media" {
   account_replication_type = "GRS"
   allow_blob_public_access = true
   tags                     = local.default_tags
+
+  static_website {
+    index_document = "index.html"
+  }
 }
 
 resource "azurerm_storage_container" "media" {

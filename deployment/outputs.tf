@@ -57,3 +57,8 @@ output "azure_storage_media_connection_string" {
 output "cluster_outbound_ips" {
   value = data.azurerm_public_ips.kubernetes.public_ips
 }
+
+output "azure_storage_media_primary_web_endpoint" {
+  value = azurerm_storage_account.media.primary_web_endpoint
+}
+
