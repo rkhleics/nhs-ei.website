@@ -56,6 +56,12 @@ spec:
               value: "{{ .Values.environment.azure_connection_string }}"
             - name: AZURE_CONTAINER
               value: "{{ .Values.environment.azure_container }}"
+            - name: EMAIL_URL
+              value: "{{ .Values.environment.email_url }}"
+            - name: DEFAULT_FROM_EMAIL
+              value: "{{ .Values.environment.default_from_email }}"
+            - name: SERVER_EMAIL
+              value: "{{ .Values.environment.server_email }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -68,6 +68,9 @@ jobs:
             --set ingress.hostnames="{${HOSTNAMES}}" \
             --set-string environment.allowed_hosts="${ALLOWED_HOSTS}" \
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
+            --set-string environment.email_url="${{ secrets.EMAIL_URL }}" \
+            --set-string environment.default_from_email="${{ secrets.DEFAULT_FROM_EMAIL }}" \
+            --set-string environment.server_email="${{ secrets.SERVER_EMAIL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}" \
             --set-string auth.secret=basic-auth \
