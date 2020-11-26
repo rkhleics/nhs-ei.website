@@ -177,3 +177,11 @@ WAGTAIL_SITE_NAME = "cms"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = "http://example.com"
+
+
+# Email
+EMAIL_CONFIG = env.email_url("EMAIL_URL", default="smtp://user@:password@localhost:25")
+SERVER_EMAIL = env("SERVER_EMAIL", default="root@localhost")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="root@localhost")
+
+vars().update(EMAIL_CONFIG)
