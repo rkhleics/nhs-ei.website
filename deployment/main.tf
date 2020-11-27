@@ -287,6 +287,28 @@ resource "azurerm_cdn_endpoint" "endpoint" {
   origin_host_header = "www.england.nhs.uk"
 }
 
+resource "azurerm_cdn_profile" "failover" {
+  name                = "${local.project}-cdn-failover"
+  location            = azurerm_resource_group.cdn.location
+  resource_group_name = azurerm_resource_group.cdn.name
+  sku                 = "Standard_Akamai"
+  tags                = local.default_tags
+}
+
+resource "azurerm_cdn_endpoint" "failover-endpoint" {
+  name                = "${local.project}-cdn-endpoint-static"
+  location            = azurerm_cdn_profile.failover.location
+  resource_group_name = azurerm_cdn_profile.failover.resource_group_name
+  profile_name        = azurerm_cdn_profile.failover.name
+  tags                = local.default_tags
+
+  origin {
+    name      = "${local.project}-static-website"
+    host_name = azurerm_storage_account.media.primary_web_host
+  }
+  origin_host_header = "www.england.nhs.uk"
+}
+
 resource "azurerm_storage_account" "media" {
   name                     = replace("${local.project}-media", "/[^a-z0-9]+/", "")
   location                 = azurerm_resource_group.rg.location
@@ -325,6 +347,11 @@ resource "azurerm_traffic_manager_profile" "tm" {
     interval_in_seconds          = 30
     timeout_in_seconds           = 9
     tolerated_number_of_failures = 3
+    expected_status_code_ranges = [
+      "200-200",
+      "301-302",
+      "401-403",
+    ]
   }
 
 }
@@ -344,5 +371,5 @@ resource "azurerm_traffic_manager_endpoint" "failover" {
   profile_name        = azurerm_traffic_manager_profile.tm.name
   type                = "externalEndpoints"
   weight              = 2
-  target              = azurerm_storage_account.media.primary_web_host
+  target              = "${azurerm_cdn_endpoint.failover-endpoint.name}.azureedge.net"
 }
