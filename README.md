@@ -1,87 +1,66 @@
-# NHS-EI Website
+# NHSE/I: Wagtail Test
 
-NHS-EI Website: Wagtail CMS contains the code to get a basic site up and runing with asset compilation using gulp.
+This is used to test our IMPORTER app inside a wagtail instance and is were we are collecting the data from SCRAPY and importing it into a Wagtail instance.
 
-## How to install
+We expect this app to show us the result of imporing pages, categories, posts and blog  and give us a chance to test out theories etc. It's an ongoing project that will likely chnage many times before production use as we discover data that needs conversion to a more suitable format to Wagtail import.
 
-### 1. Clone this repository
+## Running the scripts
 
-https://github.com/rkhleics/nhs-ei.website
+# Importing
 
-# DEVELOPMENT
-
-### Set up and activate a virtual environment
-
-Use any method you like best
-
-### Install python dependancies
+The data is collected from https://nhsei-scrapy.rkh.co.uk/api/ 
 
 ```
-pip install -r requirements/dev.txt
-
-python manange.py migrate
-
-python manage.py createsuperuser
-
-python manage.py runserver
+Collect All Data    | python manage.py runimport all
+Build The Site      | python manage.py runimport build
 ```
-
-Keep the above running in it's own terminal
-
-### Install NPM dependancies
+Should you wnat to run the scripts individually then look at the scripts run in importer > management > commands > runimport.py
 
 ```
-npm install
+# the whole lot in specific order
+
+# BEFORE ALL OTHERS as related keys exists
+import_categories(get_api_url('categories'))
+import_publication_types(get_api_url('publication_types'))
+import_settings(get_api_url('settings'))
+import_regions(get_api_url('regions'))
+# END BEFORE ALL OTHERS
+
+# pages needs to run here because later commands
+# create pages that prevent this script from running becuse of slug duplication
+
+import_pages(get_api_url('pages'))
+import_posts(get_api_url('posts'))
+import_blogs(get_api_url('blogs'))
+import_publications(get_api_url('publications'))
+import_atlas_case_studies(get_api_url('atlas_case_studies'))
 ```
 
-### Run NPM
-
-development with reload
+```
+call_command('page_mover')
+call_command('fix_slugs')
+call_command('swap_page_types')
+call_command('fix_component_page_slugs')
+call_command('fix_landing_page_slugs')
+call_command('swap_blogs_page')
+call_command('parse_stream_fields')
+call_command('parse_stream_fields_component_pages') # here we have url issue
+# TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
+call_command('make_top_pages')
+call_command('make_alert_banner')
+call_command('make_home_page')
+call_command('make_footer_links')
+```
+# Deleting
 
 ```
-npm start
+1. Delete All  | python manage.py delete_all
 ```
 
-compile for production
+Delete All runs through each of the delete commands in order which you can run separatly if need be.
 
-```
-npm run build
-```
+At present delete_all as well as the import actions cause Wagtail to generate history for the site. It's a new feature in Wagtail in the latest version. This table gets very large and we don't need that data going forward. Maybe the imports and deletes can be set to not save history? For now in dev im just starting over with a fresh database every now and then.
 
-# NOTES
+But only if you are developing the app. It's nice to have a snapshot at this point so you can move back to it if things go wrong testing scripts etc. We're working with 7500+ pages plus the other tables at this point and I found the dumpdata command to be cumbersome. As I'm using sqlite3 for the DB I make a copy to a fixtures folder which can be quicky restored if needed. Infact i do this before runing the scripts below and again after :)
 
-Has prototype added in https://github.com/rkhleics/nhs-ei.website to achieve running as a development package
-
-### Can Be Removed In The Future
-
----
-
-cms/urls.py
-
-provides the urls to be able to view the current static prototype pages
-
-```
-# views to test static pages
-    urlpatterns += [
-        path('nav-prototype', TemplateView.as_view(
-            template_name='prototype_pages/nav_prototype.html'),
-            name='nav-prototype'),
-        path('search-results-prototype', TemplateView.as_view(
-            template_name='prototype_pages/search_results_prototype.html'),
-            name='search-prototype'),
-        path('content-page-prototype', TemplateView.as_view(
-            template_name='prototype_pages/content_page_prototype.html'),
-            name='content-prototype'),
-    ]
-```
-
----
-
-static prototype templates
-
-    templates/prototype_pages/*
-    templates/prototype_pages/content_page_prototype.html
-    templates/prototype_pages/nav_prototype.html
-    templates/prototype_pages/search_results_prototype.html
-
-reworked to enable django template parsing
+In fixtures i'll have copies of db.sqlite3 as I move through the stages when running indiviual imports so I can restore to an import/processing point.

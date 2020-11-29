@@ -2,7 +2,7 @@ import sys
 import time
 
 from django.core.management import call_command
-from nhsei_wagtail.categories.models import Setting
+from cms.categories.models import Setting
 
 from .importer_cls import Importer
 

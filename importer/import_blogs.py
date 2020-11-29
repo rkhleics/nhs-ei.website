@@ -1,8 +1,8 @@
 import sys
 import time
 
-from nhsei_wagtail.blogs.models import Blog, BlogIndexPage, BlogCategoryRelationship
-from nhsei_wagtail.categories.models import Category, CategorySubSite
+from cms.blogs.models import Blog, BlogIndexPage, BlogCategoryRelationship
+from cms.categories.models import Category, CategorySubSite
 from wagtail.core.models import Page
 from django.core.management import call_command
 

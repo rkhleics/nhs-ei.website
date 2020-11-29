@@ -5,11 +5,6 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.models import Orderable, ParentalKey, ClusterableModel
 
-
-
-
-
-
 @register_setting
 class CoreSettings(BaseSetting, ClusterableModel):
     alert_banner = RichTextField()

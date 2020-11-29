@@ -32,6 +32,8 @@ class Command(BaseCommand):
 
         for page in base_pages:
 
+
+            print(page)
             # make a new page and place it under the same parent page
             first_published_at = page.first_published_at
             last_published_at = page.last_published_at
@@ -83,7 +85,7 @@ class Command(BaseCommand):
         components_pages = ComponentsPage.objects.all()
 
         for component_page in components_pages:
-            print(component_page)
+            print(component_page.id)
             wp_id = component_page.wp_id
             source = component_page.source
             # find base page with that wp_id and source so we can move it's children
@@ -94,6 +96,7 @@ class Command(BaseCommand):
                 child.move(component_page, pos='last-child')
             old_base_page.delete() 
 
+        # sys.exit()
 
         # new_blogs_page = ComponentsPage.objects.filter(title='Blogs', wp_template='page-blog-landing.php')
         # blog_items_base = BlogIndexPage.objects.get(slug='blog-items-base')

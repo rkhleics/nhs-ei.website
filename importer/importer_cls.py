@@ -9,7 +9,7 @@ from django.core.files import File
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
-from nhsei_wagtail.importer.richtextbuilder import RichTextBuilder
+from importer.richtextbuilder import RichTextBuilder
 from requests.api import head
 from wagtail.core.models import Collection
 from wagtail.documents.models import Document

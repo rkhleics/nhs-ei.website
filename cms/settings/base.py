@@ -25,7 +25,6 @@ DEBUG = env("DEBUG")
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 BASE_DIR = PROJECT_DIR.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'cms.publications',
     'cms.atlascasestudies',
     'cms.core',
+
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
+
     "modelcluster",
     "taggit",
     "django.contrib.admin",

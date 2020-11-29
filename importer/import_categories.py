@@ -2,7 +2,7 @@ import sys
 import time
 
 from django.core.management import call_command
-from nhsei_wagtail.categories.models import Category, CategorySubSite
+from cms.categories.models import Category, CategorySubSite
 
 from .importer_cls import Importer
 

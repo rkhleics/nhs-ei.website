@@ -1,11 +1,11 @@
 from os import unlink
 import re
 from bs4 import BeautifulSoup
-from nhsei_wagtail.pages.models import BasePage, ComponentsPage
-from nhsei_wagtail.posts.models import Post
-from nhsei_wagtail.blogs.models import Blog
-from nhsei_wagtail.publications.models import Publication
-from nhsei_wagtail.atlascasestudies.models import AtlasCaseStudy
+from cms.pages.models import BasePage, ComponentsPage
+from cms.posts.models import Post
+from cms.blogs.models import Blog
+from cms.publications.models import Publication
+from cms.atlascasestudies.models import AtlasCaseStudy
 
 TEST_CONTENT = """
 <h2>Tips and examples</h2>

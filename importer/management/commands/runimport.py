@@ -1,4 +1,4 @@
-from nhsei_wagtail.importer.import_media_files import MediaFilesImporter
+from importer.import_media_files import MediaFilesImporter
 import sys
 import time
 
@@ -137,6 +137,10 @@ class Command(BaseCommand):
             call_command('make_alert_banner')
             call_command('make_home_page')
             call_command('make_footer_links')
+
+        if options['app'] == 'documents':
+            call_command('make_documents_list')
+            
             """ other commands to add in
             # make any other pages we need
             # here we have url issue

@@ -6,9 +6,9 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from django.core.management import call_command
 from django.utils.html import strip_tags
-from nhsei_wagtail.categories.models import Category, CategorySubSite
-from nhsei_wagtail.pages.models import BasePage
-from nhsei_wagtail.posts.models import (Post, PostCategoryRelationship,
+from cms.categories.models import Category, CategorySubSite
+from cms.pages.models import BasePage
+from cms.posts.models import (Post, PostCategoryRelationship,
                                         PostIndexPage)
 from wagtail.core.models import Page
 

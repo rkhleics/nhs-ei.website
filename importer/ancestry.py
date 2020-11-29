@@ -1,5 +1,5 @@
-from nhsei_wagtail.pages.models import BasePage
-from nhsei_wagtail.home.models import Page
+from cms.pages.models import BasePage
+from cms.home.models import Page
 
 
 class Ancestry:
