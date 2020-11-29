@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+{% if body %}
+<div class="nhsuk-width-container">
+<div class="nhsuk-grid-row nhsuk-u-margin-bottom-6">
+    <div class="nhsuk-grid-column-full">
+        {{ body|richtext }}
+    </div>
+</div>
+</div>
+{% endif %}

@@ -42,7 +42,7 @@ class BlogIndexPage(Page):
         else:
             blogs = Blog.objects.live().order_by(blog_ordering)
 
-        paginator = Paginator(blogs, 25)
+        paginator = Paginator(blogs, 16)
 
         try:
             items = paginator.page(request.GET.get('page'))

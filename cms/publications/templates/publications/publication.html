@@ -2,27 +2,41 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
+<article class="nhsuk-width-container">
 
-{% comment %} <a href="{{ self.get_parent.url }}">back</a> {% endcomment %}
-{% if self.publication_publication_type_relationship %}
-<div class="nhsuk-panel">
-<div>
-    Categories: 
-    {% for publication_type in self.publication_publication_type_relationship.all %}
-    <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type.name }}</a>
+    <h1>{{ self.title }}</h1>
+    {{ self.body|richtext }}
+    {% if self.publication_publication_type_relationship %}
+
+    <div class="nhsuk-review-date">
+        <p class="nhsuk-body-s">
+            Page first published: {{ self.first_published_at|date:'d F Y' }}<br>
+            Last updated: {{ self.last_published_at|date:'d F Y' }}
+        </p>
+    </div>
+    <!-- <div class="nhsuk-body-s">
+        {{ self.first_published_at|date }} | Author: {{ self.author }}
+    </div> -->
+
+    <div class="nhsuk-u-reading-width">
+        <div class="nhsuk-body-s">
+            Topics:
+            {% for category in self.publication_category_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %} <br>
+            Publication Type:
+            {% for publication_type in self.publication_publication_type_relationship.all %}
+            <a href="{{ self.get_parent.url }}?publication_type={{ publication_type.publication_type.id }}">{{ publication_type.publication_type }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% for block in self.documents %}
+        {% include_block block %}
     {% endfor %}
-</div>
-<hr>
 
-{% endif %}
 
-<p>
-    {{ self.first_published_at|date }} | Author: {{ self.author }}
-</p>
-<hr>
-<h1>{{ self.title }}</h1>
-<div><i>a custom field provides this text coming soon</i></div>
-<div><i>a custom field provides the docuemnt panel coming soon</i></div>
-{{ self.body|richtext }}
-</div>
+</article>
 {% endblock content %}

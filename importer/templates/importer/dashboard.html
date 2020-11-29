@@ -1,0 +1,217 @@
+{% extends "importer_base.html" %}
+{% load static posts_tags blog_tags wagtailcore_tags %}
+
+{% block body_class %}template-importer{% endblock %}
+
+
+
+{% block content %}
+
+<div class="text-component margin-y-sm text-sm">
+    {{ self.body|richtext }}
+</div>
+
+<div>
+    <h3>Status</h3>
+    <p class="text-sm opacity-50%">Just keeping track of numbers following imports</p>
+</div>
+
+<div class="flex@sm gap-md margin-y-sm">
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Wagtail Pages</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ total_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents total of all pages in the wagtail site that are derived
+            from any Wagtail Page Model</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Base Pages</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ base_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the pages in the wagtail site that are derived from
+            imported pages from SCRAPY. It's a base page model that will be the most generic that most pages will be
+            modeled from</p>
+        <p class="text-xs opacity-50%">There will be other page models to come to cater for pages such as landing pages
+            and so on (around 6 types so far).</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Post Pages</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ post_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the post pages in the wagtail site that are derived from
+            the Post Model</p>
+        <p class="text-xs opacity-50%">These page are surfaced <a href="https://www.england.nhs.uk/news/"
+                target="_blank">here</a> in the live site</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Blog Pages</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ blog_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the blog pages in the wagtail site that are derived from
+            the Blog Model</p>
+        <p class="text-xs opacity-50%">These page are surfaced <a href="https://www.england.nhs.uk/blogs/"
+                target="_blank">here</a> in the live site</p>
+    </div>
+</div>
+<div class="flex@sm gap-md margin-y-sm">
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Publications</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ publications_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the publication pages in the wagtail site that are derived from
+            the Publication Model</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Atlas Case Studies</h4>
+        <p class="text-center text-xl"><strong class="color-success">{{ atlas_case_studies_pages_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the atlas case study pages in the wagtail site that are derived from
+            the Atlas Case Study Model</p>
+    </div>
+</div>
+<div class="flex@sm gap-md margin-y-sm">
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Categories</h4>
+        <p class="text-xl text-center"><strong class="color-success">{{ categories_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the total Categories in the wagtail site</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Regions</h4>
+        <p class="text-xl text-center"><strong class="color-success">{{ regions_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the total Regions in the wagtail site</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Settings</h4>
+        <p class="text-xl text-center"><strong class="color-success">{{ settings_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the total Settings in the wagtail site</p>
+    </div>
+    <div class="col bg-contrast-lower text-component padding-sm">
+        <h4 class="text-center">Publication Types</h4>
+        <p class="text-xl text-center"><strong class="color-success">{{ publication_types_count }}</strong></p>
+        <p class="text-xs opacity-50%">This figure represents the total Publication Types in the wagtail site</p>
+    </div>
+</div>
+
+<div class="flex@sm gap-md margin-y-sm">
+
+    <div class="col bg-contrast-lower text-component padding-sm margin-y-sm">
+        <h2>Latest Posts</h2>
+        <ul class="list list--ol text-sm">
+            {% get_lastest_posts 3 as posts %}
+            {% for post in posts %}
+            <li>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+                <span class="text-sm block">{{ post.body|truncatewords_html:"10"|striptags|safe }}
+                    <br> {{ post.first_published_at }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col bg-contrast-lower text-component padding-sm margin-y-sm">
+        <h2>Latest Blogs</h2>
+        <ul class="list list--ol text-sm">
+            {% get_lastest_blogs 3 as blogs %}
+            {% for blog in blogs %}
+            <li>
+                <a href="{{ blog.url }}">{{ blog.title }}</a>
+                <span class="text-sm block">{{ blog.body|truncatewords_html:"10"|striptags|safe }}
+                    <br> {{ blog.first_published_at }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+<h4 class="col-12">Top pages with children</h4>
+<p class="bg-warning text-xs margin-y-sm padding-xs inline-block">
+    {{ top_pages_with_children_count }} Top pages are BasePages that have children pages
+    <a class="btn btn--md btn--primary margin-left-sm" href="{% url 'top-pages-with-children' %}">Export CSV</a>
+</p>
+<p class="text-sm">
+    (00) = No Parent Available> We need to manually map where it should go... <br>
+    (01) = Has real parent, why has it not moved? <br>
+    (10) = Has actual parent, why has it not moved? I can see there are 404 pages showing in the live site.
+</p>
+<div class="text-sm margin-y-sm flex flex-wrap gap-sm">
+    {% for p in top_pages_with_children %}
+    <div class="">
+        <a class="btn btn--sm {% if p.known_slug_problem %} btn--accent{% else %} btn--subtle{% endif %}"
+            href="{{ p.url }}">
+            {{ p }}
+            {% if p.parent == 0 and p.real_parent == 0 %}
+            (00)
+            {% elif p.parent == 0 and p.real_parent > 0 %}
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">(01)</span>
+            {% elif p.parent > 0 and p.real_parent == 0 %}
+            <span style="background-color: black" class="margin-x-xs color-contrast-lower">(10)</span>
+            {% endif %}
+            <span style="background-color: red"
+                class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem }}</span>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<h4 class="col-12">Top pages without children</h4>
+<p></p>
+<p class="bg-warning text-xs margin-y-sm padding-xs inline-block">
+    {{ top_pages_without_children_count }} Top pages are pages that have no children pages and need more work
+    <a class="btn btn--md btn--primary margin-left-sm" href="{% url 'top-pages-without-children' %}">Export CSV</a>
+</p>
+<p class="text-sm">
+    (00) = No Parent Available> We need to manually map where it should go... <br>
+    (01) = Has real parent, why has it not moved? <br>
+    (10) = Has actual parent, why has it not moved? I can see there are 404 pages showing in the live site.
+</p>
+<div class="text-sm margin-y-sm flex flex-wrap gap-sm">
+    {% for p in top_pages_without_children %}
+    {% if not p.get_children %}
+    <div class="">
+        <a class="btn btn--sm {% if p.known_slug_problem %} btn--accent{% else %} btn--subtle{% endif %}"
+            href="{{ p.url }}">
+            {{ p }}
+            {% if p.parent == 0 and p.real_parent == 0 %}
+            (00)
+            {% elif p.parent == 0 and p.real_parent > 0 %}
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">(01)</span>
+            {% elif p.parent > 0 and p.real_parent == 0 %}
+            <span style="background-color: black" class="margin-x-xs color-contrast-lower">(10)</span>
+            {% endif %}
+            <span style="background-color: red"
+                class="margin-x-xs color-contrast-lower">{{ p.known_slug_problem }}</span>
+        </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<h4 class="col-12">Pages URL Errors IMPORTER vs LIVE</h4>
+<p></p>
+<p class="bg-warning text-xs margin-y-sm padding-xs inline-block">
+    {{ url_errors_count }} Pages here currently have a different url in this site vs the live site, they need
+    investigating so we can avoid bulk redirects
+    <a class="btn btn--md btn--primary margin-left-sm" href="{% url 'url-errors' %}">Export CSV</a>
+</p>
+<p class="text-sm">
+    LARGE buttons need investigating. They are from subsites so is the reason lots of other
+    same subsite pages are listed, fix top level and they will be fixed too. <br>
+    RED marker inidcates an incorret page slug based on the live url
+</p>
+<div class="text-sm margin-y-sm flex flex-wrap gap-sm">
+    {% for page in url_errors %}
+    <div class="">
+        <a class="btn  
+        {% if page.message %} btn--accent btn--lg{% else %} btn--subtle btn--sm{% endif %}
+        {% comment %} {% if page.found %} btn--disabled{% endif %} {% endcomment %}
+        " href="{{ page.page_url }}">
+            {{ page.title }}
+            {% if page.source == 'pages' %}
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">({{ page.source }})</span>
+            {% else %}
+            ({{ page.source }})
+            {% endif %}
+            <span style="background-color: red" class="margin-x-xs color-contrast-lower">{{ page.message }}</span>
+            <span class="">{{ page.path }} -> {{ page.live_url }}</span>
+        </a>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock content %}

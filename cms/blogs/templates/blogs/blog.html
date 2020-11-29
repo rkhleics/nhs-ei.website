@@ -2,24 +2,26 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
+<article class="nhsuk-width-container">
+    
+    <div class="nhsuk-u-reading-width">
+        {% if self.blog_category_relationship %}
+            <div class="nhsuk-body-s">
+            Categories:
+            {% for category in self.blog_category_relationship.all %}
+                <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %}
+            </div>
+        {% endif %}
 
-<div class="nhsuk-panel">
-{% if self.blog_category_relationship %}
-<div>
-    Categories: 
-    {% for category in self.blog_category_relationship.all %}
-    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-    {% endfor %}
-</div>
-<hr>
+        <div class="nhsuk-body-s">
+            {{ self.first_published_at|date }} | <i>Author: {{ self.author }} we are missing the ability to match ID to
+                a name</i>
+        </div>
 
-{% endif %}
-
-<div>
-    {{ self.first_published_at|date }} | <i>Author: {{ self.author }} we are missing the ability to match ID to a name</i>
-</div>
-<hr>
-<h1>{{ self.title }}</h1>
-{{ self.body|richtext }}
-</div>
+        <h1>{{ self.title }}</h1>
+        {{ self.body|richtext }}
+    </div>
+    
+</article>
 {% endblock content %}

@@ -1,0 +1,7 @@
+
+    <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">{{ side_bar_title }}</h2>
+    <ul class="nhsuk-u-margin-bottom-6">
+        {% for item in items %}
+        <li><a href="?{{ filter }}={{item.id}}">{{ item }}</a></li>
+        {% endfor %}
+    </ul>

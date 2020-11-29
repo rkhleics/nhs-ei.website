@@ -62,7 +62,7 @@ class PostIndexPage(Page):
         else:
             posts = Post.objects.child_of(self).live().order_by(post_ordering)
 
-        paginator = Paginator(posts, 25)
+        paginator = Paginator(posts, 16)
 
         try:
             items = paginator.page(request.GET.get('page'))

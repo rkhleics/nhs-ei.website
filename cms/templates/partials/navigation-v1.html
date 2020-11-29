@@ -2,8 +2,9 @@
 CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
 -->
 <!-- needs refining and styling -->
-<div class="nav">
-    <nav>
+{% comment %} <div class=""> {% endcomment %}
+<div class="mega_nav_wrapper">
+    <nav class="mega_nav">
         <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
         <ul class="menu menu-bar">
 
@@ -270,11 +271,11 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
             </li>
 
             <li><!-- Link 4 -->
-                <a href="#" class="menu-link menu-bar-link">Statistics</a>
+                <a href="https://www.england.nhs.uk/statistics/" class="menu-link menu-bar-link">Statistics</a>
             </li>
 
             <li><!-- Link 5 -->
-                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Patient involvement</a>
+                <a href="/aac/what-we-do/patient-and-public-involvement/" class="menu-link menu-bar-link" aria-haspopup="true">Patient involvement</a>
                 <ul class="mega-menu mega-menu--multiLevel">
                   <li><!-- Link 5.1 -->
                       <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Get involved</a>
@@ -446,7 +447,8 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
             </li>
         </ul>
     </nav>
-</div>
+    </div>
+{% comment %} </div> {% endcomment %}
 
 <!-- <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation" aria-labelledby="label-navigation">
   <div class="nhsuk-width-container">

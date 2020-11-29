@@ -1,0 +1,6 @@
+{% load wagtailcore_tags %}
+{% for block in value %}
+    <ul>
+        {% include_block block %} <br>
+    </ul>
+{% endfor %}

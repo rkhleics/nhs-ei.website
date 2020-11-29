@@ -3,80 +3,95 @@
 
 {% block content %}
 
-<h1>{{ self.title }}</h1>
-{% if self.body %}
-{{ self.body|richtext }}
-{% else %}
-<p>
-    This is the body content, currently empty...
-</p>
-{% endif %}
+{% include 'includes/page_title.html' with title=self.title %}
 
-<div class="nhsuk-grid-row nhsuk-panel">
+{% include 'includes/page_body.html' with body=self.body %}
 
-    <div class="nhsuk-grid-column-one-third">
-        <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Topics</h2>
-        <ul class="nhsuk-u-margin-bottom-6">
-            {% for c in categories %}
-            <li style="margin:0"><a href="?category={{c.id}}">{{ c }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="nhsuk-grid-column-two-thirds">
-        {% for post in posts %}
-        <div>
-            <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
-            {{ post.first_published_at|date }} | <i>Author: {{ post.author }} we are missing the ability to match ID to a name</i>
-            <div>
-                {{ post.body|truncatewords_html:"40"|striptags|safe }}
-                {% if post.post_category_relationship.all %}
-                <div>
-                    Topics:
-                    {% for category in post.post_category_relationship.all %}
-                    &nbsp;<a href="?category={{ category.category.id }}">{{ category.category }}</a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
+<div class="nhsuk-width-container">
 
-        </div>
-        <hr>
-        {% endfor %}
+    <div class="nhsuk-grid-row">
 
-        <div>
+        <div class="nhsuk-grid-column-one-third">
 
-            {% if posts.has_previous %}
-
-            <a href="?page={{ posts.previous_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
-                class="pagination__item" aria-label="Go to previous page">
-                <span>Prev</span>
-            </a>
-
-            {% endif %}
-
-            {% for page_num in posts.paginator.page_range %}
-
-            <a href="?page={{ page_num }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
-                class="pagination__item {% if page_num == posts.number %}pagination__item--selected{% endif %}"
-                aria-label="Go to page 1">{{ page_num }}</a>
-
-            {% endfor %}
-
-            {% if posts.has_next %}
-
-            <a href="?page={{ posts.next_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}"
-                class="pagination__item" aria-label="Go to next page">
-                <span>Next</span>
-            </a>
-
-            {% endif %}
+            {% include 'includes/side_bar_list.html' with items=categories side_bar_title='Topics' filter='category' %}
 
         </div>
 
-    </div>
+        <div class="nhsuk-grid-column-two-thirds">
 
+            <ul class="nhsuk-list nhsuk-list--border">
+                {% for post in posts %}
+                <li class="nhsuk-panel">
+                    <h2 class="nhsuk-u-margin-bottom-1 nhsuk-heading-s">
+                        <a href="{{ post.url }}">{{ post.title }}</a>
+                    </h2>
+                    <div class="nhsuk-u-margin-bottom-3">
+                        {{ post.body|truncatewords_html:"40"|striptags|safe }}
+                    </div>
+                    <p class="nhsuk-body-s">
+                        <b>Published: </b> {{ post.first_published_at|date:'d F Y' }} - <em>Latest version
+                            {{ post.last_published_at|date:'d F Y' }}</em><br>
+                        <b>Author: </b>{{ post.author }} we are missing the ability to match ID
+                        to a name <br>
+                        {% if post.post_category_relationship.all %}
+                        <b>Topics:</b>
+                        {% for category in post.post_category_relationship.all %}
+                        <a href="?category={{ category.category.id }}">{{ category.category }}</a>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% if posts.paginator.num_pages > 1 %}
+            <nav class="nhsuk-pagination" role="navigation" aria-label="Pagination">
+                <ul class="nhsuk-list nhsuk-pagination__list">
+                    {% if posts.has_previous %}
+                    <li class="nhsuk-pagination-item--previous">
+                        <a class="nhsuk-pagination__link nhsuk-pagination__link--prev"
+                            href="?page={{ posts.previous_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}">
+                            <span class="nhsuk-pagination__title">Previous</span>
+                            <span class="nhsuk-u-visually-hidden">:</span>
+                            <span class="nhsuk-pagination__page">Page {{ posts.previous_page_number }} of
+                                {{ posts.paginator.num_pages }}</span>
+                            <svg class="nhsuk-icon nhsuk-icon__arrow-left" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M4.1 12.3l2.7 3c.2.2.5.2.7 0 .1-.1.1-.2.1-.3v-2h11c.6 0 1-.4 1-1s-.4-1-1-1h-11V9c0-.2-.1-.4-.3-.5h-.2c-.1 0-.3.1-.4.2l-2.7 3c0 .2 0 .4.1.6z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if posts.has_next %}
+                    <li class="nhsuk-pagination-item--next">
+                        <a class="nhsuk-pagination__link nhsuk-pagination__link--next"
+                            href="?page={{ posts.next_page_number }}{% if chosen_category_id %}&category={{ chosen_category_id }}{% endif %}">
+                            <span class="nhsuk-pagination__title">Next</span>
+                            <span class="nhsuk-u-visually-hidden">:</span>
+                            <span class="nhsuk-pagination__page">Page {{ posts.next_page_number }} of
+                                {{ posts.paginator.num_pages }}</span>
+                            <svg class="nhsuk-icon nhsuk-icon__arrow-right" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M19.6 11.66l-2.73-3A.51.51 0 0 0 16 9v2H5a1 1 0 0 0 0 2h11v2a.5.5 0 0 0 .32.46.39.39 0 0 0 .18 0 .52.52 0 0 0 .37-.16l2.73-3a.5.5 0 0 0 0-.64z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+
+            {% endif %}
+
+        </div>
+
+    </div>
 </div>
-
 
 
 {% endblock content %}

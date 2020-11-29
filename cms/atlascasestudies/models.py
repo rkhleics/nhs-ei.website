@@ -48,7 +48,7 @@ class AtlasCaseStudyIndexPage(Page):
         else:
             atlas_case_studies = AtlasCaseStudy.objects.live().order_by(atlas_case_study_ordering)
 
-        paginator = Paginator(atlas_case_studies, 25)
+        paginator = Paginator(atlas_case_studies, 16)
 
         try:
             items = paginator.page(request.GET.get('page'))
@@ -62,7 +62,7 @@ class AtlasCaseStudyIndexPage(Page):
         category_sub_site = CategorySubSite.objects.get(source='categories')
         context['categories'] = Category.objects.filter(sub_site=category_sub_site)
 
-        context['settings'] = Setting.objects.all()
+        context['setting'] = Setting.objects.all()
 
         context['regions'] = Region.objects.all()
 

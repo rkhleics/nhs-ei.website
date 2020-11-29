@@ -1,0 +1,11 @@
+.template-homepage {
+    .featured-section {
+        background-color: $color_nhsuk-blue;
+        @include nhsuk-responsive-padding(6);
+        color: $color_nhsuk-white;
+        a{
+            color: $color_nhsuk-white;
+
+        }
+    }
+}

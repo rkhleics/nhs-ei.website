@@ -2,32 +2,34 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
+<article class="nhsuk-width-container">
 
-{% comment %} <a href="{{ self.get_parent.url }}">back</a> {% endcomment %}
-{% if self.atlas_case_study_category_relationship %}
-<div class="nhsuk-panel">
-<div>
-    Topics: 
-    {% for category in self.atlas_case_study_category_relationship.all %}
-    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-    {% endfor %} <br>
-    Settings: 
-    {% for setting in self.atlas_case_study_setting_relationship.all %}
-    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-    {% endfor %} <br>
-    Regions: 
-    {% for category in self.atlas_case_study_category_relationship.all %}
-    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-    {% endfor %}
-</div>
-<hr>
+    <div class="nhsuk-u-reading-width">
+        {% if self.atlas_case_study_category_relationship %}
+        <div class="nhsuk-body-s">
+            Topics:
+            {% for category in self.atlas_case_study_category_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %} <br>
+            Settings:
+            {% for setting in self.atlas_case_study_setting_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %} <br>
+            Regions:
+            {% for category in self.atlas_case_study_category_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %}
+        </div>
 
-{% endif %}
 
-<div>
-    {{ self.first_published_at|date }} | By: {{ self.author }} this content comes from a custom field (coming soon)
-</div>
-<h1>{{ self.title }}</h1>
-{{ self.body|richtext }}
-</div>
+        {% endif %}
+
+        <div class="nhsuk-body-s">
+            {{ self.first_published_at|date }} | By: {{ self.author }} this content comes from a custom field (coming
+            soon)
+        </div>
+        <h1>{{ self.title }}</h1>
+        {{ self.body|richtext }}
+    </div>
+</article>
 {% endblock content %}

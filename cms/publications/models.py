@@ -4,9 +4,10 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey
 from modelcluster.fields import ParentalKey
 from cms.categories.models import Category, CategorySubSite, PublicationType, PublicationTypeSubSite
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
+from cms.core.blocks import PublicationsBlocks
 
 
 class PublicationIndexPage(Page):
@@ -61,7 +62,7 @@ class PublicationIndexPage(Page):
             publications = Publication.objects.child_of(
                 self).live().order_by(publication_ordering)
 
-        paginator = Paginator(publications, 25)
+        paginator = Paginator(publications, 16)
 
         try:
             items = paginator.page(request.GET.get('page'))
@@ -140,12 +141,14 @@ class Publication(Page):
 
     # going to need to parse the html here to extract the text
     body = RichTextField(blank=True)
+    documents = StreamField(PublicationsBlocks, blank=True)
 
     """ coming across form wordpress need to keep for now"""
     wp_id = models.PositiveSmallIntegerField(null=True)
     source = models.CharField(null=True, max_length=100)
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
+    component_fields = models.TextField(null=True, blank=True)
 
     """i think we can do away with this field 
     and use the text from body to create the exceprt"""
@@ -159,12 +162,14 @@ class Publication(Page):
         InlinePanel('publication_category_relationship',
                     label='Publication Topics'),
         FieldPanel('body'),
+        StreamFieldPanel('documents'),
         MultiFieldPanel([
             FieldPanel('wp_id'),
             FieldPanel('author'),
             FieldPanel('source'),
             FieldPanel('wp_slug'),
             FieldPanel('wp_link'),
+            FieldPanel('component_fields')
         ], heading='wordpress data we dont need in the end', classname='collapsed collapsible')
     ]
 

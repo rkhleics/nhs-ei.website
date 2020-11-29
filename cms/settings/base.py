@@ -64,6 +64,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "wagtailnhsukfrontend",
     "wagtailnhsukfrontend.settings",
+
+    # importer
+    'importer',
 ]
 
 MIDDLEWARE = [

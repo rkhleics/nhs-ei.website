@@ -3,25 +3,28 @@
 
 {% block content %}
 
-{% comment %} <a href="{{ self.get_parent.url }}">back</a> {% endcomment %}
-{% if self.post_category_relationship %}
+<article class="nhsuk-width-container">
 
-<div class="nhsuk-panel">
-<div>
-    Categories: 
-    {% for category in self.post_category_relationship.all %}
-    <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
-    {% endfor %}
-</div>
-<hr>
+    <div class="nhsuk-u-reading-width">
+        {% if self.post_category_relationship %}
 
-{% endif %}
+        <div class="nhsuk-body-s">
+            Categories:
+            {% for category in self.post_category_relationship.all %}
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% endfor %}
+        </div>
 
-<div>
-    {{ self.first_published_at|date }} | Author: {{ self.author }} <i>we are missing the ability to match ID to a name</i>
-</div>
-<hr>
-<h1>{{ self.title }}</h1>
-{{ self.body|richtext }}
-</div>
+        {% endif %}
+
+        <div class="nhsuk-body-s">
+            {{ self.first_published_at|date }} | Author: {{ self.author }} <i>we are missing the ability to match ID to
+                a name</i>
+        </div>
+
+        <h1>{{ self.title }}</h1>
+        {{ self.body|richtext }}
+
+    </div>
+</article>
 {% endblock content %}
