@@ -22,27 +22,26 @@
                         <div class="nhsuk-radios">
                             <div class="nhsuk-radios__item">
                                 <input class="nhsuk-radios__input" id="ct1" name="content_type" type="radio"
-                                    value="pages">
+                                    value="pages"{% if content_type == 'pages' %}checked{% endif %}>
                                 <label class="nhsuk-label nhsuk-radios__label" for="ct1">Web page</label>
                             </div>
                             <div class="nhsuk-radios__item">
                                 <input class="nhsuk-radios__input" id="ct2" name="content_type" type="radio"
-                                    value="news">
+                                    value="news"{% if content_type == 'news' %}checked{% endif %}>
                                 <label class="nhsuk-label nhsuk-radios__label" for="ct2">News</label>
                             </div>
                             <div class="nhsuk-radios__item">
                                 <input class="nhsuk-radios__input" id="ct3" name="content_type" type="radio"
-                                    value="blogs">
+                                    value="blogs"{% if content_type == 'blogs' %}checked{% endif %}>
                                 <label class="nhsuk-label nhsuk-radios__label" for="ct3">Blog posts</label>
                             </div>
                             <div class="nhsuk-radios__item">
                                 <input class="nhsuk-radios__input" id="ct4" name="content_type" type="radio"
-                                    value="publications">
+                                    value="publications"{% if content_type == 'publications' %}checked{% endif %}>
                                 <label class="nhsuk-label nhsuk-radios__label" for="ct4">Publications</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="ct5" name="content_type" type="radio" value="all"
-                                    checked="">
+                                <input class="nhsuk-radios__input" id="ct5" name="content_type" type="radio" value="all"{% if not content_type %}checked{% endif %}>
                                 <label class="nhsuk-label nhsuk-radios__label" for="ct5">All</label>
                             </div>
                         </div>
@@ -86,10 +85,10 @@
                             <div class="nhsuk-row nhsuk-u-margin-botom-3">
                                 <select class="nhsuk-select" id="publish_date" name="order"
                                     onchange="this.form.submit()">
-                                    <option value="-first_published_at">Published (newest first)</option>
-                                    <option value="first_published_at">Published (oldest first)</option>
-                                    <option value="-latest_revision_created_at">Version (newest first)</option>
-                                    <option value="latest_revision_created_at">Version (oldest first)</option>
+                                    <option value="-first_published_at"{% if order == '-first_published_at' %} selected{% endif %}>Published (newest first)</option>
+                                    <option value="first_published_at"{% if order == 'first_published_at' %} selected{% endif %}>Published (oldest first)</option>
+                                    <option value="-latest_revision_created_at"{% if order == '-latest_revision_created_at' %} selected{% endif %}>Version (newest first)</option>
+                                    <option value="latest_revision_created_at"{% if order == 'latest_revision_created_at' %} selected{% endif %}>Version (oldest first)</option>
                                 </select>
                             </div>
                         </div>
@@ -98,8 +97,8 @@
                 <div class="nhsuk-body search-results-heading__details">
                     {% if query %}
                     <span>{{ results_count }} search results for <strong>"{{ query }}"</strong>
-                        {% if search_type %}, filtered by
-                        <strong>{{ search_type }}</strong>{% endif %}</span>
+                        {% if content_type %}, filtered by
+                        <strong>{{ content_type }}</strong>{% endif %}</span>
                 </div>
                 {% endif %}
             </div>

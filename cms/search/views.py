@@ -39,8 +39,8 @@ def search(request):
 
     search_type = ''
     search_results_count = None
-    date_from = ''
-    date_to = ''
+    date_from = request.GET.get('date_from')
+    date_to = request.GET.get('date_to')
 
     # Search
     if query:
@@ -133,6 +133,6 @@ def search(request):
         'search_params': search_params,
         'content_type': search_type,
         'order': search_ordering,
-        'date_from': '',
-        'date_to': '',
+        'date_from': date_from,
+        'date_to': date_to,
     })
