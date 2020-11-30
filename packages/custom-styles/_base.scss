@@ -30,10 +30,10 @@
   margin-left: -1000px;
   margin-right: -1000px;
 
-   .wrapped-section {
-     padding-left: 1000px;
-     padding-right: 1000px;
-   }
+  .wrapped-section {
+    padding-left: 1000px;
+    padding-right: 1000px;
+  }
 }
 
 .nhsei-latest-news {
@@ -42,8 +42,8 @@
 
 .nhsuk-footer__list.nhsie-footer-menu {
   border-bottom: 1px solid $color_nhsuk-grey-1;
-  @include nhsuk-responsive-padding(4, 'bottom');
-  @include nhsuk-responsive-margin(4, 'bottom');
+  @include nhsuk-responsive-padding(4, "bottom");
+  @include nhsuk-responsive-margin(4, "bottom");
 
   .nhsuk-footer__list-item {
     @include nhsuk-typography-responsive(19);
@@ -57,7 +57,7 @@
 }
 
 .nhsuk-breadcrumb {
-  border-top: 2px solid  $color_nhsuk-blue;
+  border-top: 2px solid $color_nhsuk-blue;
 }
 
 .nhsie-search-result-item {
@@ -67,4 +67,9 @@
   .nhsie-result-meta {
     padding-right: 0.5em;
   }
+}
+
+.nhsuk-promo__img, img {
+  max-width: 100%;
+  height: auto;
 }

@@ -1,0 +1,23 @@
+.search-results-heading {
+  border-bottom: 1px solid #dfe2e4;
+
+  .search-results-heading__title {
+    @include nhsuk-responsive-margin(3, 'bottom');
+  }
+  .search-results-heading__details {
+    @include nhsuk-responsive-padding(2, 'bottom');
+
+    &::after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+  }
+}
+
+.nhsuk-list {
+  .nhsuk-panel.nhsei-panel-search-result {
+    @include nhsuk-responsive-margin(3, 'top');
+    @include nhsuk-responsive-padding(4);
+  }
+}

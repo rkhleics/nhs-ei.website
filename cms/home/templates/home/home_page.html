@@ -1,48 +1,158 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static posts_tags publications_tags wagtailcore_tags wagtailimages_tags %}
 
-{% block body_class %}template__homepage{% endblock %}
+{% block body_class %}template-homepage{% endblock %}
+
 
 {% block content %}
 
-<div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+<div class="nhsuk-width-container">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
 
-      <!-- Change the page title here -->
-      <h1>
-        NHS England and Improvement
-      </h1>
+            <h1 class="nhsuk-u-visually-hidden">
+                NHS England and Improvement Homepage
+            </h1>
 
-      <!-- Add your content here -->
-      <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
-
-      <p class="nhsuk-lede-text">
-        Testing navigation options
-      </p>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'nav-static' %}">Navigation prototype</a>
-      </h2>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'search-static' %}">Search results</a>
-      </h2>
-
-      <hr>
-
-      <h2>
-        <a href="{% url 'content-static' %}">Content page prototype</a>
-      </h2>
-
-      <hr>
-
-      <!-- End of content -->
-
+        </div>
     </div>
-  </div>
+</div>
 
+<section class="news-section">
+    <div class="nhsuk-width-container">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
+                {{ self.all_news_sub_title|richtext }}
+                <div class="nhsuk-grid-row">
+                    {% get_lastest_posts_columns 6 as posts %}
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for post in posts.0 %}
+                            <li>
+                                <article class="">
+                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                        <a href="{{ post.url }}">
+                                            {{ post.title }}</a>
+                                    </h2>
+                                    <span class="nhsei-list-meta">Published on
+                                        <time class="date"
+                                            datetime="">{{ post.first_published_at }}</time></span>
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for post in posts.1 %}
+                            <li>
+                                <article class="">
+                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                        <a href="{{ post.url }}">
+                                            {{ post.title }}</a>
+                                    </h2>
+                                    <span class="nhsei-list-meta">Published on
+                                        <time class="date"
+                                            datetime="">{{ post.first_published_at }}</time></span>
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                {% if self.all_news_page %}
+                <a href="{{ self.all_news_page.url }}">View all news</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
+    <div class="nhsuk-width-container">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h2 class="nhsuk-u-visually-hidden">Highlights</h2>
+            </div>
+
+            <div class="nhsuk-grid-column-one-half">
+                {{ self.body|richtext }}
+            </div>
+            <div class="nhsuk-grid-column-one-half">
+                {% image self.body_image fill-800x600 %}
+            </div>
+        </div>
+    </div>
+</article>
+
+<section class="latest-publications-section">
+    <div class="nhsuk-width-container">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h2 class="nhsuk-heading-l">{{ self.all_publications_title }}</h2>
+                {{ self.all_publications_sub_title|richtext }}
+                <div class="nhsuk-grid-row">
+                    {% get_lastest_publications_columns 6 as publications %}
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for publication in publications.0 %}
+                            <li>
+                                <article class="">
+                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                        <a href="{{ publication.url }}">
+                                            {{ publication.title }}</a>
+                                    </h2>
+                                    <span class="nhsei-list-meta">Published on
+                                        <time class="date"
+                                            datetime="">{{ publication.first_published_at }}</time></span>
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for publication in publications.1 %}
+                            <li>
+                                <article class="">
+                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                        <a href="{{ publication.url }}">
+                                            {{ publication.title }}</a>
+                                    </h2>
+                                    <span class="nhsei-list-meta">Published on
+                                        <time class="date"
+                                            datetime="">{{ publication.first_published_at }}</time></span>
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                {% if self.all_publications_page %}
+                <a href="{{ self.all_publications_page.url }}">View all publications</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="nhsuk-width-container">
+    <div class="nhsuk-panel">
+
+        <h3>TEMPORARY CONTENT</h3>
+        <h1>Landing Pages</h1>
+        {% for child in landing_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+        <h1>Component Pages</h1>
+        {% for child in component_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+        <h1>Base Pages</h1>
+        {% for child in base_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

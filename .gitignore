@@ -136,3 +136,8 @@ node_modules
 # Terraform
 *.tfstate
 .terraform
+
+robots.txt
+/log
+/fixtures
+log/*.txt

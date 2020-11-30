@@ -1,50 +1,68 @@
+from cms.pages.models import ComponentsPage, BasePage, LandingPage
+from urllib.parse import urlparse
 from django.db import models
-from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.fields import StreamField
+
+from cms.core.blocks import CoreBlocks
 from wagtail.core.models import Page
-from wagtailnhsukfrontend.blocks import (ActionLinkBlock, CareCardBlock,
-                                         DetailsBlock, DoBlock, DontBlock,
-                                         ExpanderBlock, ExpanderGroupBlock,
-                                         GreyPanelBlock, ImageBlock,
-                                         InsetTextBlock, PanelBlock,
-                                         PanelListBlock, PromoBlock,
-                                         PromoGroupBlock, SummaryListBlock,
-                                         WarningCalloutBlock)
-from wagtailnhsukfrontend.mixins import HeroMixin, ReviewDateMixin
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 
 class HomePage(Page):
-    pass
-
-
-class DemoPage(HeroMixin, ReviewDateMixin, Page):
-    body = StreamField(
-        [
-            ("action_link", ActionLinkBlock()),
-            ("care_card", CareCardBlock()),
-            ("details", DetailsBlock()),
-            ("do", DoBlock()),
-            ("dont", DontBlock()),
-            ("expander", ExpanderBlock()),
-            ("expander_group", ExpanderGroupBlock()),
-            ("grey_panel", GreyPanelBlock()),
-            ("image", ImageBlock()),
-            ("inset_text", InsetTextBlock()),
-            ("panel", PanelBlock()),
-            ("panel_list", PanelListBlock()),
-            ("promo", PromoBlock()),
-            ("promo_group", PromoGroupBlock()),
-            ("summary_list", SummaryListBlock()),
-            ("warning_callout", WarningCalloutBlock()),
-        ]
+    max_num = 1
+    body = RichTextField(blank=True)
+    body_image = models.ForeignKey(
+        'wagtailimages.Image',
+        related_name='+',
+        blank=True, null=True,
+        on_delete=models.SET_NULL
     )
-
-    content_panels = (
-        Page.content_panels
-        + HeroMixin.content_panels
-        + [
-            StreamFieldPanel("body"),
-        ]
+    all_news_page = models.ForeignKey(
+        'wagtailcore.Page',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        related_name='+',
     )
+    all_news_title = models.CharField(max_length=100, blank=True)
+    all_news_sub_title = RichTextField(blank=True)
+    all_publications_page = models.ForeignKey(
+        'wagtailcore.Page',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        related_name='+'
+    )
+    all_publications_title = models.CharField(max_length=100, blank=True)
+    all_publications_sub_title = RichTextField(blank=True)
 
-    settings_panels = Page.settings_panels + ReviewDateMixin.settings_panels
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('body'),
+            ImageChooserPanel('body_image'),
+        ], heading='Main Body'),
+        MultiFieldPanel([
+            PageChooserPanel('all_news_page'),
+            FieldPanel('all_news_title'),
+            FieldPanel('all_news_sub_title'),
+        ], heading='Latest News'),
+        MultiFieldPanel([
+            PageChooserPanel('all_publications_page'),
+            FieldPanel('all_publications_title'),
+            FieldPanel('all_publications_sub_title'),
+        ], heading='Latest Publications'),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request)
+        context['component_pages'] =  ComponentsPage.objects.child_of(self)
+        context['base_pages'] =  BasePage.objects.child_of(self)
+        context['landing_pages'] =  LandingPage.objects.child_of(self)
+        return context
+
+    # @property
+    # def next_sibling(self):
+    #     return self.get_next_siblings().live().first()
+
+    # @property
+    # def prev_sibling(self):
+    #     return self.get_prev_siblings().live().first()

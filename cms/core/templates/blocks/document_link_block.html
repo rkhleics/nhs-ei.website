@@ -1,0 +1,14 @@
+<li>
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-one-half">
+            {% if value.page %}
+            Link Page: <a href="{{ value.page.url }}">{{ value.title }}</a>
+            {% else %}
+            Link External: <a href="{{ value.external_url }}">{{ value.title }}</a>
+        </div>
+        <div class="nhsuk-grid-column-one-half">
+            {{ value.summary }}
+        </div>
+    </div>
+</li>
+{% endif %}

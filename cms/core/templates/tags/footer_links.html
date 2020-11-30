@@ -1,0 +1,31 @@
+<h2 class="nhsuk-u-visually-hidden">{{ hidden_title }}</h2>
+
+<ul class="nhsuk-footer__list {{ list_class }}">
+    {% for footer_link in footer_links %}
+        {% if footer_link.page %}
+            <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="{{ footer_link.page.url }}">{{ footer_link.text }}</a>
+            </li>
+        {% else %}
+            <li class="nhsuk-footer__list-item">
+            <a class="nhsuk-footer__list-item-link" href="{{ footer_link.external_url }}">{{ footer_link.text }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    <!-- <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Contact us</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Transparency and legal</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Complaints</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Jobs</a></li> -->
+</ul>
+
+<!-- <h2 class="nhsuk-u-visually-hidden">Support links</h2>
+<ul class="nhsuk-footer__list">
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Terms and conditions</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Accessibility statement</a>
+    </li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Social media and content
+            moderation</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Privacy and cookies</a></li>
+    <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="#">Open Government Licence
+            v3.0</a></li>
+</ul> -->
