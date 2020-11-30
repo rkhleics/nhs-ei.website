@@ -1,7 +1,9 @@
 from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
-from cms.categories.models import (Category, CategorySubSite, PublicationType,
-                                   PublicationTypeSubSite, Region, Setting)
+from cms.categories.models import (
+    Category, CategorySubSite, PublicationType,
+    PublicationTypeSubSite, Region, Setting
+)
 from cms.posts.models import Post
 from cms.publications.models import Publication
 from wagtail.admin.edit_handlers import FieldPanel

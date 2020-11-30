@@ -222,8 +222,12 @@ class Command(BaseCommand):
             #     new_stream_value.insert(0, jump_menu)
             #     publication.documents = json.dumps(jump_menu + new_stream_value)
             # else:
-            if publication.wp_id == 144645:
-                print(json.dumps(new_stream_value))
+            # if publication.wp_id == 144645:
+            #     print(json.dumps(new_stream_value))
+            if jump_menu['value']['menu']:
+                new_stream_value.insert(0, jump_menu)
+                # publication.documents = json.dumps(new_stream_value)
+            # else:
             publication.documents = json.dumps(new_stream_value)
             rev = publication.save_revision()
             publication.first_published_at = publication.first_published_at
