@@ -1,8 +1,9 @@
 import sys
-from django.core.checks import messages
-from django.db import models
+
 from django.apps import apps
+from django.core.checks import messages
 from django.core.exceptions import ValidationError
+from django.db import models
 
 """CATEGORIES work with blogs and posts and across sub sites"""
 
@@ -16,26 +17,22 @@ class CategorySubSite(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
 
 class Category(models.Model):
-    sub_site = models.ForeignKey(
-        CategorySubSite,
-        on_delete=models.PROTECT,
-        null=True
-    )
+    sub_site = models.ForeignKey(CategorySubSite, on_delete=models.PROTECT, null=True)
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveSmallIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True)
     source = models.CharField(null=True, max_length=100)
 
     class Meta:
-        ordering = ['name']
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        ordering = ["name"]
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
@@ -68,26 +65,24 @@ class PublicationTypeSubSite(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
 
 class PublicationType(models.Model):
     sub_site = models.ForeignKey(
-        PublicationTypeSubSite,
-        on_delete=models.PROTECT,
-        null=True
+        PublicationTypeSubSite, on_delete=models.PROTECT, null=True
     )
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveSmallIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True)
     source = models.CharField(null=True, max_length=100)
 
     class Meta:
-        ordering = ['name']
-        verbose_name = 'Publication Type'
-        verbose_name_plural = 'Publication Types'
+        ordering = ["name"]
+        verbose_name = "Publication Type"
+        verbose_name_plural = "Publication Types"
 
     def __str__(self):
         return self.name
@@ -113,16 +108,16 @@ class Setting(models.Model):
     #     null=True
     # )
     name = models.CharField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=255)
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveSmallIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True)
     # source = models.CharField(null=True, max_length=100)
 
     class Meta:
-        ordering = ['name']
-        verbose_name = 'Setting'
-        verbose_name_plural = 'Settings'
+        ordering = ["name"]
+        verbose_name = "Setting"
+        verbose_name_plural = "Settings"
 
     def __str__(self):
         return self.name
@@ -138,13 +133,13 @@ class Region(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     """ coming across from wordpress need to keep for now"""
-    wp_id = models.PositiveSmallIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True)
     # source = models.CharField(null=True, max_length=100)
 
     class Meta:
-        ordering = ['name']
-        verbose_name = 'Region'
-        verbose_name_plural = 'Regions'
+        ordering = ["name"]
+        verbose_name = "Region"
+        verbose_name_plural = "Regions"
 
     def __str__(self):
         return self.name

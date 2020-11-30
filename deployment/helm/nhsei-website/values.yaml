@@ -54,6 +54,9 @@ environment:
   database_url: ""
   azure_connection_string: ""
   azure_container: ""
+  email_url: ""
+  server_email: ""
+  default_from_email: ""
 
 ingress:
   enabled: true
