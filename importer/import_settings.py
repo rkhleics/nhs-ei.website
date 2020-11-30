@@ -1,11 +1,10 @@
 import sys
 import time
 
-from django.core.management import call_command
 from cms.categories.models import Setting
+from django.core.management import call_command
 
 from .importer_cls import Importer
-
 
 # the indiators from wordpress aren't nice so map them to better titles
 # SOURCES = {
@@ -25,7 +24,7 @@ class SettingsImporter(Importer):
         settings = Setting.objects.all()
         # category_sub_sites = CategorySubSite.objects.all()
         if settings:
-            sys.stdout.write('⚠️  Run delete_settings before running this command\n')
+            sys.stdout.write("⚠️  Run delete_settings before running this command\n")
             sys.exit()
 
     def parse_results(self):
@@ -44,15 +43,16 @@ class SettingsImporter(Importer):
             #     category_sub_site.save()
 
             setting = Setting(
-                name=r.get('name'),
-                slug=r.get('slug'),
-                description=r.get('description'),
-                wp_id=r.get('wp_id'),
+                name=r.get("name"),
+                slug=r.get("slug"),
+                description=r.get("description"),
+                wp_id=r.get("wp_id"),
                 # source = r.get('source'),
                 # sub_site = category_sub_site
             )
+            print(setting)
             setting.save()
-            sys.stdout.write('.')
+            sys.stdout.write(".")
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

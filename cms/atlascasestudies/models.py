@@ -1,16 +1,17 @@
-from cms.categories.models import CategorySubSite, Setting, Region, Category
-from django.db import models
-from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from cms.categories.models import Category, CategorySubSite, Region, Setting
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import models
 from modelcluster.fields import ParentalKey
+from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
+                                         MultiFieldPanel)
+from wagtail.core.fields import RichTextField
+from wagtail.core.models import Page
 
 
 class AtlasCaseStudyIndexPage(Page):
     # title already in the Page class
     # slug already in the Page class
-    subpage_types = ['atlascasestudies.AtlasCaseStudy']
+    subpage_types = ["atlascasestudies.AtlasCaseStudy"]
     body = RichTextField(blank=True)
 
     # so we can filter available categories based on the sub site as well as the
@@ -23,48 +24,71 @@ class AtlasCaseStudyIndexPage(Page):
 
     content_panels = Page.content_panels + [
         # FieldPanel('sub_site_categories'),
-        FieldPanel('body'),
+        FieldPanel("body"),
     ]
 
     def get_latest_atlas_case_studies(num):
-        return AtlasCaseStudy.objects.all().order_by('-first_published_at')[:num]
+        return AtlasCaseStudy.objects.all().order_by("-first_published_at")[:num]
 
     def get_context(self, request, *args, **kwargs):
-        atlas_case_study_ordering = '-first_published_at'
+        atlas_case_study_ordering = "-first_published_at"
         context = super().get_context(request, *args, **kwargs)
 
-        if request.GET.get('setting'):
-            context['chosen_setting_id'] = int(request.GET.get('setting'))
-            atlas_case_studies = AtlasCaseStudy.objects.live().order_by(atlas_case_study_ordering).filter(
-                atlas_case_study_setting_relationship__setting=request.GET.get('setting'))
-        elif request.GET.get('region'):
-            context['chosen_region_id'] = int(request.GET.get('region'))
-            atlas_case_studies = AtlasCaseStudy.objects.live().order_by(atlas_case_study_ordering).filter(
-                atlas_case_study_region_relationship__region=request.GET.get('region'))
-        elif request.GET.get('category'):
-            context['chosen_category_id'] = int(request.GET.get('category'))
-            atlas_case_studies = AtlasCaseStudy.objects.live().order_by(atlas_case_study_ordering).filter(
-                atlas_case_study_category_relationship__category=request.GET.get('category'))
+        if request.GET.get("setting"):
+            context["chosen_setting_id"] = int(request.GET.get("setting"))
+            atlas_case_studies = (
+                AtlasCaseStudy.objects.live()
+                .order_by(atlas_case_study_ordering)
+                .filter(
+                    atlas_case_study_setting_relationship__setting=request.GET.get(
+                        "setting"
+                    )
+                )
+            )
+        elif request.GET.get("region"):
+            context["chosen_region_id"] = int(request.GET.get("region"))
+            atlas_case_studies = (
+                AtlasCaseStudy.objects.live()
+                .order_by(atlas_case_study_ordering)
+                .filter(
+                    atlas_case_study_region_relationship__region=request.GET.get(
+                        "region"
+                    )
+                )
+            )
+        elif request.GET.get("category"):
+            context["chosen_category_id"] = int(request.GET.get("category"))
+            atlas_case_studies = (
+                AtlasCaseStudy.objects.live()
+                .order_by(atlas_case_study_ordering)
+                .filter(
+                    atlas_case_study_category_relationship__category=request.GET.get(
+                        "category"
+                    )
+                )
+            )
         else:
-            atlas_case_studies = AtlasCaseStudy.objects.live().order_by(atlas_case_study_ordering)
+            atlas_case_studies = AtlasCaseStudy.objects.live().order_by(
+                atlas_case_study_ordering
+            )
 
         paginator = Paginator(atlas_case_studies, 16)
 
         try:
-            items = paginator.page(request.GET.get('page'))
+            items = paginator.page(request.GET.get("page"))
         except PageNotAnInteger:
             items = paginator.page(1)
         except EmptyPage:
             items = paginator.page(paginator.num_pages)
 
-        context['atlas_case_studies'] = items
+        context["atlas_case_studies"] = items
 
-        category_sub_site = CategorySubSite.objects.get(source='categories')
-        context['categories'] = Category.objects.filter(sub_site=category_sub_site)
+        category_sub_site = CategorySubSite.objects.get(source="categories")
+        context["categories"] = Category.objects.filter(sub_site=category_sub_site)
 
-        context['setting'] = Setting.objects.all()
+        context["setting"] = Setting.objects.all()
 
-        context['regions'] = Region.objects.all()
+        context["regions"] = Region.objects.all()
 
         # an experiment to get only categories that are used by blogs
         # blog_pages_ids = [x.id for x in Blog.objects.all()]
@@ -76,42 +100,42 @@ class AtlasCaseStudyIndexPage(Page):
 
 class AtlasCaseStudyCategoryRelationship(models.Model):
     atlas_case_study = ParentalKey(
-        'atlascasestudies.AtlasCaseStudy',
-        related_name='atlas_case_study_category_relationship',
+        "atlascasestudies.AtlasCaseStudy",
+        related_name="atlas_case_study_category_relationship",
     )
     category = models.ForeignKey(
-        'categories.Category',
-        related_name='+',
+        "categories.Category",
+        related_name="+",
         on_delete=models.CASCADE,
     )
 
 
 class AtlasCaseStudySettingRelationship(models.Model):
     atlas_case_study = ParentalKey(
-        'atlascasestudies.AtlasCaseStudy',
-        related_name='atlas_case_study_setting_relationship',
+        "atlascasestudies.AtlasCaseStudy",
+        related_name="atlas_case_study_setting_relationship",
     )
     setting = models.ForeignKey(
-        'categories.Setting',
-        related_name='+',
+        "categories.Setting",
+        related_name="+",
         on_delete=models.CASCADE,
     )
 
 
 class AtlasCaseStudyRegionRelationship(models.Model):
     atlas_case_study = ParentalKey(
-        'atlascasestudies.AtlasCaseStudy',
-        related_name='atlas_case_study_region_relationship',
+        "atlascasestudies.AtlasCaseStudy",
+        related_name="atlas_case_study_region_relationship",
     )
     region = models.ForeignKey(
-        'categories.Region',
-        related_name='+',
+        "categories.Region",
+        related_name="+",
         on_delete=models.CASCADE,
     )
 
 
 class AtlasCaseStudy(Page):
-    parent_page_types = ['atlascasestudies.AtlasCaseStudyIndexPage']
+    parent_page_types = ["atlascasestudies.AtlasCaseStudyIndexPage"]
     """
     title already in the Page class
     slug already in the Page class
@@ -122,12 +146,12 @@ class AtlasCaseStudy(Page):
     body = RichTextField(blank=True)
 
     """ coming across form wordpress need to keep for now"""
-    wp_id = models.PositiveSmallIntegerField(null=True)
+    wp_id = models.PositiveIntegerField(null=True)
     # source = models.CharField(null=True, max_length=100)
     wp_slug = models.TextField(null=True, blank=True)
     wp_link = models.TextField(null=True, blank=True)
 
-    """i think we can do away with this field 
+    """i think we can do away with this field
     and use the text from body to create the exceprt"""
     # excerpt = RichTextField(blank=True)
 
@@ -140,18 +164,21 @@ class AtlasCaseStudy(Page):
     # )
 
     content_panels = Page.content_panels + [
-        InlinePanel('atlas_case_study_setting_relationship', label='Settings'),
-        InlinePanel('atlas_case_study_region_relationship', label='Regions'),
-        InlinePanel('atlas_case_study_category_relationship', label='Categories'),
-        FieldPanel('body'),
-        MultiFieldPanel([
-            FieldPanel('wp_id'),
-            # FieldPanel('author'),
-            # FieldPanel('source'),
-            FieldPanel('wp_slug'),
-            FieldPanel('wp_link'),
-        ], heading='wordpress data we dont need in the end', classname='collapsed collapsible')
-
+        InlinePanel("atlas_case_study_setting_relationship", label="Settings"),
+        InlinePanel("atlas_case_study_region_relationship", label="Regions"),
+        InlinePanel("atlas_case_study_category_relationship", label="Categories"),
+        FieldPanel("body"),
+        MultiFieldPanel(
+            [
+                FieldPanel("wp_id"),
+                # FieldPanel('author'),
+                # FieldPanel('source'),
+                FieldPanel("wp_slug"),
+                FieldPanel("wp_link"),
+            ],
+            heading="wordpress data we dont need in the end",
+            classname="collapsed collapsible",
+        ),
     ]
 
     # def get_wp_api_link(self):
