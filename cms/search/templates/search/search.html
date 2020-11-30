@@ -13,7 +13,172 @@
 
         <div class="nhsuk-grid-column-one-third">
             <h2 class="nhsuk-heading-xs nhsuk-u-margin-bottom-3">Filter results by:</h2>
-            <ul class="nhsuk-u-margin-bottom-6">
+            <form action="">
+                <input type="hidden" name="query" value="query">
+                <fieldset class="nhsuk-fieldset">
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+                        <h1 class="nhsuk-fieldset__heading">Order by date</h1>
+                    </legend>
+                    <div class="nhsuk-form-group">
+                        <div class="nhsuk-row nhsuk-u-margin-botom-3">
+                            <!-- <label class="nhsuk-label" for="publish_date">
+                                Publish date
+                            </label> -->
+                            <select class="nhsuk-select" id="publish_date" name="publish_date">
+                                <option value="" selected="">---</option>
+                                <option value="pub_date_asc">Published (newest first)</option>
+                                <option value="pub_date_desc">Published (oldest first)</option>
+                                <option value="ver_date_asc">Version (newest first)</option>
+                                <option value="ver_date_desc">Version (oldest first)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <!-- <label class="nhsuk-label" for="version_date">
+                            Version date
+                        </label> -->
+                        <!-- <select class="nhsuk-select" id="version_date" name="version_date">
+                            <option value="" selected=""></option>
+                            <option value="asc">Newest first</option>
+                            <option value="desc">Oldest first</option>
+                        </select> -->
+                    </div>
+                </fieldset>
+                <fieldset class="nhsuk-fieldset">
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+                        <h1 class="nhsuk-fieldset__heading">Content type</h1>
+                    </legend>
+                    <div class="nhsuk-form-group">
+                        <div class="nhsuk-radios">
+                            <div class="nhsuk-radios__item">
+                              <input class="nhsuk-radios__input" id="ct1" name="content_type" type="radio" value="pages">
+                              <label class="nhsuk-label nhsuk-radios__label" for="ct1">Web page</label>
+                            </div>                            
+                            <div class="nhsuk-radios__item">
+                              <input class="nhsuk-radios__input" id="ct2" name="content_type" type="radio" value="news">
+                              <label class="nhsuk-label nhsuk-radios__label" for="ct2">News</label>
+                            </div>
+                            <div class="nhsuk-radios__item">
+                              <input class="nhsuk-radios__input" id="ct3" name="content_type" type="radio" value="blogs">
+                              <label class="nhsuk-label nhsuk-radios__label" for="ct3">Blog posts</label>
+                            </div>                            
+                            <div class="nhsuk-radios__item">
+                              <input class="nhsuk-radios__input" id="ct4" name="content_type" type="radio" value="publications">
+                              <label class="nhsuk-label nhsuk-radios__label" for="ct4">Resources</label>
+                            </div>
+                            <div class="nhsuk-radios__item">
+                              <input class="nhsuk-radios__input" id="ct5" name="content_type" type="radio" value="all" checked="">
+                              <label class="nhsuk-label nhsuk-radios__label" for="ct5">All</label>
+                            </div>
+                          </div>
+                    </div>
+                    <!-- <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-address2">
+                            Address line 2
+                        </label>
+                        <input class="nhsuk-input" id="input-address2" name="address2" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-town-city">
+                            Town or city
+                        </label>
+                        <input class="nhsuk-input" id="input-town-city" name="town" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-county">
+                            County
+                        </label>
+                        <input class="nhsuk-input" id="input-county" name="county" type="text">
+                    </div> -->
+                </fieldset>
+                <fieldset class="nhsuk-fieldset">
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+                        <h1 class="nhsuk-fieldset__heading">Resource type</h1>
+                    </legend>
+                    <div class="nhsuk-form-group">
+                        <div class="nhsuk-row nhsuk-u-margin-botom-3">
+                            <!-- <label class="nhsuk-label" for="publish_date">
+                                Publish date
+                            </label> -->
+                            <select class="nhsuk-select" id="publish_date" name="publish_date">
+                                <option value="" selected="">---</option>
+                                <option value="publication">publication type</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-address1">
+                            Address line 1
+                        </label>
+                        <input class="nhsuk-input" id="input-address1" name="address1" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-address2">
+                            Address line 2
+                        </label>
+                        <input class="nhsuk-input" id="input-address2" name="address2" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-town-city">
+                            Town or city
+                        </label>
+                        <input class="nhsuk-input" id="input-town-city" name="town" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-county">
+                            County
+                        </label>
+                        <input class="nhsuk-input" id="input-county" name="county" type="text">
+                    </div> -->
+                </fieldset>
+                <fieldset class="nhsuk-fieldset">
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xs">
+                        <h1 class="nhsuk-fieldset__heading">Date</h1>
+                    </legend>
+                    <div class="nhsuk-form-group">
+                        <div class="nhsuk-date-input">
+                              <div class="nhsuk-form-group">
+                                <label class="nhsuk-label nhsuk-date-input__label" for="date_from">From</label>
+                                <input class="nhsuk-input nhsuk-date-input__input" id="date-from" name="date_from" type="date">
+                              </div>
+                              <div class="nhsuk-form-group">
+                                <label class="nhsuk-label nhsuk-date-input__label" for="date_to">To</label>
+                                <input class="nhsuk-input nhsuk-date-input__input" id="date-to" name="date_to" type="date">
+                              </div>
+                        </div>
+                    </div>
+
+                    
+                    <!-- <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-address1">
+                            Address line 1
+                        </label>
+                        <input class="nhsuk-input" id="input-address1" name="address1" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-address2">
+                            Address line 2
+                        </label>
+                        <input class="nhsuk-input" id="input-address2" name="address2" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-town-city">
+                            Town or city
+                        </label>
+                        <input class="nhsuk-input" id="input-town-city" name="town" type="text">
+                    </div>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="input-county">
+                            County
+                        </label>
+                        <input class="nhsuk-input" id="input-county" name="county" type="text">
+                    </div> -->
+                </fieldset>
+                <button class="nhsuk-button" type="submit">
+                    Filter results
+                  </button>
+            </form>
+            <!-- <ul class="nhsuk-u-margin-bottom-6">
 
                 <li><a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=pages">Pages</a></li>
                 <li><a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=news">News</a></li>
@@ -22,36 +187,38 @@
                 <li><a href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.page }}&type=atlas_case_studies">Atlas Case Studies</a></li>
                 <li><a href="{% url 'search' %}?query={{ search_query|urlencode }}">All</a></li>
 
-            </ul>
+            </ul> -->
         </div>
         <div class="nhsuk-grid-column-two-thirds">
             <div class="search-results-heading">
-              <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
-              <div class="nhsuk-body search-results-heading__details">
-                  {% if search_query %}
-                  <span>{{ results_count }} search results for <strong>' {{ search_query }}'</strong> {% if search_type %}, filtered by
-                      <strong>{{ search_type }}</strong>{% endif %}</span>
-              </div>
-            {% endif %}
+                <h1 class="nhsuk-heading-l search-results-heading__title">Search results</h1>
+                <div class="nhsuk-body search-results-heading__details">
+                    {% if search_query %}
+                    <span>{{ results_count }} search results for <strong>"{{ search_query }}"</strong>
+                        {% if search_type %}, filtered by
+                        <strong>{{ search_type }}</strong>{% endif %}</span>
+                </div>
+                {% endif %}
             </div>
 
             <div class="search-results">
-              <ul class="nhsuk-list nhsuk-list--border">
-                  {% for result in search_results %}
-                      <li class="nhsuk-panel nhsei-panel-search-result">
-                          <h2 class="nhsuk-u-margin-bottom-1 nhsuk-heading-s">
-                              <a href="{% pageurl result %}">{{ result.title|truncatewords:"16" }}</a></h2>
-                              <div class="nhsuk-body-s">
-                              {{ result.specific.body|truncatewords_html:"20"|richtext|striptags }}
-                              </div>
-                              <div class="nhsuk-body-s">
-                                  Published: {{ result.first_published_at|date:'d F Y' }} - <em>Latest version {{ result.last_published_at|date:'d F Y' }}</em><br>
-                                </div>
+                <ul class="nhsuk-list nhsuk-list--border">
+                    {% for result in search_results %}
+                    <li class="nhsuk-panel nhsei-panel-search-result">
+                        <h2 class="nhsuk-u-margin-bottom-1 nhsuk-heading-s">
+                            <a href="{% pageurl result %}">{{ result.title|truncatewords:"16" }}</a></h2>
+                        <div class="nhsuk-body-s">
+                            {{ result.specific.body|truncatewords_html:"20"|richtext|striptags }}
+                        </div>
+                        <div class="nhsuk-body-s">
+                            Published: {{ result.first_published_at|date:'d F Y' }} - <em>Latest version
+                                {{ result.last_published_at|date:'d F Y' }}</em><br>
+                        </div>
 
-                      </li>
+                    </li>
 
-                  {% endfor %}
-              </ul>
+                    {% endfor %}
+                </ul>
             </div>
 
 

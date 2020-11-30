@@ -1,9 +1,10 @@
-from cms.core.blocks import LinkListBlock
 from django.db import models
+from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
+                                         MultiFieldPanel, PageChooserPanel)
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
-from wagtail.core.models import Orderable, ParentalKey, ClusterableModel
+from wagtail.core.fields import RichTextField
+from wagtail.core.models import ClusterableModel, Orderable, ParentalKey
+
 
 @register_setting
 class CoreSettings(BaseSetting, ClusterableModel):
