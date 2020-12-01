@@ -8,8 +8,12 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
           <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
           <ul class="menu menu-bar" aria-hidden="false" role="menubar">
               <li>
-                  <a href="/publication" class="menu-link menu-bar-link">
+                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
                     Publications</a>
+                  <ul class="mega-menu mega-menu--multiLevel">
+                    <!-- Include the list partial -->
+                    {% include "partials/nav-links/publications.html" %}
+                  </ul>
               </li>
 
               <li>
