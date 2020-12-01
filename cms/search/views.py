@@ -39,8 +39,8 @@ def search(request):
 
     search_type = ''
     search_results_count = None
-    date_from = request.GET.get('date_from')
-    date_to = request.GET.get('date_to')
+    date_from = request.GET.get('date_from', '')
+    date_to = request.GET.get('date_to', '')
 
     # Search
     if query:
