@@ -1,0 +1,27 @@
+.block-panel {
+    .nhsuk-panel {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+    }
+}
+
+.nhsuk-promo {
+    margin-top: 20px;
+    .nhsuk-promo__link-wrapper {
+        background-color: $color_nhsuk-blue;
+        color: $color_nhsuk-white;
+        h3 {
+            text-decoration: none;
+        }
+        p {
+            color: $color_nhsuk-white
+        }
+        &:hover {
+            background-color: $color_shade_nhsuk-blue-20;
+            h3 {
+                color: $color_nhsuk-white;
+            }
+        }
+    }
+}

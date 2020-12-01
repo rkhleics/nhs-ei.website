@@ -7010,6 +7010,25 @@ nav a {
     .nhsuk-list .nhsuk-panel.nhsei-panel-search-result {
       padding: 24px; } }
 
+.block-panel .nhsuk-panel {
+  margin: 0;
+  padding: 0;
+  background-color: transparent; }
+
+.nhsuk-promo {
+  margin-top: 20px; }
+  .nhsuk-promo .nhsuk-promo__link-wrapper {
+    background-color: #005eb8;
+    color: #ffffff; }
+    .nhsuk-promo .nhsuk-promo__link-wrapper h3 {
+      text-decoration: none; }
+    .nhsuk-promo .nhsuk-promo__link-wrapper p {
+      color: #ffffff; }
+    .nhsuk-promo .nhsuk-promo__link-wrapper:hover {
+      background-color: #004b93; }
+      .nhsuk-promo .nhsuk-promo__link-wrapper:hover h3 {
+        color: #ffffff; }
+
 .nhsuk-image {
   width: 100%; }
 

@@ -15,13 +15,13 @@
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
             {{ self.body }}
-            <div class="nhsuk-review-date">
+            {% comment %} <div class="nhsuk-review-date">
                 <p class="nhsuk-body-s">
                     Page first published: {{ self.first_published_at|date:'d F Y' }}<br>
                     Last updated: {{ self.last_published_at|date:'d F Y' }}
                 </p>
-            </div>
-            <ul class="nhsuk-list nhsuk-pagination__list">
+            </div> {% endcomment %}
+            {% comment %} <ul class="nhsuk-list nhsuk-pagination__list">
                 {% if self.prev_sibling %}
                 <li class="nhsuk-pagination-item--previous">
                     <a class="nhsuk-pagination__link nhsuk-pagination__link--prev" href="{{ self.prev_sibling.url }}">
@@ -52,10 +52,11 @@
                     </a>
                 </li>
                 {% endif %}
-            </ul>
+            </ul> {% endcomment %}
         </div>
         <div class="nhsuk-grid-column-one-third">
             {% if children %}
+            <h2>In this section</h2>
             <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this guide">
                 <h2 class="nhsuk-u-visually-hidden">Contents</h2>
                 <ol class="nhsuk-contents-list__list">
