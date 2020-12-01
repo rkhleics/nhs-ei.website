@@ -1,0 +1,29 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 240 240">
+  <title>ICONS Sets_v4_FileTypes_4</title>
+  <g id="ZIP">
+    <g>
+      <path d="M42.83,206.45V33.55A6.13,6.13,0,0,1,49,27.4H160.15l37,37v142A6.13,6.13,0,0,1,191,212.6H49A6.2,6.2,0,0,1,42.83,206.45Z" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <line x1="160.15" y1="27.4" x2="197.17" y2="64.42" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <polyline points="197.17 64.42 160.15 64.42 160.15 27.4" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    </g>
+    <text transform="translate(87.58 190.01)" style="font-size: 42px;fill: #005EB8;font-family: ArialMT, Arial">ZI<tspan x="37.32" y="0" style="letter-spacing: -0.01806640625em">P</tspan></text>
+    <g>
+      <g>
+        <line x1="100.5" y1="62.74" x2="117.01" y2="62.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="100.5" y1="77.74" x2="117.01" y2="77.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="100.5" y1="92.74" x2="117.01" y2="92.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="100.5" y1="107.74" x2="117.01" y2="107.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="100.5" y1="122.74" x2="117.01" y2="122.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="100.5" y1="137.74" x2="117.01" y2="137.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+      </g>
+      <g>
+        <line x1="118.5" y1="54.74" x2="128.01" y2="54.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="118.5" y1="69.74" x2="135.01" y2="69.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="118.5" y1="84.74" x2="135.01" y2="84.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="118.5" y1="99.74" x2="135.01" y2="99.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="118.5" y1="114.74" x2="135.01" y2="114.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+        <line x1="118.5" y1="129.74" x2="135.01" y2="129.74" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-miterlimit: 10;stroke-width: 4px"/>
+      </g>
+    </g>
+  </g>
+</svg>

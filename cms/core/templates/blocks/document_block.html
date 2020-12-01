@@ -1,11 +1,27 @@
 <li>
-document
-   <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-one-half">
-         Document: <a href="{{ value.document.url }}">{{ value.title }}</a>
+   <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+         <div class="nhsuk-grid-row">
+
+            <div class="nhsuk-grid-column-three-quarters">
+               <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                  <a href="{{ value.document.url }}" class="nhsuk-card__link">{{ value.title }}</a>
+              </h2>
+              <p>file size: {{ file_size }}</p>
+              <div class="nhsuk-card__description">{{ value.summary }}</div>
+            </div>
+           
+            <div class="nhsuk-grid-column-one-quarter" style="text-align: right;">
+               {% if file_ext == 'pdf' %}{% include 'svg/pdf_file.svg' %}{% endif %}
+               {% if file_ext == 'csv' %}{% include 'svg/csv_file.svg' %}{% endif %}
+               {% if file_ext == 'doc' %}{% include 'svg/document_file.svg' %}{% endif %}
+               {% if file_ext == 'docx' %}{% include 'svg/document_file.svg' %}{% endif %}
+               {% if file_ext == 'ppt' %}{% include 'svg/powerpoint_file.svg' %}{% endif %}
+               {% if file_ext == 'txt' %}{% include 'svg/text_file.svg' %}{% endif %}
+               {% if file_ext == 'zip' %}{% include 'svg/zip_file.svg' %}{% endif %}
+               {% if file_ext == 'xls' %}{% include 'svg/table.svg' %}{% endif %}
+            </div>
+         </div>
       </div>
-      <div class="nhsuk-grid-column-one-half">
-         {{ value.summary }}
-      </div>
-   </div>
+    </div>
 </li>

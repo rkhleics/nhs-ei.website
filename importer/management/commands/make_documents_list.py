@@ -179,7 +179,7 @@ class Command(BaseCommand):
                 'value': []
             }
 
-            print(mapped_type_postitions)
+            # print(mapped_type_postitions)
             if not 'anchor' in mapped_type_postitions:
                 # block_group['value'] = []
                 # block_group = {

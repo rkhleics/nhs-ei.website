@@ -1,8 +1,11 @@
-jump menu
-<ol>
+<h3>Contents</h3>
+<nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this guide">
+  <h2 class="nhsuk-u-visually-hidden">Contents</h2>
+  <ol class="nhsuk-contents-list__list">
     {% for menu in value.menu %}
-        <li>
-            <a href="#{{ menu.menu_id }}">{{ menu.title }}</a>
-        </li>
+    <li class="nhsuk-contents-list__item">
+      <a class="nhsuk-contents-list__link" href="#{{ menu.menu_id }}">{{ menu.title }}</a>
+    </li>
     {% endfor %}
-</ol>
+  </ol>
+</nav>

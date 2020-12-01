@@ -1,0 +1,13 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 240 240">
+  <title>ICONS Sets_v4_FileTypes_4</title>
+  <g id="DOC">
+    <path d="M46.14,206.45V33.55a6.12,6.12,0,0,1,6.15-6.15H163.46l37,37v142a6.12,6.12,0,0,1-6.15,6.15h-142A6.2,6.2,0,0,1,46.14,206.45Z" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <line x1="163.46" y1="27.4" x2="200.47" y2="64.42" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <polyline points="200.47 64.42 163.46 64.42 163.46 27.4" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <text transform="translate(77.14 190.01)" style="font-size: 42px;fill: #005EB8;font-family: ArialMT, Arial">DOC</text>
+    <line x1="64.53" y1="85.75" x2="168.81" y2="85.75" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <line x1="66.07" y1="109.25" x2="168.81" y2="109.25" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <line x1="66.07" y1="131.75" x2="111.17" y2="131.75" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <line x1="65.07" y1="61.92" x2="130.17" y2="61.92" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+  </g>
+</svg>

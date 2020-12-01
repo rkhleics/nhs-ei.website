@@ -1,3 +1,4 @@
+from django.template.defaultfilters import filesizeformat
 from wagtail.core.blocks import (
     StructBlock, RawHTMLBlock, CharBlock, StreamBlock, ListBlock
 )
@@ -80,6 +81,13 @@ class DocumentBlock(StructBlock):
         icon = 'doc'
         template = 'blocks/document_block.html'
         help_text = 'Choose or upload a document'
+
+    def get_context(self, value, parent_context):
+        context = super().get_context(value, parent_context)
+        context['file_ext'] = value['document'].file_extension
+        context['file_size'] = filesizeformat(value['document'].get_file_size())
+        
+        return context
 
 
 class DocumentLinkBlock(StructBlock):
