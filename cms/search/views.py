@@ -12,52 +12,107 @@ from cms.pages.models import BasePage
 
 
 def search(request):
-    search_query = request.GET.get('query', None)
-    page = request.GET.get('page', 1)
-    search_ordering = 'first_published_at'
+    query = request.GET.get('query', None)
+    """
+    sample query
+    ?
+    query=nursing&
+    order=pub_date_asc&
+    content_type=pages&
+    date_from=2020-11-01&
+    date_to=2020-11-29
+    """
 
-    search_params = ''
+    page = request.GET.get('page', 1)
+    
+    """
+    possible ordering
+    'first_published_at'
+    '-first_published_at'
+    'latest_revision_created_at'
+    '-latest_revision_created_at'
+    """
+    search_ordering = '-first_published_at'
+    
+    if request.GET.get('order'):
+        search_ordering = request.GET.get('order')
+
     search_type = ''
     search_results_count = None
+    date_from = request.GET.get('date_from')
+    date_to = request.GET.get('date_to')
 
     # Search
-    if search_query:
-        if request.GET.get('type') == 'news':
-            search_results = Post.objects.live().order_by(search_ordering).search(search_query)
-            search_params = '&type=news'
-            search_type = 'News'
+    if query:
+        if request.GET.get('content_type') == 'news':
+            """ searching news only """
+            if request.GET.get('date_from') and request.GET.get('date_to'):
+                objs = Post.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+                search_results = objs.search(query)
+                date_from = request.GET.get('date_from')
+                date_to = request.GET.get('date_to')
+            else:
+                search_results = Post.objects.live().order_by(search_ordering).search(query)
+            
+            search_type = 'news'
 
-        elif request.GET.get('type') == 'blogs':
-            search_results = Blog.objects.live().order_by(search_ordering).search(search_query)
-            search_params = '&type=blogs'
-            search_type = 'Blogs'
+        elif request.GET.get('content_type') == 'blogs':
+            """ searching blogs only """
+            if request.GET.get('date_from') and request.GET.get('date_to'):
+                objs = Blog.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+                search_results = objs.search(query)
+                date_from = request.GET.get('date_from')
+                date_to = request.GET.get('date_to')
+            else:
+                search_results = Blog.objects.live().order_by(search_ordering).search(query)
+            
+            search_type = 'blogs'
 
-        elif request.GET.get('type') == 'pages':
-            search_results = BasePage.objects.live().order_by(search_ordering).search(search_query)
-            search_params = '&type=pages'
-            search_type = 'Pages'
+        elif request.GET.get('content_type') == 'pages':
+            """ searching pages only """
+            if request.GET.get('date_from') and request.GET.get('date_to'):
+                objs = BasePage.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+                search_results = objs.search(query)
+                date_from = request.GET.get('date_from')
+                date_to = request.GET.get('date_to')
+            else:
+                search_results = BasePage.objects.live().order_by(search_ordering).search(query)
+            
+            search_type = 'pages'
 
-        elif request.GET.get('type') == 'publications':
-            search_results = Publication.objects.live().order_by(search_ordering).search(search_query)
-            search_params = '&type=publications'
-            search_type = 'Publications'
-
-        elif request.GET.get('type') == 'atlas_case_studies':
-            search_results = AtlasCaseStudy.objects.live().order_by(search_ordering).search(search_query)
-            search_params = '&type=atlas_case_studies'
-            search_type = 'Atlas Case Studies'
+        elif request.GET.get('content_type') == 'publications':
+            """ searching publications only """
+            if request.GET.get('date_from') and request.GET.get('date_to'):
+                objs = Publication.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+                search_results = objs.search(query)
+                date_from = request.GET.get('date_from')
+                date_to = request.GET.get('date_to')
+            else:
+                search_results = Publication.objects.live().order_by(search_ordering).search(query)
+            
+            search_type = 'publications'
 
         else:
-            search_results = Page.objects.live().order_by(search_ordering).search(search_query)
+            if request.GET.get('date_from') and request.GET.get('date_to'):
+                objs = Page.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+                search_results = objs.search(query)
+                date_from = request.GET.get('date_from')
+                date_to = request.GET.get('date_to')
+            else:
+                search_results = Page.objects.live().order_by(search_ordering).search(query)
+
+        # if request.GET.get('date_from') and request.GET.get('date_to'):
+        #     search_results.filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+        
 
         search_results_count = search_results.count()
 
-        query = Query.get(search_query)
-
+        query = Query.get(query)
         # Record hit
         query.add_hit()
     else:
         search_results = Page.objects.none()
+
 
     # Pagination
     paginator = Paginator(search_results, 10)
@@ -68,10 +123,16 @@ def search(request):
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
 
+    search_params = '&query={}&order={}&content_type={}&date_from={}&date_to={}'.format(query, search_ordering, search_type, date_from, date_to)
+
     return TemplateResponse(request, 'search/search.html', {
-        'search_query': search_query,
+        'query': query,
         'search_results': search_results,
+        'results_count': search_results_count,
+        'page': page,
         'search_params': search_params,
-        'search_type': search_type,
-        'results_count': search_results_count
+        'content_type': search_type,
+        'order': search_ordering,
+        'date_from': date_from,
+        'date_to': date_to,
     })
