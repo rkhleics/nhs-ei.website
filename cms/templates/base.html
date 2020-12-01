@@ -53,11 +53,7 @@
 
 <body class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
-    {% block importer_toolbar %}
-    <div style="position:fixed;bottom:0;left:0;background-color:black;padding:12px;font-size:14px;">
-        <a style="color:white" href="/importer">Importer Dashboard</a>
-    </div>
-    {% endblock importer_toolbar %}
+
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
     {% include "partials/skip_link.html" %}
     {% block bodyStart %}{% endblock %}

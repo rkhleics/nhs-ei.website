@@ -51,18 +51,3 @@ class HomePage(Page):
             FieldPanel('all_publications_sub_title'),
         ], heading='Latest Publications'),
     ]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request)
-        context['component_pages'] =  ComponentsPage.objects.child_of(self)
-        context['base_pages'] =  BasePage.objects.child_of(self)
-        context['landing_pages'] =  LandingPage.objects.child_of(self)
-        return context
-
-    # @property
-    # def next_sibling(self):
-    #     return self.get_next_siblings().live().first()
-
-    # @property
-    # def prev_sibling(self):
-    #     return self.get_prev_siblings().live().first()
