@@ -18,7 +18,7 @@
         {% endif %}
 
         <div class="nhsuk-body-s">
-            {{ self.first_published_at|date }} | Author: {{ self.author }} <i>we are missing the ability to match ID to
+            {{ self.first_published_at|date:'j N Y | g:m:s a' }} | Author: {{ self.author }} <i>we are missing the ability to match ID to
                 a name</i>
         </div>
 
