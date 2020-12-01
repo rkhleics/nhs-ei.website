@@ -32,7 +32,7 @@
         </p>
     </div>
 
-    <ul class="nhsuk-list nhsuk-pagination__list">
+    {% comment %} <ul class="nhsuk-list nhsuk-pagination__list">
         {% if self.prev_sibling %}
         <li class="nhsuk-pagination-item--previous">
             <a class="nhsuk-pagination__link nhsuk-pagination__link--prev" href="{{ self.prev_sibling.url }}">
@@ -65,7 +65,7 @@
         </li>
         {% endif %}
 
-    </ul>
+    </ul> {% endcomment %}
 
 </div>
 

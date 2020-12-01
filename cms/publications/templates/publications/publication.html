@@ -10,8 +10,8 @@
 
     <div class="nhsuk-review-date">
         <p class="nhsuk-body-s">
-            Page first published: {{ self.first_published_at|date:'d F Y' }}<br>
-            Last updated: {{ self.last_published_at|date:'d F Y' }}
+            Page first published: {{ self.first_published_at|date:'j N Y | g:m:s a' }}<br>
+            Last updated: {{ self.last_published_at|date:'j N Y | g:m:s a' }}
         </p>
     </div>
     <!-- <div class="nhsuk-body-s">
