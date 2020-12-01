@@ -493,7 +493,7 @@ class DocumentsBuilder:
                     file.created_at = make_aware(
                         dateutil.parser.parse(document['date']))
                     file.save()
-                    return self.create_document_type(file, document)
+                    return self.create_document_type(file, document, self.document)
                 else:
                     with open('log/make_documents_list_errors.txt', 'a') as the_file:
                         the_file.write('{}: {}\n'.format(
@@ -533,11 +533,11 @@ class DocumentsBuilder:
 
         return block
 
-    def create_document_type(self, file, document):
+    def create_document_type(self, file, document, container):
         block = {
             'type': 'document',
             'value': {
-                'title': document['title'],
+                'title': container['title'],
                 'document': file.id,
                 # 'type': 'pdf',
                 # 'num_pages': '2',

@@ -1,18 +1,16 @@
-
 import ast
 import json
 import sys
-from typing import Mapping
 
-from django.core.management.base import BaseCommand
-from django.utils.text import slugify
 from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
-from importer.importer_cls import DocumentsBuilder
-from importer.richtextbuilder import RichTextBuilder
 from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from cms.posts.models import Post
 from cms.publications.models import Publication
+from django.core.management.base import BaseCommand
+from django.utils.text import slugify
+from importer.importer_cls import DocumentsBuilder
+from importer.richtextbuilder import RichTextBuilder
 from wagtail.documents.models import Document
 
 DOCUMENT_TYPES = [
@@ -42,7 +40,6 @@ class Command(BaseCommand):
 
         with open('log/make_documents_list_errors.txt', 'w') as the_file:
             the_file.write('make documents list missing media url\n')
-        # print(self.urls)
 
     def handle(self, *args, **options):
 
@@ -56,8 +53,7 @@ class Command(BaseCommand):
 
         for publication in publications:
             component_fields = ast.literal_eval(publication.component_fields)
-            # print(publication, publication.wp_id)
-            introduction = []
+            introduction = ''
             docs = []
             document_list = []
             for row in component_fields:
@@ -70,7 +66,7 @@ class Command(BaseCommand):
                             item_detail = item_detail.replace(
                                 str(link[0]), str(link[1]))
                         introduction = item_detail
-                        # introduction = row[k]
+
                     if k == 'documents':
                         # some docs have no document !!!! whaaaat wp_id 1115
                         docs = ast.literal_eval(row[k]) or []
@@ -87,9 +83,6 @@ class Command(BaseCommand):
 
             # make the jump menu after by looking for headings in final document_list[]
 
-            # if publication.title == 'NHS provider directory and registers of licensed healthcare providers':
-            # print(json.dumps(document_list))
-            # sys.exit()
             jump_menu_links = []
 
             for document in document_list:
@@ -143,25 +136,6 @@ class Command(BaseCommand):
             if len(mapped_type_postitions) == 1:
                 mapped_type_postitions = mapped_type_postitions[0]
 
-            # print(mapped_type_postitions)
-            # sys.exit()
-
-            # block_group_template = {
-            #     'type': 'document_group',
-            #     'value': []
-            # }
-
-            # mapped_type_postitions = []
-
-            # for i in range(0, len(document_list)):
-            #     if document_list[i]['type'] == 'named_anchor':
-            #         mapped_type_postitions.append('anchor')
-            #     else:
-            #         mapped_type_postitions.append('doc')
-
-            # mapped_type_postitions.append('end') # can check for this to finish
-            # print(mapped_type_postitions)
-
             """ 
             mapped_type_positions becomes this 
             
@@ -169,23 +143,14 @@ class Command(BaseCommand):
             https://www.england.nhs.uk/publication/torbay-and-south-devon-nhs-foundation-trust/ wp_id=146041
             may be problem as very different layout
             """
-            # if publication.wp_id == '146041':
-            # print(publication, publication.wp_id)
-            # print(mapped_type_postitions)
-            # print(document_list)
 
             block_group = {
                 'type': 'document_group',
                 'value': []
             }
 
-            # print(mapped_type_postitions)
             if not 'anchor' in mapped_type_postitions:
-                # block_group['value'] = []
-                # block_group = {
-                #     'type': 'document_group',
-                #     'value': []
-                # }
+
                 for i in range(0, len(mapped_type_postitions)):
                     block_group['value'].append(document_list[i])
                 new_stream_value.append(block_group)
@@ -200,34 +165,21 @@ class Command(BaseCommand):
                             'type': 'document_group',
                             'value': []
                         }
-                        print(publication.wp_id, publication)
-                        # print(len(item))
-                        # print(document_list[pos])
+
                         for doc in item:
                             block_group['value'].append(document_list[pos])
                             pos += 1
                         new_stream_value.append(block_group)
-                        # print(block_group)
-                        # print(block_group)
 
                     else:  # deal with anchor dont forget it's always len 1
 
                         new_stream_value.append(document_list[pos])
                         pos += 1
 
-                    # block_group['value'].clear()
-                    # print(new_stream_value)
-            # publication.documents = json.dumps(new_stream_value)
-            # if jump_menu['value']['menu']:
-            #     new_stream_value.insert(0, jump_menu)
-            #     publication.documents = json.dumps(jump_menu + new_stream_value)
-            # else:
-            # if publication.wp_id == 144645:
-            #     print(json.dumps(new_stream_value))
             if jump_menu['value']['menu']:
                 new_stream_value.insert(0, jump_menu)
-                # publication.documents = json.dumps(new_stream_value)
-            # else:
+
+            publication.body = introduction
             publication.documents = json.dumps(new_stream_value)
             rev = publication.save_revision()
             publication.first_published_at = publication.first_published_at
@@ -235,251 +187,6 @@ class Command(BaseCommand):
             publication.latest_revision_created_at = publication.latest_revision_created_at
             publication.save()
             rev.publish()
-
-            # anchor_pos = None
-            # counter = 0
-            # for item in document_list:
-
-            #     if mapped_type_postitions[counter] == 'doc':
-
-            #         if not item['type'] == 'free_text':
-            #             block_group['value'].append(item) # document
-            #         else:
-            #             new_stream_value.append(item) # free text
-
-            #     if mapped_type_postitions[counter] == 'anchor':
-
-            #         if len(block_group['value']) == 0:
-
-            #             new_stream_value.append(item) # anchor
-
-            #         else:
-
-            #             new_stream_value.append(block_group)
-            #             block_group['value'].clear()
-            #             new_stream_value.append(item)
-
-            #     counter += 1
-            # print('---')
-            # print(new_stream_value)
-            # print('===')
-            # print(block_group)
-
-            # print(mapped_type_postitions[counter])
-            # if mapped_type_postitions[counter] == 'doc' and not item['type'] == 'free_text':
-            #     block_group['value'].append(item)
-            # if mapped_type_postitions[counter] == 'doc' and item['type'] == 'free_text':
-            #     new_stream_value.append(item)
-
-            # print('===')
-            # print(block_group)
-            # if mapped_type_postitions[counter] == 'anchor':
-            #     print('is anchor')
-            #     if len(block_group['value']) == 0:
-            #         print('block = 0')
-            #         new_stream_value.append(item)
-            #     elif len(block_group['value']) > 0:
-            #         print('block ! 0')
-            #         new_stream_value.append(block_group)
-            #         new_stream_value.append(item)
-            #         block_group['value'].clear()
-
-            # if mapped_type_postitions[counter] == 'anchor' and len(block_group['value']) == 0:
-
-            # elif mapped_type_postitions[counter] == 'anchor' and len(block_group['value']) > 0:
-            #     new_stream_value.append(block_group)
-            #     new_stream_value.append(item)
-            #     block_group['value'].clear()
-            # if mapped_type_postitions[counter] == 'doc' and not item['type'] == 'free_text':
-            #     block_group['value'] = item
-            # if mapped_type_postitions[counter] == 'anchor' and len(block_group['value']) > 0:
-            #     new_stream_value.append(block_group)
-            #     block_group['value'] = []
-            #     new_stream_value.append(item)
-            # elif mapped_type_postitions[counter] == 'anchor' and len(block_group['value']) == 0:
-            #     new_stream_value.append(item)
-
-            # for i in range(0, len(mapped_type_postitions)):
-            #     if mapped_type_postitions[i] == 'anchor':
-            #         new_stream_value.append(document_list[i])
-            #     if mapped_type_postitions[i] == 'doc' and document_list[i]['type'] != 'free-text':
-            #         block_group['value'].append(document_list[i])
-            #         if mapped_type_postitions[i+1] == 'anchor':
-            #             new_stream_value.append(block_group)
-            #             block_group['value'] = []
-
-            # print(block_group)
-
-            # if mapped_type_postitions[i] == 'anchor':
-            #     new_stream_value.append(document_list[i])
-            #     # new_stream_value.append(block_group)
-            #     # block_group['value'] = []
-
-            # # if mapped_type_postitions[i] == 'end':
-            # #     new_stream_value.append(block_group)
-            # #     # block_group['value'] = []
-
-            # if mapped_type_postitions[i] == 'doc':
-            #     block_group['value'].append(document_list[i])
-
-            # if mapped_type_postitions[i+1] == 'anchor':
-            #     new_stream_value.append(block_group)
-            #     block_group['value'] = []
-
-            # elif len(block_group['value']) > 0 and mapped_type_postitions[i] == 'anchor':
-            #         new_stream_value.append(block_group)
-
-            # else:
-            #     new_stream_value.append(document_list[i])
-            # elif mapped_type_postitions[i] == 'anchor' and not len(block_group['value']):
-            #     new_stream_value.append(document_list[i])
-            # elif mapped_type_postitions[i] == 'doc' and document_list[i]['type'] != 'free_text':
-            #     block_group['value'].append(document_list[i])
-
-            # print(block_group)
-
-            # print(json.dumps(new_stream_value, indent=1))
-            # if mapped_type_postitions[i] == 'doc':
-            #     block_group['value'].append(document_list[i])
-            # print(document_list[i].title)
-            # if mapped_type_postitions[i] == 'anchor':
-            #     # if len(block_group['value']) > 0 and mapped_type_postitions[i+i] == 'doc':
-            #     #     new_stream_value.append(block_group)
-            #     #     block_group['value'] = []
-            #     new_stream_value.append(document_list[i])
-            #     if mapped_type_postitions[i+1] == 'anchor':
-            #         new_stream_value.append(block_group)
-            #         block_group['value'] = []
-            # if not document_list[i]['type'] != 'free_text':
-            #     if mapped_type_postitions[i] == 'doc':
-            #         print('build block group')
-            #         block_group['value'].append(document_list[i])
-            #     elif mapped_type_postitions[i] == 'anchor':
-            #         new_stream_value.append(document_list[i])
-            #         print('write anchor')
-            #     if block_group['value'] and mapped_type_postitions[i+1] == 'anchor':
-            #         print('write block group')
-            #         new_stream_value.append(block_group)
-            #         block_group['value'] = []
-            # elif document_list[i]['type'] != 'free_text':
-            #     new_stream_value.append(document_list[i])
-            # if mapped_type_postitions[i] == 'doc':
-            #     block_group['value'].append(document_list[i])
-            # elif mapped_type_postitions[i] == 'anchor':
-            #     new_stream_value.append(document_list[i])
-            #     if block_group['value']:
-            #         new_stream_value.append(block_group)
-
-            # if 'anchor' not in mapped_type_postitions:
-            #     # just render all blocks in a block group
-            # if mapped_type_postitions[i+1] == 'end' and block_group['value']:
-            #     new_stream_value.append(block_group)
-            # elif mapped_type_postitions[i] == 'doc' and mapped_type_postitions[i+1] != 'end' and mapped_type_postitions[i] != 'anchor':
-            #     block_group['value'].append(document_list[i])
-            # elif mapped_type_postitions[i] == 'anchor' and not block_group['value']:
-            #     new_stream_value.append(document_list[i])
-            # for i in range(0, len(mapped_type_postitions)):
-            #     if document_list[i]['type'] == 'doc' and mapped_type_postitions[i+1] == 'end':
-            #         new_stream_value.append(block_group)
-            #     elif document_list[i]['type'] == 'doc' and mapped_type_postitions[i+1] == 'doc':
-            #         block_group['value'].append(document_list[i])
-            #     elif document_list[i]['type'] == 'anchor' and block_group['value']:
-            #         new_stream_value.append(document_list[i])
-            # if mapped_type_postitions[i+1] != 'end' # write all out
-
-            # for i in range(0, len(mapped_type_postitions)):
-            # if mapped_type_postitions == 'anchor':
-            #     new_stream_value.append(document_list[i])
-            # else:
-            #     # build the block_group value
-            #     block_group['value'].append(document_list[i])
-            #     if i == len(mapped_type_postitions) - 1: # reached the end so write out block_group
-            #         new_stream_value.append(block_group)
-
-            # print(len(mapped_type_postitions))
-            # next_type = mapped_type_postitions[i+1] or None
-            # if i < len(mapped_type_postitions) and mapped_type_postitions[i+1] == 'anchor':
-            #     new_stream_value.append(block_group)
-            #     block_group['value'] = []
-            # if mapped_type_postitions[i] ==
-            # if i in mapped_type_postitions:
-            #     block_group['value'] = []
-            #     new_stream_value.append(document_list[i])
-            #     if block_group['value']:
-            #         new_stream_value.append(block_group)
-            #     # new_stream_value.append(block_group)
-            #     # break
-            # else:
-            #     block_group['value'].append(document_list[i])
-            # elif mapped_anchor_postitions[i+1] != i: # make block group
-            #     block_group['value'].append(document_list[i])
-
-            #     if document_list[i]['type'] == 'named_anchor';
-            #     print(document_list[i]['type'])
-            # if document_list[i]['type']['value'] == 'named_anchor':
-            #     new_stream_value.append(document_list[i])
-            # for item in document_list:
-            #     if item['type'] == 'named_anchor':
-            #     elif not item['type'] == 'named_anchor':
-            #         block_group_template['value'].append(item)
-            #         # new_stream_value.append(block÷_group_template)
-            # print(new_stream_value)
-            # if publication.title == 'NHS provider directory and registers of licensed healthcare providers':
-            # print(document_list)
-            # print(mapped_type_postitions)
-            # print(json.dumps(new_stream_value, indent=2))
-            # print(json.dumps(document_list, indent=2))
-            # sys.exit()
-            # for item in document_list:
-            #     # assume no more anchors as each group needs one
-            #     if not item['type'] == 'name_anchor':
-
-            # if publication.title == 'NHS provider directory and registers of licensed healthcare providers':
-            # need to combine the doclist into block_group with title before if exists
-            # new_heading = True
-
-            # for item in document_list:
-            #     if item['type']
-            #     block_group = {
-            #         'type': 'document_group',
-            #         'value': document_list
-            #     }
-
-            #         if
-            #         print(json.dumps(item))
-
-            # doc_list = block_group
-
-            # print(publication, publication.id)
-
-            # print(jump_menu)
-
-            # sys.exit()
-
-            # if jump_menu['value']['menu']:
-            #     doc_list.append(jump_menu)
-            #     doc_list.append(block_group)
-
-            # print(block_group)
-            # print(doc_list, publication)
-            # publication.body = introduction
-            # if jump_menu['value']['menu']:
-            #     publication.documents = json.dumps([jump_menu, block_group])
-            # else:
-            #     publication.documents = json.dumps([block_group])
-            # rev = publication.save_revision()
-            # publication.first_published_at = publication.first_published_at
-            # publication.last_published_at = publication.last_published_at
-            # publication.latest_revision_created_at = publication.latest_revision_created_at
-            # publication.save()
-            # rev.publish()
-            # if publication.title == 'NHS provider directory and registers of licensed healthcare providers':
-            #     # print(json.dumps([jump_menu, block_group], indent=2))
-            #     # print(jump_menu)
-            #     # print(block_group)
-            #     # print(json.dumps(document_list, indent=2))
-            # sys.exit()
-
 
 """
 exmaple URL https://www.england.nhs.uk/wp-json/wp/v2/documents/144645

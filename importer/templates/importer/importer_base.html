@@ -1,0 +1,52 @@
+{% load static wagtailuserbar %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Importer</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {# Global stylesheets #}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/importer-style.css' %}">
+    {% comment %} <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+    </style> {% endcomment %}
+    {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+</head>
+
+<body class="container padding-xl text-component">
+        <h3>Landing Pages</h3>
+        {% for child in landing_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+        <br>
+        <h3>Component Pages</h3>
+        {% for child in component_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+        <br>
+        <h3>Base Pages</h3>
+        {% for child in base_pages %}
+        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
+        {% endfor %}
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/importer-scripts.js' %}"></script>
+
+        {% block extra_js %}
+        {# Override this in templates to add extra javascript #}
+        {% endblock %}
+</body>
+
+</html>

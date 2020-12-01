@@ -137,22 +137,4 @@
     </div>
 </section>
 
-<div class="nhsuk-width-container">
-    <div class="nhsuk-panel">
-
-        <h3>TEMPORARY CONTENT</h3>
-        <h1>Landing Pages</h1>
-        {% for child in landing_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
-        {% endfor %}
-        <h1>Component Pages</h1>
-        {% for child in component_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
-        {% endfor %}
-        <h1>Base Pages</h1>
-        {% for child in base_pages %}
-        <div><a href="{{ child.url }}">{{ child }}{{ child.md_pcc_reference }}</a></div>
-        {% endfor %}
-    </div>
-</div>
 {% endblock content %}
