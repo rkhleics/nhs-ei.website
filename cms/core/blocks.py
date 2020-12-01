@@ -1,3 +1,4 @@
+from django.template.defaultfilters import filesizeformat
 from wagtail.core.blocks import (
     StructBlock, RawHTMLBlock, CharBlock, StreamBlock, ListBlock
 )
@@ -24,6 +25,10 @@ from wagtailnhsukfrontend.blocks import (
     PromoGroupBlock,
     SummaryListBlock,
 )
+
+def pretty_size(n,pow=0,b=1024,u='B',pre=['']+[p+'i'for p in'KMGTPEZY']):
+    pow,n=min(int(log(max(n*b**pow,1),b)),len(pre)-1),n*b**pow
+    return "%%.%if %%s%%s"%abs(pow%(-pow-1))%(n/b**float(pow),pre[pow],u)
 
 
 class RecentPostsBlock(FlattenValueContext, StructBlock):
@@ -80,6 +85,13 @@ class DocumentBlock(StructBlock):
         icon = 'doc'
         template = 'blocks/document_block.html'
         help_text = 'Choose or upload a document'
+
+    def get_context(self, value, parent_context):
+        context = super().get_context(value, parent_context)
+        context['file_ext'] = value['document'].file_extension
+        context['file_size'] = filesizeformat(value['document'].get_file_size())
+        
+        return context
 
 
 class DocumentLinkBlock(StructBlock):

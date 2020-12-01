@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
+    <ul class="nhsuk-list">
 {% for block in value %}
-    <ul>
         {% include_block block %} <br>
-    </ul>
 {% endfor %}
+    </ul>

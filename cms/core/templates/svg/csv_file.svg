@@ -1,0 +1,20 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 240 240">
+  <title>ICONS Sets_v4_FileTypes_4</title>
+  <g id="CSV">
+    <path d="M46.14,206.45V33.55a6.12,6.12,0,0,1,6.15-6.15H163.46l37,37v142a6.12,6.12,0,0,1-6.15,6.15h-142A6.2,6.2,0,0,1,46.14,206.45Z" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <line x1="163.46" y1="27.4" x2="200.47" y2="64.42" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <polyline points="200.47 64.42 163.46 64.42 163.46 27.4" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    <text transform="translate(80.63 190.01)" style="font-size: 42px;fill: #005EB8;font-family: ArialMT, Arial">CSV</text>
+    <g id="csv_icon" data-name="csv icon">
+      <rect x="69.62" y="63.35" width="27.06" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="70" y="87.36" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="70" y="111.75" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="109.63" y="63.35" width="27.06" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="110.01" y="87.36" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="110.01" y="111.75" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="150.03" y="87.36" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <rect x="150.03" y="111.75" width="26.68" height="12.96" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+      <polyline points="176.7 76.31 149.65 76.31 149.65 63.35 156.37 63.35" style="fill: none;stroke: #005EB8;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4px"/>
+    </g>
+  </g>
+</svg>

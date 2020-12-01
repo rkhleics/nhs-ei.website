@@ -534,27 +534,14 @@ class DocumentsBuilder:
         return block
 
     def create_document_type(self, file, document):
-        # print('document type')
-        """
-        {
-            'type': 'document',
-            'value': {
-                'title': 'optional label',
-                'document': 'file'
-                'type': 'pdf'
-                'num_pages': '2'
-                'file_size': '1000'
-            }
-        }
-        """
         block = {
             'type': 'document',
             'value': {
                 'title': document['title'],
                 'document': file.id,
-                'type': 'pdf',
-                'num_pages': '2',
-                'file_size': '1000',
+                # 'type': 'pdf',
+                # 'num_pages': '2',
+                # 'file_size': '1000',
             }
         }
 
@@ -564,10 +551,10 @@ class DocumentsBuilder:
         return {
             'type': 'document_link',
             'value': {
-                'title': '1234',
-                'external_url': '1234',
+                'title': document['title'],
+                'external_url': document['link_url'],
                 'page': '1234',
-                'summary': '1234',
+                'summary': document['snapshot'],
             }
         }
 
@@ -575,15 +562,15 @@ class DocumentsBuilder:
         return {
             'type': 'document_embed',
             'value': {
-                'title': 'video block',
-                'html': '1234'
+                'title': document['title'],
+                'html': document['audio_or_video']
             }
         }
 
     def create_free_text(self, document):
         return {
             'type': 'free_text',
-            'value': '1234'
+            'value': document['free_text']
         }
 
     #     self.component_keys = ['a_to_z_index_component', 'article_component', 'in_this_section_component',
