@@ -1,24 +1,43 @@
 /* ==========================================================================
    #BETA-BANNER
    ========================================================================== */
-
 .app-phase-banner__container {
-  border-bottom: 1px solid $nhsuk-border-color;
-  padding: nhsuk-spacing(2) 0;
-}
-
-.app-phase-banner__content {
-  display: table;
-  margin-bottom: 0;
-
-  .app-phase-banner__content__tag {
-    display: block;
-    margin-right: nhsuk-spacing(2);
+  margin-bottom: 10px;
+  .app-phase-banner__content {
+    // div {
+      color: $color_nhsuk-white;
+      display: flex;
+      flex-direction: column;
+      // text-align: center;
+      strong {
+        margin-top: -15px;
+      }
+      a {
+        color: $color_nhsuk-white;
+      }
+    // }
   }
 }
 
-.app-phase-banner__text {
-  @include nhsuk-font($size: 16, $line-height: 1.2);
-  display: table-cell;
-  vertical-align: baseline;
-}
+// .app-phase-banner__container {
+//   // border-bottom: 1px solid $nhsuk-border-color;
+//   padding: nhsuk-spacing(2) 0;
+//   color: $color_nhsuk-white;
+// }
+
+// .app-phase-banner__content {
+//   display: table;
+//   margin-bottom: 0;
+//   text-align: center;
+
+//   .app-phase-banner__content__tag {
+//     display: block;
+//     margin-right: nhsuk-spacing(2);
+//   }
+// }
+
+// .app-phase-banner__text {
+//   @include nhsuk-font($size: 16, $line-height: 1.2);
+//   display: table-cell;
+//   vertical-align: baseline;
+// }

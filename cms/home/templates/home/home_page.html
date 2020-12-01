@@ -25,7 +25,7 @@
                 <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
                 {{ self.all_news_sub_title|richtext }}
                 <div class="nhsuk-grid-row">
-                    {% get_lastest_posts_columns 6 as posts %}
+                    {% get_lastest_posts_columns 4 as posts %}
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for post in posts.0 %}
@@ -93,7 +93,7 @@
                 <h2 class="nhsuk-heading-l">{{ self.all_publications_title }}</h2>
                 {{ self.all_publications_sub_title|richtext }}
                 <div class="nhsuk-grid-row">
-                    {% get_lastest_publications_columns 6 as publications %}
+                    {% get_lastest_publications_columns 4 as publications %}
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for publication in publications.0 %}

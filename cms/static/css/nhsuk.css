@@ -6384,32 +6384,15 @@ b {
    #BETA-BANNER
    ========================================================================== */
 .app-phase-banner__container {
-  border-bottom: 1px solid #d8dde0;
-  padding: 8px 0; }
-
-.app-phase-banner__content {
-  display: table;
-  margin-bottom: 0; }
-  .app-phase-banner__content .app-phase-banner__content__tag {
-    display: block;
-    margin-right: 8px; }
-
-.app-phase-banner__text {
-  font-weight: 400;
-  font-size: 14px;
-  font-size: 0.875rem;
-  line-height: 1.2;
-  display: table-cell;
-  vertical-align: baseline; }
-  @media (min-width: 40.0625em) {
-    .app-phase-banner__text {
-      font-size: 16px;
-      font-size: 1rem;
-      line-height: 1.2; } }
-  @media print {
-    .app-phase-banner__text {
-      font-size: 14pt;
-      line-height: 1.2; } }
+  margin-bottom: 10px; }
+  .app-phase-banner__container .app-phase-banner__content {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column; }
+    .app-phase-banner__container .app-phase-banner__content strong {
+      margin-top: -15px; }
+    .app-phase-banner__container .app-phase-banner__content a {
+      color: #ffffff; }
 
 .nhsuk-related-nav {
   border-top: 1px solid #d8dde0; }
