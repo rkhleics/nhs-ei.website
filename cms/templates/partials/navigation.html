@@ -3,52 +3,48 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
 -->
 <!-- needs refining and styling & Fix mobile-->
 <div class="nhsuk-width-container">
-  <div class="nav">
-      <nav id="header-navigation" class="" role="navigation" aria-label="Primary navigation" aria-labbeledby="label-navigation">
+  <div class="nav mega_nav_wrapper">
+      <nav id="header-navigation" class="mega_nav" role="navigation" aria-label="Primary navigation" aria-labbeledby="label-navigation">
           <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
           <ul class="menu menu-bar" aria-hidden="false" role="menubar">
               <li>
-                  <a href="/publication" class="menu-link menu-bar-link">
-                    Publications</a>
+                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
+                    Publications
+                  </a>
+                  <ul class="mega-menu mega-menu--multiLevel">
+                    {% include "partials/nav-links/publications.html" %}
+                  </ul>
               </li>
 
               <li>
-                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Our work</a>
+                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
+                    Our work
+                  </a>
                   <ul class="mega-menu mega-menu--multiLevel">
                     <li>
-                        <a href="/ourwork" class="menu-link mega-menu-link mega-menu-header">Our work</a>
+                        <a href="/ourwork" class="menu-link mega-menu-link mega-menu-header">
+                          Our work
+                        </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-link mega-menu-link " aria-haspopup="true">Our priorities</a>
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link " aria-haspopup="true">
+                          Our priorities
+                        </a>
                         <ul class="menu menu-list menu-multiColumn">
-                          <li>
-                              <a href="/our-priorities" class="menu-link mega-menu-link mega-menu-header">Our priorities</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          {% comment %} {% for item in data.our_priorities %}
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  {{ item['title'] }}<br />
-                                  <small>{{ item['description'] }}</small>
-                              </a>
-                            </li>
-                          {% endfor %} {% endcomment %}
-
+                          {% include "partials/nav-links/our-work__our-priorities.html" %}
                         </ul>
                     </li>
                     <li>
-                        <a href="/ways-of-working" class="menu-link mega-menu-link">Ways of working</a>
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">
+                          Ways of working
+                        </a>
+                        <ul class="menu menu-list menu-multiColumn">
+                          {% include "partials/nav-links/our-work__ways-of-working.html" %}
+                        </ul>
                     </li>
                     <li>
-                        <a href="/primary-secondary-care" class="menu-link mega-menu-link">Primary and secondary care
+                        <a href="/commissioning/" class="menu-link mega-menu-link">
+                          Commissioning
                         </a>
                     </li>
                     <li class="mobile-menu-back-item"><!-- Mobile back -->
@@ -58,208 +54,34 @@ CODEPEN: https://codepen.io/vixxofsweden/pen/xxGGYOE
               </li>
               <li>
                 <a href="javascript:void(0);"
-                class="menu-link menu-bar-link" aria-haspopup="true">Our people</a>
+                class="menu-link menu-bar-link" aria-haspopup="true">
+                  Our people
+                </a>
                 <ul class="mega-menu mega-menu--multiLevel">
-                  <li>
-                      <a href="/our-people" class="menu-link mega-menu-link mega-menu-header">Our people</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">NHS: People Plan
-                    </a>
-                    <ul class="menu menu-list">
-                    <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                      {% comment %} {% for item in data.nhs_people_plan %}
-                      <li><!-- Link 2.1.1 -->
-                        <a href="#" class="menu-link menu-list-link">
-                            {{ item['title'] }}<br />
-                            <small>{{ item['description'] }}</small>
-                        </a>
-                      </li>
-                      {% endfor %} {% endcomment %}
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#" class="menu-link mega-menu-link">Looking after our people
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="menu-link mega-menu-link">Health and Care Innovation Expo
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="menu-link mega-menu-link">Pensions
-                    </a>
-                  </li>
+                  {% include "partials/nav-links/our-people.html" %}
                 </ul>
               </li>
               <li>
-                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Improvement</a>
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
+                  Improvement
+                </a>
                 <ul class="mega-menu mega-menu--multiLevel">
-                  <li>
-                    <a href="/improvement" class="menu-link mega-menu-link mega-menu-header">Improvement
-                    </a>
-                  </li>
-                  <li>
-                      <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">Improvement hub
-                      </a>
-                      <ul class="menu menu-list">
-                      <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                        {% comment %} {% for item in data.improvement_hub %}
-                        <li>
-                          <a href="#" class="menu-link menu-list-link">
-                              {{ item['title'] }}<br />
-                              <small>{{ item['description'] }}</small>
-                          </a>
-                        </li>
-                        {% endfor %} {% endcomment %}
-                      </ul>
-                  </li>
-                  <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                          <li>
-                            <a href="#" class="menu-link menu-list-link">A sample link</a>
-                          </li>
-                  {% comment %} {% for item in data.improvement %}
-                    <li>
-                      <a href="javascript:void(0);" class="menu-link mega-menu-link">{{ item['title'] }}</a>
-                    </li>
-                  {% endfor %} {% endcomment %}
+                  {% include "partials/nav-links/improvement.html" %}
                 </ul>
               </li>
               <li>
-                  <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">Commissioning</a>
-                  <ul class="mega-menu mega-menu--multiLevel">
-                    <li>
-                        <a href="/commissioning" class="menu-link mega-menu-link mega-menu-header">Comissioning
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Commissioned services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">About NHS commissioning
-                        </a>
-                        <ul class="menu menu-list">
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  What is commissioning?<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  Who commissions NHS services?<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Commissioned services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Specialised commissioning
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Supporting commissioners
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Commissioning regulation
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link mega-menu-link">Commissioning policies
-                        </a>
-                    </li>
-                    <li class="mobile-menu-back-item">
-                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
-                    </li>
-                  </ul>
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">
+                  Patient involvement
+                </a>
+                <ul class="mega-menu mega-menu--multiLevel">
+                  {% include "partials/nav-links/patient-involvement.html" %}
+                </ul>
               </li>
 
               <li>
                   <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">News and blogs</a>
                   <ul class="mega-menu mega-menu--multiLevel">
-                    <li>
-                        <a href="/news" class="menu-link mega-menu-link" aria-haspopup="true">News</a>
-                        <ul class="menu menu-list">
-                            <li>
-                              <a href="/news" class="menu-link menu-list-link">
-                                  News<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  Alerts<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/blogs" class="menu-link mega-menu-link" aria-haspopup="true">Blogs
-                        </a>
-                        <ul class="menu menu-list">
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  Latest posts section here<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  All posts<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="https://www.england.nhs.uk/events/" class="menu-link mega-menu-link" aria-haspopup="true">Events
-                        </a>
-                        <ul class="menu menu-list">
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  Latest events section here<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-link menu-list-link">
-                                  All events<br />
-                                  <small>Short decription of link</small>
-                              </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="mobile-menu-back-item">
-                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
-                    </li>
+                    {% include "partials/nav-links/news-blogs.html" %}
                   </ul>
               </li>
 
