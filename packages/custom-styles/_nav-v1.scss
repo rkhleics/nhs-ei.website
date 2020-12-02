@@ -6,20 +6,13 @@ $color-accent:                      $color_nhsuk-blue;
 $color-light:                       $color_nhsuk-white;
 $color-dark:                        $color_nhsuk-black;
 $mobile-menu-second-level-colour:   #d4e4f3;
-$menu-link-padding:                 20px 15px;
+$menu-link-padding:                 15px 10px;
 $breakpoint:                        950px;
 $mega-menu-multiLevel-colWidth:     100/3 + 0%;
 $mega-menu-multiColumn-colWidth:    100/2 + 0%;
 $mobile-menu-back-height:           calc(1.4em + 40px);
 $mobile-menu-back-offset:           calc(0px - (1.4em + 40px));
 $menu-mobile-width:                 350px;
-
-// body {
-//   font-family: 'Noto Sans', sans-serif;
-// //  background: #fafafa;
-//   padding: 0;
-//   margin: 0;
-// }
 
 // *, *:before, *:after {
 //     -webkit-box-sizing: border-box;
@@ -537,5 +530,13 @@ nav {
   small {
     color: $color-dark;
 
+  }
+}
+
+// ------------------ overriding NHSUK STYLES
+
+.mega_nav {
+  > ul > li {
+    margin-bottom: 0;
   }
 }
