@@ -14,6 +14,8 @@ $mobile-menu-back-height:           calc(1.4em + 40px);
 $mobile-menu-back-offset:           calc(0px - (1.4em + 40px));
 $menu-mobile-width:                 350px;
 
+$nav-font-size:                     1rem;
+
 // *, *:before, *:after {
 //     -webkit-box-sizing: border-box;
 //     -moz-box-sizing: border-box;
@@ -71,7 +73,7 @@ nav {
 }
 
 .mega-menu-header {
-  font-size: 1.2em;
+  font-size: $nav-font-size;
   //text-transform: uppercase;
   font-weight: bold;
   color: darken($color-accent, 5%);
@@ -93,9 +95,9 @@ nav {
   // Desktop only
 
   .nav {
-    //margin-top: 50px;
+
     background: $color-light;
-    //margin-left: 12em;
+
     > nav {
       max-width: 1200px;
       margin: 0 auto;
@@ -319,8 +321,10 @@ nav {
           // Second level
           > li {
             > [aria-haspopup="true"] {
-              font-size: 1.2em;
+              font-size: $nav-font-size;
+
               ~ ul {
+                border-top: 2px solid $color_nhsuk-blue;
                 a {
                   padding-left: 40px;
                 }
@@ -534,9 +538,41 @@ nav {
 }
 
 // ------------------ overriding NHSUK STYLES
-
 .mega_nav {
+  a.menu-link {
+    font-size: $nav-font-size;
+  }
   > ul > li {
     margin-bottom: 0;
+
+    > ul > li {
+      margin-bottom: 0;
+      border-bottom: 1px solid tint($color-accent, 85%);
+      border-right: 1px solid tint($color-accent, 85%);
+      border-left: 2px solid $color-accent;
+
+      &:first-child {
+        border-top: 1px solid tint($color-accent, 85%);
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 5px;
+      }
+
+      a.menu-link {
+        padding: 10px;
+      }
+
+      > ul > li {
+        margin-bottom: 0;
+        border-bottom: 1px solid tint($color-accent, 85%);
+        border-right: 1px solid tint($color-accent, 85%);
+        border-left: 1px solid tint($color-accent, 85%);
+
+        &:first-child {
+          border-top: 1px solid tint($color-accent, 85%);
+        }
+      }
+    }
   }
 }

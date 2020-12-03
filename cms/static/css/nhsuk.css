@@ -6800,7 +6800,7 @@ nav a {
     color: #005eb8; }
 
 .mega-menu-header {
-  font-size: 1.2em;
+  font-size: 1rem;
   font-weight: bold;
   color: #00519f; }
 
@@ -6926,12 +6926,14 @@ nav a {
       max-height: 100vh;
       width: 100%;
       transition: left .3s; }
-      .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul {
-        border-top: 2px solid #005eb8; }
-        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
-          padding-left: 40px; }
-        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
-          padding-left: 80px; }
+      .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] {
+        font-size: 1rem; }
+        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul {
+          border-top: 2px solid #005eb8; }
+          .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
+            padding-left: 40px; }
+          .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
+            padding-left: 80px; }
       .menu-bar > li > [aria-haspopup="true"] ~ ul [aria-haspopup="true"] {
         color: #212b32; }
         .menu-bar > li > [aria-haspopup="true"] ~ ul [aria-haspopup="true"]:after {
@@ -7019,8 +7021,29 @@ nav a {
 .menu-link small {
   color: #212b32; }
 
+.mega_nav a.menu-link {
+  font-size: 1rem; }
+
 .mega_nav > ul > li {
   margin-bottom: 0; }
+  .mega_nav > ul > li > ul > li {
+    margin-bottom: 0;
+    border-bottom: 1px solid #d9e7f4;
+    border-right: 1px solid #d9e7f4;
+    border-left: 2px solid #005eb8; }
+    .mega_nav > ul > li > ul > li:first-child {
+      border-top: 1px solid #d9e7f4; }
+    .mega_nav > ul > li > ul > li:last-child {
+      border-bottom-left-radius: 5px; }
+    .mega_nav > ul > li > ul > li a.menu-link {
+      padding: 10px; }
+    .mega_nav > ul > li > ul > li > ul > li {
+      margin-bottom: 0;
+      border-bottom: 1px solid #d9e7f4;
+      border-right: 1px solid #d9e7f4;
+      border-left: 1px solid #d9e7f4; }
+      .mega_nav > ul > li > ul > li > ul > li:first-child {
+        border-top: 1px solid #d9e7f4; }
 
 .nhsuk-image {
   width: 100%; }
@@ -7085,7 +7108,7 @@ nav a {
         color: #002f5c; }
 
 .nhsuk-breadcrumb {
-  border-top: 2px solid #005eb8; }
+  border-top: 2px solid #d8dde0; }
 
 .nhsie-search-result-item {
   background-color: #ffffff;
