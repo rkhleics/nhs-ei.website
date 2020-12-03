@@ -7096,3 +7096,7 @@ nav a {
 .nhsuk-promo__img, img {
   max-width: 100%;
   height: auto; }
+
+.nhsuk-header__logo .nhsuk-logo.nhsei-logo {
+  height: 50px;
+  width: 100px; }
