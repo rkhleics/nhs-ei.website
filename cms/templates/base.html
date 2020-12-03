@@ -26,8 +26,9 @@
         crossorigin>
     {# Global stylesheets #}
     {% block headCSS %}
-    <link rel="stylesheet" href="{% static 'css/nhsuk.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wagtailnhsukfrontend/css/wagtail-nhsuk-frontend.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nhsuk.css' %}">
+
     {% endblock %}
 
     {% block extra_css %}
@@ -71,7 +72,7 @@
     {% block breadcrumb %}
         {% breadcrumb %}
     {% endblock %}
-    
+
     {% block main %}
     {% comment %} <div class="nhsuk-width-container {{ containerClasses }}"> {% endcomment %}
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
