@@ -54,7 +54,7 @@ nav {
     padding-right: 30px;
     &:after {
       content: "";
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg#accent');
+      background-image: url('../assets/icons/nav-arrow-right.svg#accent');
       background-size: 14px;
       width: 14px;
       height: 14px;
@@ -116,11 +116,11 @@ nav {
       > [aria-haspopup="true"] {
         // STYLING: Down arrow on desktop
         &:after {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#accent');
+            background-image: url('../assets/icons/nav-arrow-bottom.svg#accent');
         }
         &:hover {
           &:after {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#light');
+            background-image: url('../assets/icons/nav-arrow-bottom.svg#light');
           }
         }
 
@@ -156,7 +156,7 @@ nav {
         background: $color-accent;
         color: $color-light;
         &:after {
-          background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowTop.svg#light');
+          background-image: url('../assets/icons/nav-arrow-top.svg#light');
         }
       }
     }
@@ -376,7 +376,7 @@ nav {
         content: "";
         width: 14px;
         height: 12px;
-        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowLeft.svg#default');
+        background-image: url('../assets/icons/nav-arrow-left.svg#default');
         background-size: 14px;
         margin-right: 10px;
         display: inline-block;

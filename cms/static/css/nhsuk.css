@@ -6787,7 +6787,7 @@ nav a {
     padding-right: 30px; }
     .menu-link[aria-haspopup="true"]:after {
       content: "";
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg#accent");
+      background-image: url("../assets/icons/nav-arrow-right.svg#accent");
       background-size: 14px;
       width: 14px;
       height: 14px;
@@ -6822,9 +6822,9 @@ nav a {
   .menu-bar {
     position: relative; }
     .menu-bar > li > [aria-haspopup="true"]:after {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#accent"); }
+      background-image: url("../assets/icons/nav-arrow-bottom.svg#accent"); }
     .menu-bar > li > [aria-haspopup="true"]:hover:after {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#light"); }
+      background-image: url("../assets/icons/nav-arrow-bottom.svg#light"); }
     .menu-bar > li > [aria-haspopup="true"]:focus ~ ul {
       display: flex;
       transform-origin: top;
@@ -6841,7 +6841,7 @@ nav a {
       .menu-bar > li > [aria-haspopup="true"]:focus:after,
       .menu-bar > li:focus-within > [aria-haspopup="true"]:after,
       .menu-bar > li:hover > a:after {
-        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowTop.svg#light"); }
+        background-image: url("../assets/icons/nav-arrow-top.svg#light"); }
   .mega-menu {
     position: absolute;
     top: 100%;
@@ -6926,8 +6926,8 @@ nav a {
       max-height: 100vh;
       width: 100%;
       transition: left .3s; }
-      .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] {
-        font-size: 1.2em; }
+      .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul {
+        border-top: 2px solid #005eb8; }
         .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
           padding-left: 40px; }
         .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
@@ -6960,7 +6960,7 @@ nav a {
         content: "";
         width: 14px;
         height: 12px;
-        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowLeft.svg#default");
+        background-image: url("../assets/icons/nav-arrow-left.svg#default");
         background-size: 14px;
         margin-right: 10px;
         display: inline-block; }
