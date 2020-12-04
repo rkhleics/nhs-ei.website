@@ -23,21 +23,19 @@
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
-                {{ self.all_news_sub_title|richtext }}
+                <p>{{ self.all_news_sub_title|richtext }}</p>
                 <div class="nhsuk-grid-row">
                     {% get_lastest_posts_columns 4 as posts %}
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for post in posts.0 %}
                             <li>
-                                <article class="">
-                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ post.url }}">
                                             {{ post.title }}</a>
                                     </h2>
-                                    <span class="nhsei-list-meta">Published on
-                                        <time class="date"
-                                            datetime="">{{ post.first_published_at }}</time></span>
+                                    {% include 'partials/article-list-meta--news.html' %}
                                 </article>
                             </li>
                             {% endfor %}
@@ -47,14 +45,12 @@
                         <ol class="nhsuk-list">
                             {% for post in posts.1 %}
                             <li>
-                                <article class="">
-                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ post.url }}">
                                             {{ post.title }}</a>
                                     </h2>
-                                    <span class="nhsei-list-meta">Published on
-                                        <time class="date"
-                                            datetime="">{{ post.first_published_at }}</time></span>
+                                    {% include 'partials/article-list-meta--news.html' %}
                                 </article>
                             </li>
                             {% endfor %}
@@ -91,21 +87,23 @@
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-heading-l">{{ self.all_publications_title }}</h2>
-                {{ self.all_publications_sub_title|richtext }}
+                <p>{{ self.all_publications_sub_title|richtext }}</p>
                 <div class="nhsuk-grid-row">
                     {% get_lastest_publications_columns 4 as publications %}
                     <div class="nhsuk-grid-column-one-half">
                         <ol class="nhsuk-list">
                             {% for publication in publications.0 %}
                             <li>
-                                <article class="">
-                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ publication.url }}">
                                             {{ publication.title }}</a>
                                     </h2>
-                                    <span class="nhsei-list-meta">Published on
-                                        <time class="date"
-                                            datetime="">{{ publication.first_published_at }}</time></span>
+                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
+                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
+                                      </span>
+                                    {% endfor %}
+                                    {% include 'partials/article-list-meta--publication.html' %}
                                 </article>
                             </li>
                             {% endfor %}
@@ -115,14 +113,16 @@
                         <ol class="nhsuk-list">
                             {% for publication in publications.1 %}
                             <li>
-                                <article class="">
-                                    <h2 class="nhsuk-heading-xs nhsei-list-title">
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
                                         <a href="{{ publication.url }}">
                                             {{ publication.title }}</a>
                                     </h2>
-                                    <span class="nhsei-list-meta">Published on
-                                        <time class="date"
-                                            datetime="">{{ publication.first_published_at }}</time></span>
+                                    {% for publication_type in publication.publication_publication_type_relationship.all %}
+                                      <span class="nhsuk-tag nhsuk-tag--white {{ publication_type.publication_type.id }}"> {{ publication_type.publication_type }}
+                                      </span>
+                                    {% endfor %}
+                                    {% include 'partials/article-list-meta--publication.html' %}
                                 </article>
                             </li>
                             {% endfor %}
