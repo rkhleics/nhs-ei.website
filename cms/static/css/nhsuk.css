@@ -6466,39 +6466,6 @@ b {
       line-height: 1.2; } }
 
 /* ==========================================================================
-   #TAG
-   ========================================================================== */
-.nhsuk-tag {
-  font-weight: 600;
-  font-size: 14px;
-  font-size: 0.875rem;
-  line-height: 1;
-  background-color: #005eb8;
-  color: #ffffff;
-  display: inline-block;
-  letter-spacing: 1px;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  text-decoration: none;
-  text-transform: uppercase; }
-  @media (min-width: 40.0625em) {
-    .nhsuk-tag {
-      font-size: 16px;
-      font-size: 1rem;
-      line-height: 1; } }
-  @media print {
-    .nhsuk-tag {
-      font-size: 14pt;
-      line-height: 1; } }
-
-.nhsuk-tag--dark-grey {
-  background-color: #4c6272; }
-
-/* ==========================================================================
    #TABS
    ========================================================================== */
 .nhsuk-tabs {
@@ -7050,14 +7017,6 @@ nav a {
 
 .nhsei-featured-section .nhsuk-image {
   margin-top: 0; }
-
-.nhsei-full-wrap {
-  overflow-x: hidden;
-  margin-left: -1000px;
-  margin-right: -1000px; }
-  .nhsei-full-wrap .wrapped-section {
-    padding-left: 1000px;
-    padding-right: 1000px; }
 
 .nhsei-latest-news {
   background-color: #d8dde0; }
