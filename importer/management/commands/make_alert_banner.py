@@ -8,7 +8,7 @@ from cms.core.models import CoreSettings
 
 class Command(BaseCommand):
     help = 'Creates the alert banner'
-    
+
     def handle(self, *args, **options):
         settings = CoreSettings.objects.all().first()
         # delete first
@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         settings.alert_banner = """
             <h2>Coronavirus (COVID-19)</h2>
-            <p><a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">Get the latest advice about coronavirus</a></p>
+            <p><a href="http://www.england.nhs.uk/coronavirus/">Our advice for clinicians on the coronavirus is here.</a><br />If you are a member of the public looking for health advice, go to the <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS website</a>. And if you are looking for the latest travel information, and advice about the government response to the outbreak, go to the <a href="https://www.gov.uk/guidance/wuhan-novel-coronavirus-information-for-the-public">gov.uk website</a>.</p>
         """
         settings.is_visible = True
         settings.save()
