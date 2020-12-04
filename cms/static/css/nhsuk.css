@@ -6787,7 +6787,7 @@ nav a {
     padding-right: 30px; }
     .menu-link[aria-haspopup="true"]:after {
       content: "";
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg#accent");
+      background-image: url("../assets/icons/nav-arrow-right.svg#accent");
       background-size: 14px;
       width: 14px;
       height: 14px;
@@ -6800,7 +6800,7 @@ nav a {
     color: #005eb8; }
 
 .mega-menu-header {
-  font-size: 1.2em;
+  font-size: 1rem;
   font-weight: bold;
   color: #00519f; }
 
@@ -6822,9 +6822,9 @@ nav a {
   .menu-bar {
     position: relative; }
     .menu-bar > li > [aria-haspopup="true"]:after {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#accent"); }
+      background-image: url("../assets/icons/nav-arrow-bottom.svg#accent"); }
     .menu-bar > li > [aria-haspopup="true"]:hover:after {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowBottom.svg#light"); }
+      background-image: url("../assets/icons/nav-arrow-bottom.svg#light"); }
     .menu-bar > li > [aria-haspopup="true"]:focus ~ ul {
       display: flex;
       transform-origin: top;
@@ -6841,7 +6841,7 @@ nav a {
       .menu-bar > li > [aria-haspopup="true"]:focus:after,
       .menu-bar > li:focus-within > [aria-haspopup="true"]:after,
       .menu-bar > li:hover > a:after {
-        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowTop.svg#light"); }
+        background-image: url("../assets/icons/nav-arrow-top.svg#light"); }
   .mega-menu {
     position: absolute;
     top: 100%;
@@ -6927,11 +6927,13 @@ nav a {
       width: 100%;
       transition: left .3s; }
       .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] {
-        font-size: 1.2em; }
-        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
-          padding-left: 40px; }
-        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
-          padding-left: 80px; }
+        font-size: 1rem; }
+        .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul {
+          border-top: 2px solid #005eb8; }
+          .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
+            padding-left: 40px; }
+          .menu-bar > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul > li > [aria-haspopup="true"] ~ ul a {
+            padding-left: 80px; }
       .menu-bar > li > [aria-haspopup="true"] ~ ul [aria-haspopup="true"] {
         color: #212b32; }
         .menu-bar > li > [aria-haspopup="true"] ~ ul [aria-haspopup="true"]:after {
@@ -6960,7 +6962,7 @@ nav a {
         content: "";
         width: 14px;
         height: 12px;
-        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowLeft.svg#default");
+        background-image: url("../assets/icons/nav-arrow-left.svg#default");
         background-size: 14px;
         margin-right: 10px;
         display: inline-block; }
@@ -7019,8 +7021,29 @@ nav a {
 .menu-link small {
   color: #212b32; }
 
+.mega_nav a.menu-link {
+  font-size: 1rem; }
+
 .mega_nav > ul > li {
   margin-bottom: 0; }
+  .mega_nav > ul > li > ul > li {
+    margin-bottom: 0;
+    border-bottom: 1px solid #d9e7f4;
+    border-right: 1px solid #d9e7f4;
+    border-left: 2px solid #005eb8; }
+    .mega_nav > ul > li > ul > li:first-child {
+      border-top: 1px solid #d9e7f4; }
+    .mega_nav > ul > li > ul > li:last-child {
+      border-bottom-left-radius: 5px; }
+    .mega_nav > ul > li > ul > li a.menu-link {
+      padding: 10px; }
+    .mega_nav > ul > li > ul > li > ul > li {
+      margin-bottom: 0;
+      border-bottom: 1px solid #d9e7f4;
+      border-right: 1px solid #d9e7f4;
+      border-left: 1px solid #d9e7f4; }
+      .mega_nav > ul > li > ul > li > ul > li:first-child {
+        border-top: 1px solid #d9e7f4; }
 
 .nhsuk-image {
   width: 100%; }
@@ -7085,7 +7108,7 @@ nav a {
         color: #002f5c; }
 
 .nhsuk-breadcrumb {
-  border-top: 2px solid #005eb8; }
+  border-top: 2px solid #d8dde0; }
 
 .nhsie-search-result-item {
   background-color: #ffffff;

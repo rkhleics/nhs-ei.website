@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <symbol id="arrowBottom">
+
+  <title transform="rotate(90 24 24)" class="" style="">Icon</title>
+  <polygon points="31.028 19.573 19.975 8.52 15.549 12.948 26.6 24 15.549 35.052 19.975 39.479 31.028 28.427 35.455 24 31.028 19.573" transform="rotate(-180 24 24)" class="" style=""/>
+
+    </symbol>
+  </defs>
+    <view id="default" viewBox="0 0 48 48"/>
+    <use data-variant="default" xlink:href="#arrowBottom" x="0" y="0" fill="#000000"/>
+    <view id="accent" viewBox="0 48 48 48"/>
+    <use data-variant="accent" xlink:href="#arrowBottom" x="0" y="48" fill="#005eb8"/>
+    <view id="light" viewBox="0 96 48 48"/>
+    <use data-variant="light" xlink:href="#arrowBottom" x="0" y="96" fill="#ffffff"/>
+</svg>
