@@ -6728,6 +6728,11 @@ b {
       .nhsuk-promo .nhsuk-promo__link-wrapper:hover h3 {
         color: #ffffff; }
 
+.nhsei-article-list {
+  margin-bottom: 32px; }
+  .nhsei-article-list .nhsei-article-list--title {
+    margin-bottom: 8px; }
+
 nav ul, nav li {
   list-style: none;
   padding: 0;
