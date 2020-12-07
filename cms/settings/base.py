@@ -34,18 +34,17 @@ BASE_DIR = PROJECT_DIR.parent
 INSTALLED_APPS = [
     "cms.home",
     "cms.search",
-    'cms.categories',
-    'cms.posts',
-    'cms.blogs',
-    'cms.pages',
-    'cms.publications',
-    'cms.atlascasestudies',
-    'cms.core',
-
+    "cms.categories",
+    "cms.posts",
+    "cms.blogs",
+    "cms.pages",
+    "cms.publications",
+    "cms.atlascasestudies",
+    "cms.core",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
-    'wagtail.contrib.modeladmin',
+    "wagtail.contrib.modeladmin",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -55,7 +54,6 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
-
     "modelcluster",
     "taggit",
     "django.contrib.admin",
@@ -66,9 +64,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "wagtailnhsukfrontend",
     "wagtailnhsukfrontend.settings",
-
     # importer
-    'importer',
+    "importer",
 ]
 
 MIDDLEWARE = [
@@ -152,6 +149,15 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+WAGTAILSEARCH_BACKENDS = {
+    "default": {
+        "BACKEND": "wagtail.search.backends.elasticsearch7",
+        "TIMEOUT": 5,
+        "AUTO_UPDATE": True,
+        "URLS": env.list("WAGTAILSEARCH_URLS", default=["http://search:9200"]),
+    },
+}
 
 
 # Media files (User uploaded images and documents)

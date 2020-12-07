@@ -57,6 +57,7 @@ environment:
   email_url: ""
   server_email: ""
   default_from_email: ""
+  wagtailsearch_urls: ""
 
 ingress:
   enabled: true

@@ -62,6 +62,8 @@ spec:
               value: "{{ .Values.environment.default_from_email }}"
             - name: SERVER_EMAIL
               value: "{{ .Values.environment.server_email }}"
+            - name: WAGTAILSEARCH_URLS
+              value: "{{ .Values.environment.wagtailsearch_urls }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
