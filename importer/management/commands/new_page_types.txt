@@ -1,0 +1,90 @@
+Transparency and legal
+•••• link in footer
+Panel:
+ Body: It is important we are transparent in all the work we do. The following pages include information on the regulatory action we have taken, decisions made by our Board as well as data on workplace equality and corporate expenditure. You can find all of our Freedom of Information releases here too.
+
+Promo Group:
+ One half
+ Default
+ 3
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=123
+    heading: Freedom of Information release
+    description: We are legally obliged to release information under the Freedom of Information Act. Here you will find all of our FOI releases.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?category=557
+    heading: Board meeting papers and minutes
+    description: Meeting papers and videos from our all of our Board meetings.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=148
+    heading: Regulatory
+    description: Information on regulatory action we have taken against licensed healthcare providers as well as details on NHS trusts in England.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=164
+    heading: Transparency data
+    description: Here you will find information on how we are kept to account on matters such as workplace equality and corporate expenditure.
+
+=====================
+Mental health **** its already there so check what comes in....
+
+Promo Group:
+ One third
+ small
+ 3
+
+ Promo:
+    url: https://www.england.nhs.uk/mental-health/cyp/
+    heading: Children and young people
+    description: Our ambition is to support CCGs to work with partners to build effective mental health services for children and young people.
+
+    url: https://www.england.nhs.uk/mental-health/adults/
+    heading: Adults
+    description: We aim to transform mental health services by 2020, with an ambition of putting mental health on an equal footing to physical health.
+
+    url: https://www.england.nhs.uk/mental-health/nhs-led-provider-collaboratives/
+    heading: NHS-led Provider Collaboratives
+    description: Supporting the delivery of new ways of working across mental health NHS trusts within local areas to improve specialised mental health services
+
+Action link:
+    Link text: Improving Access to Psychological Therapies (IAPT)
+    url: https://www.england.nhs.uk/mental-health/adults/iapt/
+
+Action link:
+    Link text: Case studies
+    url: https://www.england.nhs.uk/mental-health/case-studies/
+
+Action link:
+    Link text: Dementia
+    url: https://www.england.nhs.uk/mental-health/dementia/
+
+Expander:
+ title: You may also be interested in
+    action link:
+        Link text: Advancing mental health equalities strategy
+        url: https://www.england.nhs.uk/publication/advancing-mental-health-equalities-strategy/
+
+    action link:
+        link text: About mental health
+        url: https://www.england.nhs.uk/mental-health/about/
+
+    action link:
+        link text: Mental Health Forward View
+        url: https://www.england.nhs.uk/mental-health/taskforce/imp/
+
+    action link:
+        link text: Perinatal
+        url: https://www.england.nhs.uk/mental-health/perinatal/
+
+    action link:
+        link text: Working for the NHS in mental health
+        url: https://www.england.nhs.uk/mental-health/working-in-mental-health/
+
+    action link:
+        link text: Resources
+        url: https://www.england.nhs.uk/mental-health/resources/
+
+Recent Posts:
+    title: News and blogs
+    type: post
+    num posts: 3
+    see all: true 

@@ -1,6 +1,7 @@
 import sys
 import time
 import ast
+import os
 from io import BytesIO
 from pathlib import Path
 
@@ -28,6 +29,8 @@ SOURCES = {
 
 class MediaFilesImporter(Importer):
     def __init__(self):
+        with open('importer/log/import_media_files.txt', 'w') as log:
+            log.write('errors found while importing media files\n')
         images = Image.objects.all()
         documents = Document.objects.all()
         if images or documents:
@@ -59,29 +62,39 @@ class MediaFilesImporter(Importer):
             media_type = r.get('media_type')
             media_name = source_url.split('/')[-1]
             response = requests.get(source_url)
+            title = r.get('title')  # if the title id blank it causes an error
+            if not title:
+                title = 'No title was available'
             if response:
-                if media_type == 'file': # save to documents
-                    http_res = requests.get(source_url)
-                    title = r.get('title')
-                    media_file = File(BytesIO(http_res.content), name=media_name)
-                    file = Document(title=title, file=media_file, collection=collection)
+
+                if media_type == 'file':  # save to documents
+
+                    media_file = File(
+                        BytesIO(response.content), name=media_name)
+                    file = Document(
+                        title=title, file=media_file, collection=collection)
                     file.save()
                     file.created_at = r.get('date')
                     file.save()
-                elif media_type == 'image': # save to images
-                    http_res = requests.get(source_url)
-                    title = r.get('title')
-                    image_file = ImageFile(BytesIO(http_res.content), name=media_name)
-                    image = Image(title=title, file=image_file, collection=collection)
+
+                elif media_type == 'image':  # save to images
+                    
+                    image_file = ImageFile(
+                        BytesIO(response.content), name=media_name)
+                    image = Image(title=title, file=image_file,
+                                  collection=collection)
                     image.save()
                     image.created_at = r.get('date')
                     image.save()
 
             else:
-                sys.stdout.write('⚠️ Got no response\n') 
+                sys.stdout.write(
+                    '⚠️ Got no response. Error has been logged importer/log/import_media_files.txt\n')
+                with open('importer/log/import_media_files.txt', 'a') as the_file:
+                    the_file.write('{}\n'.format(r))
 
         if self.next:
             time.sleep(self.sleep_between_fetches)
             self.fetch_url(self.next)
             self.parse_results()
-        return None
+        return Document.objects.count() + Image.objects.count(), 0

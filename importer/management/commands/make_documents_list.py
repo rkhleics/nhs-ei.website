@@ -43,15 +43,17 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        documents = Document.objects.all()
-        if documents:
-            sys.stdout.write(
-                '⚠️  Deleteing the documents\n')
-            docs = Document.objects.all().delete()
+        """ now not deleteing docuemnts they need to be found instead """
+        # documents = Document.objects.all()
+        # if documents:
+        #     sys.stdout.write(
+        #         '⚠️  Deleteing the documents\n')
+        #     docs = Document.objects.all().delete()
 
         publications = Publication.objects.all()
 
         for publication in publications:
+            sys.stdout.write('\n⌛️ {} processing...'.format(publication))
             component_fields = ast.literal_eval(publication.component_fields)
             introduction = ''
             docs = []
@@ -60,12 +62,13 @@ class Command(BaseCommand):
                 items = row.items()
                 for k, v in items:
                     if k == 'introduction':
-                        self.block_builder.extract_links(row[k])
-                        item_detail = row[k]
-                        for link in self.block_builder.change_links:
-                            item_detail = item_detail.replace(
-                                str(link[0]), str(link[1]))
-                        introduction = item_detail
+                        # self.block_builder.extract_links(row[k])
+                        # item_detail = row[k]
+                        # for link in self.block_builder.change_links:
+                        #     item_detail = item_detail.replace(
+                        #         str(link[0]), str(link[1]))
+                        # introduction = item_detail
+                        introduction = row[k]
 
                     if k == 'documents':
                         # some docs have no document !!!! whaaaat wp_id 1115
@@ -187,6 +190,7 @@ class Command(BaseCommand):
             publication.latest_revision_created_at = publication.latest_revision_created_at
             publication.save()
             rev.publish()
+            sys.stdout.write('\n✅ {} processing...'.format(publication))
 
 """
 exmaple URL https://www.england.nhs.uk/wp-json/wp/v2/documents/144645

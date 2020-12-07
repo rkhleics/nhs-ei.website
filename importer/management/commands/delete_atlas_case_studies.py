@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         # delete the top level news index page
         try:
-            atlas_case_study_index = AtlasCaseStudyIndexPage.objects.get(title='Atlas Case Study Items Base')
+            atlas_case_study_index = AtlasCaseStudyIndexPage.objects.get(title='Atlas Case Studies')
             atlas_case_study_index.delete()
         except AtlasCaseStudyIndexPage.DoesNotExist:
             pass

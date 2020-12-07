@@ -30,18 +30,6 @@ class SettingsImporter(Importer):
     def parse_results(self):
         settings = self.results
         for r in settings:
-            # if the subsite parent for this category does not exits make it once
-            # try:
-            #     category_sub_site = CategorySubSite.objects.get(source=r.get('source'))
-            # except CategorySubSite.DoesNotExist:
-            #     title = SOURCES.get(r.get('source'))
-            #     sys.stdout.write('.')
-            #     category_sub_site = CategorySubSite(
-            #         title = title,
-            #         source = r.get('source')
-            #     )
-            #     category_sub_site.save()
-
             setting = Setting(
                 name=r.get("name"),
                 slug=r.get("slug"),
@@ -50,7 +38,6 @@ class SettingsImporter(Importer):
                 # source = r.get('source'),
                 # sub_site = category_sub_site
             )
-            print(setting)
             setting.save()
             sys.stdout.write(".")
 
