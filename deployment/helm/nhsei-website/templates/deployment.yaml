@@ -62,7 +62,7 @@ spec:
               value: "{{ .Values.environment.default_from_email }}"
             - name: SERVER_EMAIL
               value: "{{ .Values.environment.server_email }}"
-            - name: WAGAILSEARCH_URLS
+            - name: WAGTAILSEARCH_URLS
               value: "{{ .Values.environment.wagtailsearch_urls }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
