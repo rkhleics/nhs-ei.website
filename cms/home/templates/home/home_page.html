@@ -18,70 +18,6 @@
     </div>
 </div>
 
-<section class="news-section">
-    <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
-                <p>{{ self.all_news_sub_title|richtext }}</p>
-                <div class="nhsuk-grid-row">
-                    {% get_lastest_posts_columns 4 as posts %}
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for post in posts.0 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <ol class="nhsuk-list">
-                            {% for post in posts.1 %}
-                            <li>
-                                <article class="nhsei-article-list">
-                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
-                                        <a href="{{ post.url }}">
-                                            {{ post.title }}</a>
-                                    </h2>
-                                    {% include 'partials/article-list-meta--news.html' %}
-                                </article>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                </div>
-                {% if self.all_news_page %}
-                <a href="{{ self.all_news_page.url }}">View all news</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-
-<article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
-    <div class="nhsuk-width-container">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <h2 class="nhsuk-u-visually-hidden">Highlights</h2>
-            </div>
-
-            <div class="nhsuk-grid-column-one-half">
-                {{ self.body|richtext }}
-            </div>
-            <div class="nhsuk-grid-column-one-half">
-                {% image self.body_image fill-800x600 %}
-            </div>
-        </div>
-    </div>
-</article>
-
 <section class="latest-publications-section">
     <div class="nhsuk-width-container">
         <div class="nhsuk-grid-row">
@@ -131,6 +67,70 @@
                 </div>
                 {% if self.all_publications_page %}
                 <a href="{{ self.all_publications_page.url }}">View all publications</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<article class="featured-section nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-6">
+    <div class="nhsuk-width-container">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h2 class="nhsuk-u-visually-hidden">Highlights</h2>
+            </div>
+
+            <div class="nhsuk-grid-column-one-half">
+                {{ self.body|richtext }}
+            </div>
+            <div class="nhsuk-grid-column-one-half">
+                {% image self.body_image fill-800x600 %}
+            </div>
+        </div>
+    </div>
+</article>
+
+<section class="news-section">
+    <div class="nhsuk-width-container">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
+                <p>{{ self.all_news_sub_title|richtext }}</p>
+                <div class="nhsuk-grid-row">
+                    {% get_lastest_posts_columns 4 as posts %}
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for post in posts.0 %}
+                            <li>
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                        <a href="{{ post.url }}">
+                                            {{ post.title }}</a>
+                                    </h2>
+                                    {% include 'partials/article-list-meta--news.html' %}
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <ol class="nhsuk-list">
+                            {% for post in posts.1 %}
+                            <li>
+                                <article class="nhsei-article-list">
+                                    <h2 class="nhsuk-heading-xs nhsei-article-list--title">
+                                        <a href="{{ post.url }}">
+                                            {{ post.title }}</a>
+                                    </h2>
+                                    {% include 'partials/article-list-meta--news.html' %}
+                                </article>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                {% if self.all_news_page %}
+                <a href="{{ self.all_news_page.url }}">View all news</a>
                 {% endif %}
             </div>
         </div>
