@@ -73,5 +73,6 @@ jobs:
             --set-string environment.server_email="${{ secrets.SERVER_EMAIL }}" \
             --set-string environment.azure_container="website-media" \
             --set-string environment.azure_connection_string="${{ secrets.AZURE_CONNECTION_STRING }}" \
+            --set-string environment.wagtailsearch_urls="${{ secrets.WAGAILSEARCH_URLS }}" \
             --set-string auth.secret=basic-auth \
             --set-string auth.realm="Authentication required"
