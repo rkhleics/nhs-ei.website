@@ -16,7 +16,7 @@
             {% include 'includes/side_bar_list.html' with items=publication_types side_bar_title='Publication Type'  filter='publication_type' %}
 
             {% include 'includes/side_bar_list.html' with items=categories side_bar_title='Topics' filter='category' %}
-                
+
     </div>
 
     <div class="nhsuk-grid-column-two-thirds">
@@ -24,7 +24,7 @@
         <ul class="nhsuk-list nhsuk-list--border">
 
             {% for publication in publications %}
-            
+
             <li class="nhsuk-panel">
                 <h2 class="nhsuk-u-margin-bottom-1 nhsuk-heading-s">
                     <a href="{{ publication.url }}">{{ publication.title }}</a>
@@ -33,10 +33,13 @@
                 {{ publication.body|truncatewords_html:"40"|striptags|safe }}
                 </div>
                 <p class="nhsuk-body-s">
-                    <b>Published: </b> {{ publication.first_published_at|date:'j N Y | g:m:s a' }} - <em>Latest version
-                        {{ publication.last_published_at|date:'j N Y | g:m:s a' }}</em><br>
+                    <b>Published: </b> {{ publication.first_published_at|date:'d M Y g:i a' }} - <em>Latest version
+                        {{ publication.last_published_at|date:'d M Y g:i a' }}</em><br>
+
+                  {% comment %}
                     <b>Author: </b>{{ publication.author }} we are missing the ability to match ID
                     to a name <br>
+                  {% endcomment %}
                     {% if publication.publication_publication_type_relationship.all %}
                     <b>Publication Type:</b>
                     {% for publication_type in publication.publication_publication_type_relationship.all %}
@@ -50,7 +53,7 @@
                     {% endfor %}
                     {% endif %}
                 </p>
-            </li>    
+            </li>
 
             {% endfor %}
 

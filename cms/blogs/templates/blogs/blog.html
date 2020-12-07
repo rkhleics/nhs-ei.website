@@ -15,10 +15,13 @@
         {% endif %}
 
         <div class="nhsuk-body-s">
-            <b>Published: </b>{{ self.first_published_at|date:'j N Y | g:m:s a' }} <br> <em>Latest version
-                {{ self.last_published_at|date:'j N Y | g:m:s a' }}</em> | <i>Author: {{ self.author }} we are missing
+            <b>Published: </b>{{ self.first_published_at|date:'d M Y g:i a' }} <br> <em>Latest version
+                {{ self.last_published_at|date:'d M Y g:i a' }}</em>
+              {% comment %}
+                <i>Author: {{ self.author }} we are missing
                 the ability to match ID to
                 a name</i>
+              {% endcomment %}
         </div>
 
         <h1>{{ self.title }}</h1>
