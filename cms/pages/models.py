@@ -61,6 +61,7 @@ class BasePage(Page):
             FieldPanel('real_parent'),
             FieldPanel('wp_link'),
             FieldPanel('model_fields'),
+            FieldPanel('raw_content'),
             FieldPanel('content_fields'),
             FieldPanel('content_field_blocks'),
             FieldPanel('component_fields'),
