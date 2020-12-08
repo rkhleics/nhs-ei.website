@@ -95,7 +95,9 @@
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h2 class="nhsuk-heading-l">{{ self.all_news_title }}</h2>
+                {% if self.all_news_sub_title %}
                 <p>{{ self.all_news_sub_title|richtext }}</p>
+                {% endif %}
                 <div class="nhsuk-grid-row">
                     {% get_lastest_posts_columns 4 as posts %}
                     <div class="nhsuk-grid-column-one-half">
