@@ -20,41 +20,63 @@ class Command(BaseCommand):
 
         about_us = None
         contact_us = None
+        complaints = None
+        jobs = None
+        transparency_legal = 'https://nhsei-staging.uksouth.cloudapp.azure.com/transparency-and-legal/'
+        statistics = 'https://www.england.nhs.uk/statistics'
+
         terms_and_conditions = None
         accessibility = None
         commentpolicy = None
         privacypolicy = None
+
         for page in all_pages:
             if page.get_url() == '/about/':
                 about_us = page
+
             if page.get_url() == '/contact-us/':
                 contact_us = page
+
+            if page.get_url() == '/complaint/':
+                complaints = page
+
+            if page.get_url() == '/about/working-for/':
+                jobs = page
+
+            # if page.get_url() == '/transparency-and-legal/':
+            #     transparency_legal = page
+
             if page.get_url() == '/terms-and-conditions/':
                 terms_and_conditions = page
+
             if page.get_url() == '/accessibility/':
                 accessibility = page
+
             if page.get_url() == '/comment-policy/':
                 commentpolicy = page
+
             if page.get_url() == '/privacy-policy/':
                 privacypolicy = page
 
         upper_footer_links = [
             {
-                'text': 'About us', 'page': about_us, 'external_url': '', 'setting': settings},
+                'text': 'About us', 'page': about_us, 'external_url': '', 'setting': settings
+            },
             {
-                'text': 'Contact us', 'page': contact_us, 'external_url': '', 'setting': settings},
+                'text': 'Contact us', 'page': contact_us, 'external_url': '', 'setting': settings
+            },
             {
-                'text': 'Statistics', 'page': None, 'external_url': 'https://www.england.nhs.uk/statistics/', 'setting': settings},
+                'text': 'Complaints', 'page': complaints, 'external_url': '', 'setting': settings
+            },
             {
-                'text': 'Patient involvement', 'page': home_page, 'external_url': '', 'setting': settings},
+                'text': 'Jobs', 'page': jobs, 'external_url': '', 'setting': settings
+            },
             {
-                'text': 'System guidance and processes', 'page': home_page, 'external_url': '', 'setting': settings},
+                'text': 'Transparency and legal', 'page': None, 'external_url': transparency_legal, 'setting': settings
+            },
             {
-                'text': 'Jobs', 'page': home_page, 'external_url': '', 'setting': settings},
-            {
-                'text': 'Transparency and legal', 'page': home_page, 'external_url': '', 'setting': settings},
-            {
-                'text': 'Complaints', 'page': home_page, 'external_url': '', 'setting': settings},
+                'text': 'Statistics', 'page': None, 'external_url': statistics, 'setting': settings
+            },
         ]
 
         for link in upper_footer_links:
