@@ -26,6 +26,12 @@ from wagtailnhsukfrontend.blocks import (
     SummaryListBlock,
 )
 
+RICHTEXT_FEATURES_ALL = [
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'bold', 'italic', 'ol', 'ul',
+    'hr', 'link', 'document-link', 'image', 'embed', 'code',
+    'superscript', 'subscript', 'strikethrough', 'blockquote'
+]
+
 
 class RecentPostsBlock(FlattenValueContext, StructBlock):
     title = CharBlock()
@@ -144,6 +150,22 @@ class CoreBlocks(StreamBlock):
     promo_group = PromoGroupBlock(group='Base')
 
     recent_posts = RecentPostsBlock(group='Custom')
+    text = RichTextBlock(
+        group='Custom',
+        help_text="""
+            Use this block to add formatted text into a page e.g. 
+            paragraph with heading and/or links and images
+        """,
+        template='blocks/text_block.html',
+        features=RICHTEXT_FEATURES_ALL
+    )
+    html = RawHTMLBlock(
+        group='custom',
+        help_text="""
+            Use this block to add raw html
+        """,
+        template='blocks/html_block.html',
+    )
 
 
 class PublicationsBlocks(StreamBlock):
