@@ -1,6 +1,9 @@
 /* ==========================================================================
    #BETA-BANNER
    ========================================================================== */
+.nhsei-phase-banner__wrapper {
+  background-color: $color_nhsuk-grey-5;
+}
 
 .app-phase-banner__container {
   border-bottom: 1px solid $nhsuk-border-color;
@@ -13,7 +16,7 @@
 
   .app-phase-banner__content__tag {
     display: block;
-    margin-right: nhsuk-spacing(2);
+    @include nhsuk-responsive-margin(4, "right");
   }
 }
 
