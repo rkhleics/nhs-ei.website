@@ -13,44 +13,31 @@ The data is collected from https://nhsei-scrapy.rkh.co.uk/api/
 ```
 Collect All Data    | python manage.py runimport all
 Build The Site      | python manage.py runimport build
+Fix some stuff      | python manage.py runimport fixes
+Make some stuff     | python manage.py runimport makes
+Make docuemnts      | python manage.py runimport documents
 ```
+
+Skipping importing media in its own script, it's too buggy just now. So any media needed for pages or publicaitons gets pulled in as required for now.
+
 Should you wnat to run the scripts individually then look at the scripts run in importer > management > commands > runimport.py
 
-```
-# the whole lot in specific order
+Last minute code snippets.
 
-# BEFORE ALL OTHERS as related keys exists
-import_categories(get_api_url('categories'))
-import_publication_types(get_api_url('publication_types'))
-import_settings(get_api_url('settings'))
-import_regions(get_api_url('regions'))
-# END BEFORE ALL OTHERS
-
-# pages needs to run here because later commands
-# create pages that prevent this script from running becuse of slug duplication
-
-import_pages(get_api_url('pages'))
-import_posts(get_api_url('posts'))
-import_blogs(get_api_url('blogs'))
-import_publications(get_api_url('publications'))
-import_atlas_case_studies(get_api_url('atlas_case_studies'))
-```
+Analytics, for core settings when in place
 
 ```
-call_command('page_mover')
-call_command('fix_slugs')
-call_command('swap_page_types')
-call_command('fix_component_page_slugs')
-call_command('fix_landing_page_slugs')
-call_command('swap_blogs_page')
-call_command('parse_stream_fields')
-call_command('parse_stream_fields_component_pages') # here we have url issue
-# TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
-call_command('make_top_pages')
-call_command('make_alert_banner')
-call_command('make_home_page')
-call_command('make_footer_links')
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FBFNP91TN9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'G-FBFNP91TN9');
+</script>
 ```
+
 # Deleting
 
 ```
