@@ -15,11 +15,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='homepage',
-            name='all_news_sub_title',
-            field=wagtail.core.fields.RichTextField(blank=True),
-        ),
-        migrations.AddField(
-            model_name='homepage',
             name='all_news_title',
             field=models.CharField(blank=True, max_length=100),
         ),

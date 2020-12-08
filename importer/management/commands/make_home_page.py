@@ -19,7 +19,7 @@ class Command(BaseCommand):
             images = Image.objects.filter(collection=collection)
             for image in images:
                 image.delete()
-            
+
             collection.delete()
 
         except Collection.DoesNotExist:
@@ -35,7 +35,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         collection_root = Collection.get_first_root_node()
         collection = collection_root.add_child(name='Temporary Images')
-    
+
         tall = requests.get('https://unsplash.com/photos/A-11N8ItHZo/download?force=true')
         image_file = ImageFile(BytesIO(tall.content), name='tall.jpg')
 
@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
         home_page.body = """
             <h3><a id="{}" linktype="page">We are the NHS: People Plan for 2020/21</a></h3>
-            
+
             <p>Our NHS is made up of 1.3 million people who care for the people of this country with skill, compassion and dedication.
             This plan sets out what the people of the NHS can expect – from their leaders and from each other – for the rest of 2020
             and into 2021.</p>
@@ -69,7 +69,6 @@ class Command(BaseCommand):
         np = BasePage.objects.child_of(home_page).filter(slug='news')[0]
         home_page.all_news_page = np
         home_page.all_news_title = 'Latest news'
-        home_page.all_news_sub_title = 'The most recently added news articles'
 
         home_page.all_publications_page = BasePage.objects.child_of(home_page).filter(slug='publication')[0]
         home_page.all_publications_title = 'Latest in publications'

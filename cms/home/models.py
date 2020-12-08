@@ -25,7 +25,6 @@ class HomePage(Page):
         related_name='+',
     )
     all_news_title = models.CharField(max_length=100, blank=True)
-    all_news_sub_title = RichTextField(blank=True)
     all_publications_page = models.ForeignKey(
         'wagtailcore.Page',
         on_delete=models.SET_NULL,
@@ -43,7 +42,6 @@ class HomePage(Page):
         MultiFieldPanel([
             PageChooserPanel('all_news_page'),
             FieldPanel('all_news_title'),
-            FieldPanel('all_news_sub_title'),
         ], heading='Latest News'),
         MultiFieldPanel([
             PageChooserPanel('all_publications_page'),
