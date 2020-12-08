@@ -231,15 +231,16 @@ class ComponentsBuilder:
                     else:
                         content_image_id = None
                         content_image_alt = None
-
-                block_promo = {
-                    'url': page_path,
-                    'heading': strip_tags(promo['promo_title']),
-                    'description': strip_tags(promo['promo_content']),
-                    'content_image': content_image_id,  # need to make it work in wagtail
-                    'alt_text': content_image_alt
-                }
-                block_group['value']['promos'].append(block_promo)
+                 # sometime they are there but have not content at all and get rendered empty                        
+                if promo['promo_title'] or promo['promo_content']:
+                    block_promo = {
+                        'url': page_path,
+                        'heading': strip_tags(promo['promo_title']),
+                        'description': strip_tags(promo['promo_content']),
+                        'content_image': content_image_id,  # need to make it work in wagtail
+                        'alt_text': content_image_alt
+                    }
+                    block_group['value']['promos'].append(block_promo)
             return block_group
 
     def build_recent_posts_component(self, layout):
