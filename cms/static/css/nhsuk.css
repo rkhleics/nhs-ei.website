@@ -6733,6 +6733,9 @@ b {
   .nhsei-article-list .nhsei-article-list--title {
     margin-bottom: 8px; }
 
+.nhsuk-list.nhsei-landing-panel-list .nhsuk-panel:first-child {
+  margin-top: 0; }
+
 nav ul, nav li {
   list-style: none;
   padding: 0;

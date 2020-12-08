@@ -25,8 +25,11 @@
         {% endif %}
 
         <div class="nhsuk-body-s">
-            {{ self.first_published_at|date }} | By: {{ self.author }} this content comes from a custom field (coming
+            {{ self.first_published_at|date }}
+            {% comment %}
+             | By: {{ self.author }} this content comes from a custom field (coming
             soon)
+            {% endcomment %}
         </div>
         <h1>{{ self.title }}</h1>
         {{ self.body|richtext }}
