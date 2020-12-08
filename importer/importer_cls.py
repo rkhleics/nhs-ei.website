@@ -221,16 +221,16 @@ class ComponentsBuilder:
                 content_image_id = None
                 content_image_alt = None
                 page_path = self.get_page_path(promo['promo_url'])
-                if has_image:
-                    # found_image = self.fetch_image_id(promo['promo_image']['title'])
-                    found_image = self.fetch_image_id(
-                        self.variate_name())  # just for testing
-                    if found_image:
-                        content_image_id = found_image.id
-                        content_image_alt = promo['promo_image']['title']
-                    else:
-                        content_image_id = None
-                        content_image_alt = None
+                # if has_image:
+                #     # found_image = self.fetch_image_id(promo['promo_image']['title'])
+                #     found_image = self.fetch_image_id(
+                #         self.variate_name())  # just for testing
+                #     if found_image:
+                #         content_image_id = found_image.id
+                #         content_image_alt = promo['promo_image']['title']
+                #     else:
+                #         content_image_id = None
+                #         content_image_alt = None
                  # sometime they are there but have not content at all and get rendered empty                        
                 if promo['promo_title'] or promo['promo_content']:
                     block_promo = {
@@ -248,8 +248,8 @@ class ComponentsBuilder:
             'type': 'recent_posts',
             'value': {
                 'title': layout['section_title'],
-                'type': layout['post_type'],
-                'num_posts': layout['number_of_posts'],
+                'type': ['post','blog'],
+                'num_posts': 3,
                 'see_all': layout['show_see_all']
             }
         }
