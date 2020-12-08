@@ -6383,6 +6383,9 @@ b {
 /* ==========================================================================
    #BETA-BANNER
    ========================================================================== */
+.nhsei-phase-banner__wrapper {
+  background-color: #f0f4f5; }
+
 .app-phase-banner__container {
   border-bottom: 1px solid #d8dde0;
   padding: 8px 0; }
@@ -6392,7 +6395,10 @@ b {
   margin-bottom: 0; }
   .app-phase-banner__content .app-phase-banner__content__tag {
     display: block;
-    margin-right: 8px; }
+    margin-right: 16px; }
+    @media (min-width: 40.0625em) {
+      .app-phase-banner__content .app-phase-banner__content__tag {
+        margin-right: 24px; } }
 
 .app-phase-banner__text {
   font-weight: 400;
@@ -6783,6 +6789,9 @@ b {
   .nhsei-article-list .nhsei-article-list--title {
     margin-bottom: 8px; }
 
+.nhsuk-list.nhsei-landing-panel-list .nhsuk-panel:first-child {
+  margin-top: 0; }
+
 nav ul, nav li {
   list-style: none;
   padding: 0;
@@ -7066,6 +7075,9 @@ nav a {
       border-left: 1px solid #d9e7f4; }
       .mega_nav > ul > li > ul > li > ul > li:first-child {
         border-top: 1px solid #d9e7f4; }
+
+.nhsei-nav-wrapper {
+  background-color: #ffffff; }
 
 .nhsuk-image {
   width: 100%; }
