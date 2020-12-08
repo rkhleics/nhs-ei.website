@@ -535,7 +535,7 @@ class DocumentsBuilder:
                     file.save()
                     return self.create_document_type(file, document, self.document)
                 else:
-                    with open('log/make_documents_list_errors.txt', 'a') as the_file:
+                    with open('importer/log/make_documents_list_errors.txt', 'a') as the_file:
                         the_file.write('{}: {}\n'.format(
                             self.publication, self.publication.id))
 
