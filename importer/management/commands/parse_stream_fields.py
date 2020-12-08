@@ -147,7 +147,7 @@ class Command(BaseCommand):
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
             # no_forms = True
-            if '<form action=' in raw_content:
+            if raw_content and '<form action=' in raw_content:
                 with open('importer/log/forms_found.txt', 'a') as the_file:
                     the_file.write('{} | {} | {}\n'.format(page, page.id, page.wp_link))
             #     no_forms = False
