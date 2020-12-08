@@ -15,7 +15,9 @@
         {% endwith %}
         {% endblock %}
     </title>
+    {% if settings.core.CoreSettings.header_extra %}
     {{ settings.core.CoreSettings.header_extra|safe }}
+    {% endif %}
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://www.nhs.uk/" rel="preconnect">
@@ -96,7 +98,9 @@
     {% block extra_js %}
     {# Override this in templates to add extra javascript #}
     {% endblock %}
+    {% if settings.core.CoreSettings.footer_extra %}
     {{ settings.core.CoreSettings.footer_extra|safe }}
+    {% endif %}
 </body>
 
 </html>
