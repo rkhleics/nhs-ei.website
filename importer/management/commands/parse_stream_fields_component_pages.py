@@ -69,7 +69,7 @@ class Command(BaseCommand):
         if options['mode'] == 'dev':
             """# dev get a small set of pages"""
             # components_parent = BasePage.objects.get(wp_id=62659, source='pages')
-            components_parent = ComponentsPage.objects.get(wp_id=126975, source='pages')
+            components_parent = ComponentsPage.objects.get(wp_id=78673, source='pages')
             pages = ComponentsPage.objects.descendant_of(components_parent, inclusive=True)
             # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
             # pages = []
