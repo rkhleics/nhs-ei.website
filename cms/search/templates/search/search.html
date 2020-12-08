@@ -107,6 +107,7 @@
                 <ul class="nhsuk-list nhsuk-list--border">
                     {% for result in search_results %}
                     <li class="nhsuk-panel nhsei-panel-search-result">
+                        {% get_content_type_tag result %}
                         <h2 class="nhsuk-u-margin-bottom-1 nhsuk-heading-s">
                             <a href="{% pageurl result %}">{{ result.title|truncatewords:"16" }}</a></h2>
                         <div class="nhsuk-body-s">

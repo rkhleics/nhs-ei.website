@@ -241,10 +241,11 @@ class RichTextBuilder:
                     title=path_list[-1], file=media_file, collection=collection_root)
                 file.save()
                 pass
-
-            document_link = self.make_document_link(
-                link.text, document_id, path_list[-1])
-            self.change_links.append([link, document_link])
+            
+            if document_id:
+                document_link = self.make_document_link(
+                    link.text, document_id, path_list[-1])
+                self.change_links.append([link, document_link])
 
         elif page_path in self.url_map_keys and page_path not in SKIP_ANCHOR_URLS:
             page_link = self.make_page_link(
