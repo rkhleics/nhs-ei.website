@@ -104,6 +104,9 @@ class Command(BaseCommand):
 
         self.block_builder = RichTextBuilder(self.url_map)
 
+        with open('importer/log/forms_found.txt', 'w') as the_file:
+            the_file.write('a list of forms found during import\n')
+
     def add_arguments(self, parser):
         parser.add_argument('mode', type=str, help='Run as development with reduced recordsets')
 
@@ -111,7 +114,7 @@ class Command(BaseCommand):
         pages = []
         if options['mode'] == 'dev':
             """# dev get a small set of pages"""
-            base_parent = BasePage.objects.get(wp_id=62659, source='pages')
+            base_parent = BasePage.objects.get(wp_id=159085, source='pages')
             print('Starting from: {}'.format(base_parent.title))
             components_parent = ComponentsPage.objects.get(wp_id=5, source='pages-coronavirus') # /coronavirus/
             base_pages = BasePage.objects.descendant_of(base_parent, inclusive=True)
@@ -144,7 +147,9 @@ class Command(BaseCommand):
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
             # no_forms = True
-            # if '<form' in raw_content and 'enctype="multipart/form-data"' in raw_content:
+            if '<form action=' in raw_content:
+                with open('importer/log/forms_found.txt', 'a') as the_file:
+                    the_file.write('{} | {} | {}\n'.format(page, page.id, page.wp_link))
             #     no_forms = False
             # if raw_content and no_forms:
             if raw_content:
@@ -272,7 +277,7 @@ class Command(BaseCommand):
                         new_image = self.block_builder.make_image_embed(image.id, alt, 'fullwidth')
                         linked_html = linked_html.replace(img_string, new_image)
                     except Image.DoesNotExist:
-                        print('missing image')
+                        # print('missing image')
                         with open('importer/log/media_document_not_found.txt', 'a') as the_file:
                             the_file.write('{} | {} | {}\n'.format(img['src'], page, page.id))
                     if not new_image:
