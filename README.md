@@ -20,24 +20,58 @@ Make docuemnts      | python manage.py runimport documents
 
 Skipping importing media in its own script, it's too buggy just now. So any media needed for pages or publicaitons gets pulled in as required for now.
 
-Should you wnat to run the scripts individually then look at the scripts run in importer > management > commands > runimport.py
+Should you want to run the scripts individually then look at the scripts run in importer > management > commands > runimport.py
 
-Last minute code snippets.
+# Last minute code snippets.
 
-Analytics, for core settings when in place
+Home page image to replace place holder
+https://drive.google.com/file/d/1_PWTKXe45D2Z0kuAYw3fvsCOSFOLFPbi/view?usp=sharing
+
+
+Analytics, for core settings header extra
 
 ```
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FBFNP91TN9"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-185074252-1"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
- 
-  gtag('config', 'G-FBFNP91TN9');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-185074252-1');
 </script>
 ```
 
+News page to be created after the import.
+
+```
+Transparency and legal
+•••• link in footer
+slug = 'transparency-and-legal'
+Panel:
+ Body: It is important we are transparent in all the work we do. The following pages include information on the regulatory action we have taken, decisions made by our Board as well as data on workplace equality and corporate expenditure. You can find all of our Freedom of Information releases here too.
+
+Promo Group:
+ One half
+ Default
+ 3
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=123
+    heading: Freedom of Information release
+    description: We are legally obliged to release information under the Freedom of Information Act. Here you will find all of our FOI releases.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?category=557
+    heading: Board meeting papers and minutes
+    description: Meeting papers and videos from our all of our Board meetings.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=148
+    heading: Regulatory
+    description: Information on regulatory action we have taken against licensed healthcare providers as well as details on NHS trusts in England.
+ Promo:
+    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=164
+    heading: Transparency data
+    description: Here you will find information on how we are kept to account on matters such as workplace equality and corporate expenditure.
+
+```
 # Deleting
 
 ```
