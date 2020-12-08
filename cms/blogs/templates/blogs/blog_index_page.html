@@ -11,15 +11,9 @@
 
     <div class="nhsuk-grid-row">
 
-        <div class="nhsuk-grid-column-one-third">
-
-            {% include 'includes/side_bar_list.html' with items=categories side_bar_title='Topics' filter='category' %}
-
-        </div>
-
         <div class="nhsuk-grid-column-two-thirds">
 
-            <ul class="nhsuk-list nhsuk-list--border">
+            <ul class="nhsuk-list nhsuk-list--border nhsei-landing-panel-list">
 
                 {% for blog in blogs %}
 
@@ -38,7 +32,7 @@
                         <b>Author: </b>{{ blog.author }} we are missing the ability to match ID
                         to a name <br>
                       {% endcomment %}
-                      
+
                         {% if blog.blog_category_relationship.all %}
                         <b>Topics:</b>
                         {% for category in blog.blog_category_relationship.all %}
