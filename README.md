@@ -41,12 +41,12 @@ gtag('config', 'UA-185074252-1');
 </script>
 ```
 
-News page to be created after the import.
+New page to be created after the import.
 
 ```
 Transparency and legal
 •••• link in footer
-slug = 'transparency-and-legal'
+url = '/transparency-and-legal/'
 Panel:
  Body: It is important we are transparent in all the work we do. The following pages include information on the regulatory action we have taken, decisions made by our Board as well as data on workplace equality and corporate expenditure. You can find all of our Freedom of Information releases here too.
 
@@ -71,6 +71,10 @@ Promo Group:
     heading: Transparency data
     description: Here you will find information on how we are kept to account on matters such as workplace equality and corporate expenditure.
 
+```
+Footer Links
+```
+Complaints. use this url: /contact-us/complaint/complaining-to-nhse/
 ```
 # Deleting
 
