@@ -1,1 +1,0 @@
-when uploading documents wagtail found more than one file with the same name
