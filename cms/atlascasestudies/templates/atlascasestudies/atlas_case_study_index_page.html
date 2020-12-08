@@ -36,8 +36,10 @@
                     <p class="nhsuk-body-s">
                         <b>Published: </b> {{ atlas_case_study.first_published_at|date:'d F Y' }} - <em>Latest version
                             {{ atlas_case_study.last_published_at|date:'d F Y' }}</em><br>
+                      {% comment %}
                         <b>Author: </b>{{ atlas_case_study.author }} we are missing the ability to match ID
                         to a name <br>
+                      {% endcomment %}
                         {% if atlas_case_study.atlas_case_study_category_relationship.all %}
                         <b>Topics:</b>
                         {% for category in atlas_case_study.atlas_case_study_category_relationship.all %}
