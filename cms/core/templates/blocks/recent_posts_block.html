@@ -1,99 +1,54 @@
+
 <div class="nhsuk-panel-with-label">
     <h3 class="nhsuk-panel-with-label__label">{{ value.title }}</h3>
     <div class="nhsuk-grid-row">
       <div class="nhsuk-grid-column-full">
-        <p>The most recently added documents to the 
-        {% for type in value.type %}
-        get types here
-        {% endfor %}
-        </p>
+        
         <div class="nhsuk-grid-row">
           <div class="nhsuk-grid-column-one-half">
             <ol class="nhsuk-list">
-            
+
+            {% for item in queryset.posts %}
                 <li>
-                  <article class="">
-                    <h2 class="nhsuk-heading-xs nhsei-list-title">
-                      <a href="#">
-                      Data Protection Impact Assessment: National Immunisation, Vaccination System (NIVS)</a>
+                  <article class="nhsuk-u-margin-bottom-4">
+                    <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
+                      <a href="{{item.record.url}}">
+                      {{item.record.title}}</a>
                     </h2>
-                    <span class="nhsei-publication-type label-tag label-tag--orange">Guidance</span>
+                    <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
                     <span class="nhsei-list-meta">Published
-                    <time class="date" datetime="">17 November 2020</time></span>
+                    <time class="date" datetime="">{{ item.record.first_published_at|date:'d M Y g:i a' }}</time></span>
                   </article>
                 </li>
-              
-                <li>
-                  <article class="">
-                    <h2 class="nhsuk-heading-xs nhsei-list-title">
-                      <a href="#">
-                      COVID-19 therapy: corticosteroids including dexamethasone and hydrocortisone</a>
-                    </h2>
-                    <span class="nhsei-publication-type label-tag label-tag--blue">Letter</span>
-                    <span class="nhsei-list-meta">Updated
-                    <time class="date" datetime="">13 November 2020</time></span>
-                  </article>
-                </li>
-              
-                <li>
-                  <article class="">
-                    <h2 class="nhsuk-heading-xs nhsei-list-title">
-                      <a href="#">
-                      Case study: St. George’s University Hospitals NHS Foundation Trust: Occupational health and wellbeing</a>
-                    </h2>
-                    <span class="nhsei-publication-type label-tag label-tag--green">Case study</span>
-                    <span class="nhsei-list-meta">Published
-                    <time class="date" datetime="">13 November 2020</time></span>
-                  </article>
-                </li>
+              {% endfor %}
               
             </ol>
+            <a href="/news/nhs-england-improvement/">View all News</a>
           </div>
 
           <div class="nhsuk-grid-column-one-half">
             <ol class="nhsuk-list">
-              
-                  <li>
-                    <article class="">
-                      <h2 class="nhsuk-heading-xs nhsei-list-title">
-                        <a href="#">
-                        Primary Medical Care Policy and Guidance Manual – Annex B: sub contracting of clinical services under GMS contracts</a>
-                      </h2>
-                      <span class="nhsei-publication-type label-tag label-tag--orange">Guidance</span>
-                      <span class="nhsei-list-meta">Published
-                      <time class="date" datetime="">12 November 2020</time></span>
-                    </article>
-                  </li>
-                
-                  <li>
-                    <article class="">
-                      <h2 class="nhsuk-heading-xs nhsei-list-title">
-                        <a href="#">
-                        Primary Medical Care Policy and Guidance Manual – Annex A: sub contracting of clinical services under GMS contracts</a>
-                      </h2>
-                      <span class="nhsei-publication-type label-tag label-tag--orange">Guidance</span>
-                      <span class="nhsei-list-meta">Published
-                      <time class="date" datetime="">12 November 2020</time></span>
-                    </article>
-                  </li>
-                
-                  <li>
-                    <article class="">
-                      <h2 class="nhsuk-heading-xs nhsei-list-title">
-                        <a href="#">
-                        Primary Medical Care Policy and Guidance Manual – Annex 17: novation agreement</a>
-                      </h2>
-                      <span class="nhsei-publication-type label-tag label-tag--pink">Template</span>
-                      <span class="nhsei-list-meta">Published
-                      <time class="date" datetime="">12 November 2020</time></span>
-                    </article>
-                  </li>
+              {% for item in queryset.blogs %}
+                <li>
+                  <article class="nhsuk-u-margin-bottom-4">
+                    <h2 class="nhsuk-heading-xs nhsei-list-title nhsuk-u-margin-bottom-1">
+                      <a href="{{item.record.url}}">
+                      {{item.record.title}}</a>
+                    </h2>
+                    <span class="nhsuk-tag nhsuk-tag--white">{{ item.tag }}</span>
+                    <span class="nhsei-list-meta">Published
+                    <time class="date" datetime="">{{ item.record.first_published_at|date:'d M Y g:i a' }}</time></span>
+                  </article>
+                </li>
+              {% endfor %}
+
                 
             </ol>
+            <a href="/blogs/blog/">View all Blogs</a>
           </div>
 
         </div>
-        <a href="#">View all publications</a>
+        
       </div>
     </div>
     </div>

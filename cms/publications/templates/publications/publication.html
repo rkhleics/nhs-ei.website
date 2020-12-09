@@ -11,7 +11,7 @@
     <div class="nhsuk-review-date">
         <p class="nhsuk-body-s">
             Page first published: {{ self.first_published_at|date:'d M Y  g:i a' }}<br>
-            Last updated: {{ self.last_published_at|date:'d M Y  g:i a' }}
+            Last updated: {{ self.latest_revision_created_at|date:'d M Y  g:i a' }}
         </p>
     </div>
     <!-- <div class="nhsuk-body-s">

@@ -135,53 +135,8 @@ class Command(BaseCommand):
         improvement.save()
         rev.publish()
 
-        # commissioning
-        # already exists at url 'commissioning'
-        # TEMP: none to add as the page has content already
 
-        # news and blogs
-        # new page at url 'newsandblogs' there both news and blogs needs to be moved here
-        # TEMP: This is the news and blogs top level page
-        # news_blogs = LandingPage(
-        #     title='News and Blogs',
-        #     wp_id=-10,
-        #     source='none',
-        #     wp_slug='none',
-        # )
+        """ Transparency and legal """
 
-        # home_page.add_child(instance=news_blogs)
 
-        # rev = news_blogs.save_revision()
-        # news_blogs.save()
-        # rev.publish()
-
-        # our_nhs_people_page = Page.objects.get(slug='our-nhs-people')
-
-        # home_page.body = """
-        #     <h3><a id="{}" linktype="page">We are the NHS: People Plan for 2020/21</a></h3>
-
-        #     <p>Our NHS is made up of 1.3 million people who care for the people of this country with skill, compassion and dedication.
-        #     This plan sets out what the people of the NHS can expect – from their leaders and from each other – for the rest of 2020
-        #     and into 2021.</p>
-
-        #     <p>It sets out actions to support transformation across the whole NHS. It focuses on how we must all continue to look after
-        #     each other and foster a culture of inclusion and belonging, as well as action to grow our workforce, train our people,
-        #     and work together differently to deliver patient care.</p>
-        #     """.format(our_nhs_people_page.id)
-
-        # home_page.body_image = wide_image
-
-        # np = BasePage.objects.child_of(home_page).filter(slug='news')[0]
-        # home_page.all_news_page = np
-        # home_page.all_news_title = 'Latest news'
-        # home_page.all_news_sub_title = 'The most recently added news articles'
-
-        # home_page.all_publications_page = BasePage.objects.child_of(home_page).filter(slug='publication')[0]
-        # home_page.all_publications_title = 'Latest in publications'
-        # home_page.all_publications_sub_title = 'The most recently added documents to the publications library'
-
-        # # print(home_page.__dict__)
-
-        # rev = home_page.save_revision()
-        # home_page.save()
-        # rev.publish()
+        """ Mental health """

@@ -69,11 +69,11 @@ class Command(BaseCommand):
         np = BasePage.objects.child_of(home_page).filter(slug='news')[0]
         home_page.all_news_page = np
         home_page.all_news_title = 'Latest news'
-        home_page.all_news_sub_title = 'The most recently added news articles'
+        home_page.all_news_sub_title = ''
 
         home_page.all_publications_page = BasePage.objects.child_of(home_page).filter(slug='publication')[0]
         home_page.all_publications_title = 'Latest in publications'
-        home_page.all_publications_sub_title = 'The most recently added documents to the publications library'
+        home_page.all_publications_sub_title = ''
 
         # print(home_page.__dict__)
 

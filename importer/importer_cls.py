@@ -1,4 +1,9 @@
 import ast
+from cms.blogs.models import Blog
+from cms.pages.models import BasePage, ComponentsPage, LandingPage
+from cms.posts.models import Post
+from cms.atlascasestudies.models import AtlasCaseStudy
+from cms.publications.models import Publication
 import random
 import sys
 from io import BytesIO
@@ -10,8 +15,8 @@ from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.timezone import make_aware
 from importer.richtextbuilder import RichTextBuilder
-from requests.api import head
-from wagtail.core.models import Collection
+from requests.api import head, post
+from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
@@ -53,7 +58,12 @@ class Importer:
 
 class ComponentsBuilder:
 
-    def __init__(self, data):
+    def __init__(self, data, url_map=None, page=None):
+
+         # a temporary fix to rewrite absolute urls
+         # in the block types that ultimatley will have a page chooser etc
+        self.url_map = url_map
+        self.page = page
 
         self.data = data
         self.component_keys = ['a_to_z_index_component', 'article_component', 'in_this_section_component',
@@ -133,10 +143,12 @@ class ComponentsBuilder:
         # }
 
     def build_article_component(self, layout):
+        
         if layout['article_image']:
             image_url = layout['article_image']['url']
         else:
             image_url = ''
+        
         data = {
             'image': image_url,
             'image_alignment': layout['article_image_alignment'],
@@ -208,25 +220,27 @@ class ComponentsBuilder:
                 has_image = promo['promo_image']
                 content_image_id = None
                 content_image_alt = None
-                if has_image:
-                    # found_image = self.fetch_image_id(promo['promo_image']['title'])
-                    found_image = self.fetch_image_id(
-                        self.variate_name())  # just for testing
-                    if found_image:
-                        content_image_id = found_image.id
-                        content_image_alt = promo['promo_image']['title']
-                    else:
-                        content_image_id = None
-                        content_image_alt = None
-
-                block_promo = {
-                    'url': promo['promo_url'],
-                    'heading': strip_tags(promo['promo_title']),
-                    'description': strip_tags(promo['promo_content']),
-                    'content_image': content_image_id,  # need to make it work in wagtail
-                    'alt_text': content_image_alt
-                }
-                block_group['value']['promos'].append(block_promo)
+                page_path = self.get_page_path(promo['promo_url'])
+                # if has_image:
+                #     # found_image = self.fetch_image_id(promo['promo_image']['title'])
+                #     found_image = self.fetch_image_id(
+                #         self.variate_name())  # just for testing
+                #     if found_image:
+                #         content_image_id = found_image.id
+                #         content_image_alt = promo['promo_image']['title']
+                #     else:
+                #         content_image_id = None
+                #         content_image_alt = None
+                 # sometime they are there but have not content at all and get rendered empty                        
+                if promo['promo_title'] or promo['promo_content']:
+                    block_promo = {
+                        'url': page_path,
+                        'heading': strip_tags(promo['promo_title']),
+                        'description': strip_tags(promo['promo_content']),
+                        'content_image': content_image_id,  # need to make it work in wagtail
+                        'alt_text': content_image_alt
+                    }
+                    block_group['value']['promos'].append(block_promo)
             return block_group
 
     def build_recent_posts_component(self, layout):
@@ -234,8 +248,8 @@ class ComponentsBuilder:
             'type': 'recent_posts',
             'value': {
                 'title': layout['section_title'],
-                'type': layout['post_type'],
-                'num_posts': layout['number_of_posts'],
+                'type': ['post','blog'],
+                'num_posts': 3,
                 'see_all': layout['show_see_all']
             }
         }
@@ -271,11 +285,12 @@ class ComponentsBuilder:
             }
             if priorities:
                 for priority in priorities:
+                    page_path = self.get_page_path(priority['priority_url'])
                     obj = {
                         'type': 'action_link',
                         'value': {
                             'text': strip_tags(priority['priority_title']),
-                            'external_url': priority['priority_url'],
+                            'external_url': page_path,
                             'new_window': False,
                         }
                     }
@@ -287,11 +302,12 @@ class ComponentsBuilder:
             links = []
             if priorities:
                 for priority in priorities:
+                    page_path = self.get_page_path(priority['priority_url'])
                     obj = {
                         'type': 'action_link',
                         'value': {
                             'text': strip_tags(priority['priority_title']),
-                            'external_url': priority['priority_url'],
+                            'external_url': page_path,
                             'new_window': False,
                         }
                     }
@@ -329,11 +345,12 @@ class ComponentsBuilder:
                 }
 
                 for link in action_links:
+                    page_path = self.get_page_path(link['in_this_section_link_url'])
                     action_link = {
                         'type': 'action_link',
                         'value': {
                             'text': strip_tags(link['in_this_section_link_title']),
-                            'external_url': link['in_this_section_link_url'],
+                            'external_url': page_path,
                             'new_window': False,
                         }
                     }
@@ -343,11 +360,12 @@ class ComponentsBuilder:
             else:
                 links = []
                 for link in action_links:
+                    page_path = self.get_page_path(link['in_this_section_link_url'])
                     action_link = {
                         'type': 'action_link',
                         'value': {
                             'text': strip_tags(link['in_this_section_link_title']),
-                            'external_url': link['in_this_section_link_url'],
+                            'external_url': page_path,
                             'new_window': False,
                         }
                     }
@@ -405,8 +423,9 @@ class ComponentsBuilder:
                 #     url = ''
                 #     alt = ''
                 # if section['topic_url'] != '': # some topic urls are blank
+                page_path = self.get_page_path(section['topic_url'])
                 block_promo = {
-                    'url': section['topic_url'],
+                    'url': page_path,
                     'heading': strip_tags(section['topic_title']),
                     'description': strip_tags(section['topic_content']),
                     # need to make it work in wagtail, topic blocks never have an image
@@ -437,6 +456,27 @@ class ComponentsBuilder:
             return names[0]
         else:
             return names[1]
+
+    # temp for getting absolute url page path
+    def get_page_path(self, url):
+        if url:
+            path_list = url.split('/')  # a list of path segments
+            # first is always '' so lets remove it
+            del path_list[0]
+            if not path_list[0]:  # this one can go too
+                del path_list[0]
+            if not path_list[-1]:  # this one can go too
+                del path_list[-1]
+            if path_list[0] == 'www.england.nhs.uk':
+                del path_list[0]
+
+            page_path = '/' + '/'.join(path_list) + '/' # a string of the path
+            if page_path in self.url_map:
+                page = Page.objects.get(id=self.url_map[page_path]['id'])
+                page_path = page.get_full_url()
+            if 'http://coding.nickmoreton.co.uk/' in page_path:
+                page_path = page_path.replace('http://coding.nickmoreton.co.uk/','http://coding.nickmoreton.co.uk:8000/')
+            return page_path
 
 
 class DocumentsBuilder:
@@ -495,10 +535,10 @@ class DocumentsBuilder:
                     file.save()
                     return self.create_document_type(file, document, self.document)
                 else:
-                    with open('log/make_documents_list_errors.txt', 'a') as the_file:
+                    with open('importer/log/make_documents_list_errors.txt', 'a') as the_file:
                         the_file.write('{}: {}\n'.format(
                             self.publication, self.publication.id))
-                    # print('++++++missing url: {}'.format(page_path))
+
         elif self.document['type_of_publication'] == 'documentlink':
             # pass
             # document = self.data['document']

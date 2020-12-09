@@ -1,4 +1,4 @@
-from django.template.defaultfilters import filesizeformat
+from django.template.defaultfilters import default, filesizeformat
 from wagtail.core.blocks import (
     StructBlock, RawHTMLBlock, CharBlock, StreamBlock, ListBlock
 )
@@ -26,22 +26,68 @@ from wagtailnhsukfrontend.blocks import (
     SummaryListBlock,
 )
 
+from cms.posts.models import Post
+from cms.blogs.models import Blog
+
+RICHTEXT_FEATURES_ALL = [
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'bold', 'italic', 'ol', 'ul',
+    'hr', 'link', 'document-link', 'image', 'embed', 'code',
+    'superscript', 'subscript', 'strikethrough', 'blockquote'
+]
+
 
 class RecentPostsBlock(FlattenValueContext, StructBlock):
     title = CharBlock()
     type = MultipleChoiceBlock(choices=(
         ('post', 'Post'),
         ('blog', 'Blog'),
-        ('case_studies', 'Case Studies'),
-        ('publications', 'Publications'),
     ), default=['post', 'blog'])
-    num_posts = IntegerBlock(default=6)
-    see_all = BooleanBlock(default=True)
+    num_posts = IntegerBlock(default=6, help_text='How many of each type')
+    see_all_posts = BooleanBlock(default=True)
+    see_all_blogs = BooleanBlock(default=True)
 
     class Meta:
         icon = 'pick'
         template = 'blocks/recent_posts_block.html'
         help_text = 'Show a recent posts/blogs panel. Choose post and/or blog and categories to filter by.'
+
+    def get_context(self, value, parent_context):
+        context = super().get_context(value, parent_context=parent_context)
+        num_of_each = int(value.get('num_posts'))
+        posts = Post.objects.all().order_by('-first_published_at')[:num_of_each]
+        blogs = Blog.objects.all().order_by('-first_published_at')[:num_of_each]
+        post_types = value.get('type')
+        qs = {
+            'posts': [],
+            'blogs': [],
+        }
+        if 'post' in post_types:
+            for post in posts:
+                qs['posts'].append(
+                    {
+                        'record': post,
+                        'tag': 'News'
+                    }
+                ),
+
+        if 'blog' in post_types:
+            for blog in blogs:
+                qs['blogs'].append(
+                    {
+                        'record': blog,
+                        'tag': 'Blog'
+                    }
+                )
+
+        context['queryset'] = qs
+
+        # for post_type in post_types:
+
+        # if len(post_types) == 1:
+        #     pass
+        # elif len(post_types) == 2:
+        #     pass
+        return context
 
 
 class JumpMenuBlock(StructBlock):
@@ -85,8 +131,9 @@ class DocumentBlock(StructBlock):
     def get_context(self, value, parent_context):
         context = super().get_context(value, parent_context)
         context['file_ext'] = value['document'].file_extension
-        context['file_size'] = filesizeformat(value['document'].get_file_size())
-        
+        context['file_size'] = filesizeformat(
+            value['document'].get_file_size())
+
         return context
 
 
@@ -144,6 +191,22 @@ class CoreBlocks(StreamBlock):
     promo_group = PromoGroupBlock(group='Base')
 
     recent_posts = RecentPostsBlock(group='Custom')
+    text = RichTextBlock(
+        group='Custom',
+        help_text="""
+            Use this block to add formatted text into a page e.g. 
+            paragraph with heading and/or links and images
+        """,
+        template='blocks/text_block.html',
+        features=RICHTEXT_FEATURES_ALL
+    )
+    html = RawHTMLBlock(
+        group='custom',
+        help_text="""
+            Use this block to add raw html
+        """,
+        template='blocks/html_block.html',
+    )
 
 
 class PublicationsBlocks(StreamBlock):
