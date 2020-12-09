@@ -104,13 +104,14 @@ class PostsImporter(Importer):
             obj = Post(
                 title=post.get('title'),
                 # excerpt = post.get('excerpt'),
+                # dont preset the slug coming from wordpress some are too long
                 body=post.get('content'),
                 show_in_menus=True,
                 wp_id=post.get('wp_id'),
                 author=post.get('author'),
                 source=post.get('source'),
-                wp_slug=post.get('wp_slug'),
-                wp_link=post.get('wp_link'),
+                wp_slug=post.get('slug'),
+                wp_link=post.get('link'),
             )
             sub_site_news_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here

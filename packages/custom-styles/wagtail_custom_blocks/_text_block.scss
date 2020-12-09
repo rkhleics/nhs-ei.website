@@ -1,0 +1,44 @@
+@mixin clearfix-after() {
+    &:after {
+      clear: both;
+      content: '';
+      display: table;
+      float: none;
+    }
+  }
+
+  @mixin clearfix-before() {
+    &:before {
+      clear: both;
+      content: '';
+      display: table;
+      float: none;
+    }
+  }
+
+
+.core-custom__text {
+    @include clearfix();
+    img.richtext-image {
+        width: 100%;
+        @include mq($from: tablet) {
+            &.left {
+                float: left;
+                max-width: 60%;
+                margin-right: 20px;
+            }
+            &.right {
+                float: right;
+                max-width: 60%;
+                margin-left: 20px;
+            }
+        }
+    }
+    blockquote {
+        @include clearfix-after();
+        @include clearfix-before();
+        border-left: 6px solid lightgray;
+        margin: 20px 0;
+        padding: 20px;
+    }
+}

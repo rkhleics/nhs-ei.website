@@ -38,6 +38,7 @@ class Command(BaseCommand):
                 sys.stdout.write('-')
                 image.delete()
                 images_length -= 1
+            sys.stdout.write('\n')
         else:
             sys.stdout.write('✅ There are no images to delete\n') 
 
@@ -50,10 +51,11 @@ class Command(BaseCommand):
                 sys.stdout.write('-')
                 document.delete()
                 documents_length -= 1
+            sys.stdout.write('\n')
         else:
             sys.stdout.write('✅ There are no documents to delete\n') 
 
-        sys.stdout.write('Removing collections')
+        sys.stdout.write('✅ Removing collections\n')
         for key in SOURCES.keys():
             try:
                 collection = Collection.objects.filter(name=SOURCES[key])
@@ -62,6 +64,4 @@ class Command(BaseCommand):
                     sys.stdout.write('-')
             except Collection.DoesNotExist:
                 pass
-        sys.stdout.write('\n')
-        
-        sys.stdout.write('✅ Complete\n')
+        sys.stdout.write('\n✅ Complete\n')

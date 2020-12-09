@@ -8,7 +8,6 @@ from sys import path
 from typing import ItemsView
 from bs4 import BeautifulSoup
 from django.core.files.base import File
-from django.core.files.images import ImageFile
 import requests
 from html import unescape
 
@@ -79,33 +78,25 @@ https://www.england.nhs.uk/ig/ig-resources/
 """
 
 
-TEST_DATA_SET_PAGE_TITLES = [
-    'Always Events', 'Coronavirus guidance for clinicians and NHS managers'
-]
-
-
 class Command(BaseCommand):
     help = 'parsing stream fields'
 
     def __init__(self):
         models = [BasePage, ComponentsPage, Blog,
                   Post, AtlasCaseStudy, Publication, LandingPage]
-
-        self.url_map = {}  # cached
+        map = {}  # cached
 
         for model in models:
             pages = model.objects.all()
             for page in pages:
-                self.url_map[page.url] = {
+                map[page.url] = {
                     'id': page.id,
                     'slug': page.slug,
                     'title': page.title,
                 }
 
+        self.url_map = map
         self.block_builder = RichTextBuilder(self.url_map)
-
-        with open('importer/log/forms_found.txt', 'w') as the_file:
-            the_file.write('a list of forms found during import\n')
 
     def add_arguments(self, parser):
         parser.add_argument('mode', type=str, help='Run as development with reduced recordsets')
@@ -114,25 +105,24 @@ class Command(BaseCommand):
         pages = []
         if options['mode'] == 'dev':
             """# dev get a small set of pages"""
-            base_parent = BasePage.objects.get(wp_id=159085, source='pages')
-            print('Starting from: {}'.format(base_parent.title))
-            components_parent = ComponentsPage.objects.get(wp_id=5, source='pages-coronavirus') # /coronavirus/
-            base_pages = BasePage.objects.descendant_of(base_parent, inclusive=True)
-            base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
-            pages = []
-            for page in base_pages:
-                pages.append(page)
-            for page in base_pages_under_components_page:
-                pages.append(page)
+            # components_parent = BasePage.objects.get(wp_id=62659, source='pages')
+            components_parent = ComponentsPage.objects.get(wp_id=5, source='pages-coronavirus')
+            pages = ComponentsPage.objects.descendant_of(components_parent, inclusive=True)
+            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
+            # pages = []
+            # for page in base_pages:
+            #     pages.append(page)
+            # for page in base_pages_under_components_page:
+            #     pages.append(page)
             
         if options['mode'] == 'prod':
             """ get all the pages """
-            pages = BasePage.objects.all() 
-        # pages_count = pages.count()
+            pages = ComponentsPage.objects.all() 
+        # pages = BasePage.objects.all()  # the poroper one to run
+        # pages = ComponentsPage.objects.filter(id=1420) # dev just to get one page
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
-        # counter = pages_count
         for page in pages:
-            sys.stdout.write('⌛️ {} processing...\n'.format(page))
+
             # keep the dates as when imported
             # if page.title == 'Join the NHS COVID-19 vaccine team':
             first_published_at = page.first_published_at
@@ -143,13 +133,11 @@ class Command(BaseCommand):
             # get this to make a stream field
             raw_content = page.raw_content
 
-            # print('⚙️  {}'.format(page.title))
+            print('⚙️  {} parsed'.format(page.title))
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
             # no_forms = True
-            if raw_content and '<form action=' in raw_content:
-                with open('importer/log/forms_found.txt', 'a') as the_file:
-                    the_file.write('{} | {} | {}\n'.format(page, page.id, page.wp_link))
+            # if '<form' in raw_content and 'enctype="multipart/form-data"' in raw_content:
             #     no_forms = False
             # if raw_content and no_forms:
             if raw_content:
@@ -167,13 +155,11 @@ class Command(BaseCommand):
                 for field in content_fields:
                     keys = field.keys()
                     for key in keys:
-                        if key == 'default_template_hidden_text_blocks' and field['default_template_hidden_text_blocks'] != 'False':
-                            # if len(page.content_fields) > 0:
-                            content_fields = self.make_expander_group_block(page.content_fields, page)
-                            for field in content_fields:
-                                body.append(field)
-
-                            # body.append(content_blocks)
+                        if key == 'default_template_hidden_text_blocks':
+                            if len(ast.literal_eval(page.content_field_blocks)) > 0:
+                                content_blocks = self.make_expander_group_block(
+                                    ast.literal_eval(page.content_field_blocks), page)
+                                body.append(content_blocks)
 
             # print(body)
             # sys.exit()
@@ -188,11 +174,6 @@ class Command(BaseCommand):
             page.latest_revision_created_at = latest_revision_created_at
             page.save()
             rev.publish()
-
-            sys.stdout.write('✅ {} done\n'.format(page))
-
-            # counter -=1
-            # print(counter)
 
             # if page.id == 1420:
             #     print(body)
@@ -218,8 +199,6 @@ class Command(BaseCommand):
             'alink', 'cellpadding', 'cellspacing']
 
         soup = BeautifulSoup(content, "lxml", exclude_encodings=True)
-
-        
 
         iframes = soup.find_all('iframe')
 
@@ -253,36 +232,21 @@ class Command(BaseCommand):
 
             # print(tag.name)
             if not tag.name in TAGS_TO_BLOCKS:
-
-                images = tag.find_all('img')
-                
-                    # img.replaceWith(new_image)
                 # it's a simple text field so concat all text
-                # self.block_builder.extract_img(str(tag), page)
                 self.block_builder.extract_links(str(tag), page)
                 linked_html = str(tag)
                 for link in self.block_builder.change_links:
                     linked_html = linked_html.replace(
                         str(link[0]), str(link[1]))
-
-                # replace any img elements with str.replace, problem uploading image
-                # as cant get correct src so missing images are marked and logged
-                for img in images:
-                    img_string = str(img)
-                    src = 'original_images/' + img.get('src').split('/')[-1] # need the last part
-                    alt = img.get('alt')
-                    new_image = None
-                    try:
-                        image = Image.objects.get(file=src)
-                        new_image = self.block_builder.make_image_embed(image.id, alt, 'fullwidth')
-                        linked_html = linked_html.replace(img_string, new_image)
-                    except Image.DoesNotExist:
-                        # print('missing image')
-                        with open('importer/log/media_document_not_found.txt', 'a') as the_file:
-                            the_file.write('{} | {} | {}\n'.format(img['src'], page, page.id))
-                    if not new_image:
-                        linked_html = linked_html + '<h3 style="color:red">missing image</h3>'
                 block_value += linked_html
+                # if counter == len(soup) and len(block_value) > 0:
+                # when we reach the end and somehing is in the
+                # block_value just output and clear
+                # blocks.append({
+                #     'type': 'text',
+                #     'value': block_value
+                # })
+                # block_value = ''
 
             if tag.name == 'table':
 
@@ -323,11 +287,6 @@ class Command(BaseCommand):
         return blocks
 
     def make_expander_group_block(self, content, page):
-        content = ast.literal_eval(content)
-        title = content[0]['default_template_hidden_text_section_title']
-        expander_list = content[1] # (a list of expanders)
-        expanders = ast.literal_eval(expander_list['default_template_hidden_text_blocks'])
-
         """
         {
             'type': 'expander_group',
@@ -350,35 +309,24 @@ class Command(BaseCommand):
         }
         """
 
-        block_title = {
-            'type': 'text',
-            'value': ''
-        }
+        # block_title = {}
 
         block_group = {
             'type': 'expander_group', 'value': {'expanders': []},
         }
+        for field in content:
 
-        for expander in expanders:
-            summary = expander['default_template_hidden_text_summary']
-            details = expander['default_template_hidden_text_details']
-            
+            for item in field['items']:
+                self.block_builder.extract_links(item['detail'], page)
+                item_detail = item['detail']
+                for link in self.block_builder.change_links:
+                    item_detail = item_detail.replace(
+                        str(link[0]), str(link[1]))
+                block_item = {'title': item['summary'], 'body': [
+                    {'type': 'richtext', 'value': item_detail}]}
+                block_group['value']['expanders'].append(block_item)
 
-            # for item in field['items']:
-            item_detail = details
-            self.block_builder.extract_links(details, page)
-            for link in self.block_builder.change_links:
-                item_detail = item_detail.replace(
-                    str(link[0]), str(link[1]))
-            block_item = {'title': summary, 'body': [
-                {'type': 'richtext', 'value': item_detail}]}
-            block_group['value']['expanders'].append(block_item)
-
-        if title:
-            block_title['value'] = '<h3>{}</h3>'.format(title)
-            return [block_title, block_group]
-        else:
-            return [block_group]
+        return block_group
 
     def make_panel_block(self, content):
         """

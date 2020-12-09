@@ -11,14 +11,18 @@ class CoreSettings(BaseSetting, ClusterableModel):
     alert_banner = RichTextField()
     is_visible = models.BooleanField(default=False, blank=True)
 
-    # upper_footer_links = StreamField(LinkListBlock, blank=True)
-    # lower_footer_links = StreamField(LinkListBlock(), blank=True)
+    header_extra = models.TextField(blank=True, null=True)
+    footer_extra = models.TextField(blank=True, null=True)
 
     panels = [
         MultiFieldPanel([
             FieldPanel('alert_banner'),
             FieldPanel('is_visible')
         ], heading='Alert Banner'),
+        MultiFieldPanel([
+            FieldPanel('header_extra'),
+            FieldPanel('footer_extra'),
+        ], heading='Extra header and footer code', help_text='You can add valid html code snippets here such as analytics code or other scripts'),
         MultiFieldPanel([
             InlinePanel('upper_footer_links')
         ], heading='Upper Footer Links', help_text='NOTE: if you choose a page as a link it will overide the external link'),

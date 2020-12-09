@@ -46,38 +46,40 @@ class PublicationIndexPage(Page):
         result sets but we will need a decision made on that.
         """
         publication_ordering = "-first_published_at"
+        if request.GET.get('order'):
+            publication_ordering = request.GET.get('order')
         context = super().get_context(request, *args, **kwargs)
         # sub_site_categories = Category.objects.filter(
         #     sub_site=self.sub_site_categories.id)
 
-        if request.GET.get("publication_type"):
-            context["publication_type_id"] = int(request.GET.get("publication_type"))
-            publications = (
-                Publication.objects.child_of(self)
-                .live()
-                .order_by(publication_ordering)
-                .filter(
-                    publication_publication_type_relationship__publication_type=request.GET.get(
-                        "publication_type"
-                    )
-                )
-            )
-        elif request.GET.get("category"):
-            context["category_id"] = int(request.GET.get("category"))
-            publications = (
-                Publication.objects.child_of(self)
-                .live()
-                .order_by(publication_ordering)
-                .filter(
-                    publication_category_relationship__category=request.GET.get(
-                        "category"
-                    )
-                )
-            )
-        else:
-            publications = (
-                Publication.objects.child_of(self).live().order_by(publication_ordering)
-            )
+        # if request.GET.get("publication_type"):
+        #     context["publication_type_id"] = int(request.GET.get("publication_type"))
+        #     publications = (
+        #         Publication.objects.child_of(self)
+        #         .live()
+        #         .order_by(publication_ordering)
+        #         .filter(
+        #             publication_publication_type_relationship__publication_type=request.GET.get(
+        #                 "publication_type"
+        #             )
+        #         )
+        #     )
+        # elif request.GET.get("category"):
+        #     context["category_id"] = int(request.GET.get("category"))
+        #     publications = (
+        #         Publication.objects.child_of(self)
+        #         .live()
+        #         .order_by(publication_ordering)
+        #         .filter(
+        #             publication_category_relationship__category=request.GET.get(
+        #                 "category"
+        #             )
+        #         )
+        #     )
+        # else:
+        publications = (
+            Publication.objects.child_of(self).live().order_by(publication_ordering)
+        )
 
         paginator = Paginator(publications, 16)
 
@@ -102,6 +104,7 @@ class PublicationIndexPage(Page):
 
         category_subsite = CategorySubSite.objects.get(source=sub_site_source)
         context["categories"] = Category.objects.filter(sub_site=category_subsite.id)
+        context["order"] = publication_ordering
 
         return context
 

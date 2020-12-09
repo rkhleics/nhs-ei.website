@@ -26,7 +26,7 @@
                     </div>
                     <p class="nhsuk-body-s">
                         <b>Published: </b> {{ blog.first_published_at|date:'d M Y g:i a' }} - <em>Latest version
-                            {{ blog.last_published_at|date:'d M Y g:i a' }}</em><br>
+                            {{ blog.latest_revision_created_at|date:'d M Y g:i a' }}</em><br>
 
                       {% comment %}
                         <b>Author: </b>{{ blog.author }} we are missing the ability to match ID

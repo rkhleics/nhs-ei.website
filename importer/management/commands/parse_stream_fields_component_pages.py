@@ -1,4 +1,8 @@
 import ast
+from cms.publications.models import Publication
+from cms.atlascasestudies.models import AtlasCaseStudy
+from cms.posts.models import Post
+from cms.blogs.models import Blog
 import json
 import re
 from html import unescape
@@ -12,11 +16,12 @@ from bs4 import BeautifulSoup
 from django.core.files.base import File
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
-from cms.pages.models import BasePage, ComponentsPage
+from cms.pages.models import BasePage, ComponentsPage, LandingPage
 from importer.importer_cls import ComponentsBuilder
 from wagtail.core.models import Collection
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
+from importer.richtextbuilder import RichTextBuilder
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 
@@ -40,8 +45,43 @@ from wagtail.images.models import Image
 class Command(BaseCommand):
     help = 'parsing stream fields component pages'
 
+    def __init__(self):
+        models = [BasePage, ComponentsPage, Blog, Post, AtlasCaseStudy, Publication, LandingPage]
+
+        self.url_map = {}  # cached
+
+        for model in models:
+            pages = model.objects.all()
+            for page in pages:
+                self.url_map[page.url] = {
+                    'id': page.id,
+                    'slug': page.slug,
+                    'title': page.title,
+                }
+
+        # self.rich_text_builder = RichTextBuilder(self.url_map)
+
+    def add_arguments(self, parser):
+        parser.add_argument('mode', type=str, help='Run as development with reduced recordsets')
+        
     def handle(self, *args, **options):
-        pages = ComponentsPage.objects.all()
+        pages = []
+        if options['mode'] == 'dev':
+            """# dev get a small set of pages"""
+            # components_parent = BasePage.objects.get(wp_id=62659, source='pages')
+            components_parent = ComponentsPage.objects.get(wp_id=78673, source='pages')
+            pages = ComponentsPage.objects.descendant_of(components_parent, inclusive=True)
+            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
+            # pages = []
+            # for page in base_pages:
+            #     pages.append(page)
+            # for page in base_pages_under_components_page:
+            #     pages.append(page)
+            
+        if options['mode'] == 'prod':
+            """ get all the pages """
+            pages = ComponentsPage.objects.all() 
+        # pages = ComponentsPage.objects.all()
         component_types = []  # just for dev to check we have them all
         """
         [
@@ -55,6 +95,7 @@ class Command(BaseCommand):
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         for page in pages:
+            sys.stdout.write('⌛️ {} processing...\n'.format(page))
             # keep the dates as when imported
             first_published_at = page.first_published_at
             last_published_at = page.last_published_at
@@ -78,8 +119,7 @@ class Command(BaseCommand):
             if page.component_fields:
                 print(page, page.id)
                 components = ast.literal_eval(page.component_fields)[0]
-                builder = ComponentsBuilder(
-                    ast.literal_eval(components['components']))
+                builder = ComponentsBuilder(ast.literal_eval(components['components']), self.url_map)
                 blocks = builder.make_blocks()
                 body = blocks
 
@@ -94,6 +134,8 @@ class Command(BaseCommand):
             page.latest_revision_created_at = latest_revision_created_at
             page.save()
             rev.publish()
+
+            sys.stdout.write('✅ {} done\n'.format(page))
 
             # if page.title == 'About us':
             #     sys.exit()

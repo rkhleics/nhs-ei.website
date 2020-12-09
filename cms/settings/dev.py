@@ -18,6 +18,12 @@ DATABASES = {
     }
 }
 
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    }
+}
+
 try:
     from .local import *
 except ImportError:

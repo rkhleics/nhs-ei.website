@@ -1,11 +1,19 @@
-from os import unlink
+from os import PRIO_USER, unlink
+import requests
 import re
+import sys
+from io import BytesIO
+from django.core.files import File
 from bs4 import BeautifulSoup
 from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
+from wagtail.core.models import Page
+from wagtail.documents.models import Document
+from wagtail.images.models import Image
+from wagtail.core.models import Collection
 
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
@@ -29,8 +37,9 @@ case studies</a> provide examples of the work of some providers to make the FFT 
 £101 million for 2017/18</a>.</p>
 """
 
-# some urls dont need to be rewritten as they are 
-# not in scope
+# some urls dont need to be rewritten as they are
+# not in scope in this project and will remain
+# absolute when live although they are same site just now
 SKIP_ANCHOR_URLS = [
     '/east-of-england/',
     '/london/',
@@ -42,10 +51,25 @@ SKIP_ANCHOR_URLS = [
     '/statistics/statistical-work-areas/rtt-waiting-times/rtt-guidance/',
 ]
 
+# these pages are 404 in live site
+SKIP_ANCHOR_URLS += [
+    '/fft/fft-guidance/revised-fft-guidance/'
+]
+
+# not sure how to manage these yet
+SKIP_ANCHOR_URLS += [
+    '/patientsafety/wp-content'
+]
+
 MEDIA_FILE_EXTENSIONS = {
-    'images': ['jpg','gif','png'],
-    'documents': ['doc','pdf','xlsx','docx']
+    'images': ['jpg', 'gif', 'png'],
+    'documents': ['doc', 'pdf', 'xlsx', 'docx']
 }
+
+IGNORE_CONTENT_WITH = [
+    'form'
+]
+
 
 class RichTextBuilder:
 
@@ -60,32 +84,31 @@ class RichTextBuilder:
     # <a id="1" linktype="document">link</a> DOCUMENT
     # <embed embedtype="image" id="10" alt="A pied wagtail" format="left" /> IMAGE
 
-    def __init__(self, all_pages=None, html_content=''):
+    def __init__(self, url_map, html_content=None):
         # theres are log files to record url problems, clean it out first
-        with open('log/parse_stream_fields_url_errors.txt', 'w') as log:
-                    log.write('parse_stream_field missing urls\n')
-        with open('log/parse_stream_fields_media_errors.txt', 'a') as the_file:
-                the_file.write('parse_stream_field missing media\n')
-        self.html_content = TEST_CONTENT
-        if not all_pages:
-            self.urls = self.all_pages()
-        else:
-            self.urls = all_pages
+        with open('importer/log/parse_stream_fields_url_errors.txt', 'w') as log:
+            log.write('parse_stream_field missing urls\n')
+        with open('importer/log/parse_stream_fields_media_errors.txt', 'w') as the_file:
+            the_file.write('parse_stream_field missing media\n')
+        with open('importer/log/media_document_not_found.txt', 'w') as the_file:
+            the_file.write(
+                'the follwing media files had to be fetched from england.nhs.uk as missing in Documents\n')
+
+        self.url_map_keys = url_map.keys()
+        self.url_map = url_map
         self.change_links = []
+        self.html_content = html_content
 
-    def all_pages(self):
-        models = [BasePage, ComponentsPage, Blog,
-                  Post, AtlasCaseStudy, Publication]
-        url_ids = {}  # cached
 
-        for model in models:
-            pages = model.objects.all()
-            for page in pages:
-                url_ids[page.url] = page.id
+    def extract_img(self, content=None, page=None):
+        soup = BeautifulSoup(content, features="html5lib")
+        images = soup.find_all('img')
+        print('images')
+        print(images)
+        sys.exit()
 
-        return url_ids
 
-    def extract_links(self, content=None):
+    def extract_links(self, content=None, page=None):
         # BS4 to get a handle on all the anchor links
         if not content:
             html_content = self.html_content
@@ -94,38 +117,194 @@ class RichTextBuilder:
         soup = BeautifulSoup(html_content, features="html5lib")
 
         links = soup.find_all('a', href=re.compile(
-            r"^https://www.england.nhs.uk/"))
+            r"^(http://|https://)(www.england.nhs.uk/|www.england.nhs.uk)"))
 
-        for link in links:
-            page_path = '/' + '/'.join(link['href'].split('/')[3:])
-            self.prepare_links(link, page_path)
+        has_form = soup.find_all('form')
 
-    def prepare_links(self, link, page_path):
-        path_list = page_path.split('/')
-        if len(path_list[-1]):
-            pass
-            # with open('log/parse_stream_fields_media_errors.txt', 'a') as the_file:
-            #     the_file.write('{}\n'.format(page_path))
-            #     print('++++++missing media: {}'.format(page_path))
-        else: ############ GOT TO HERE just run ./manage.py parse_stream_fields
-            if page_path in self.urls and page_path not in SKIP_ANCHOR_URLS:
-                page_link = self.make_page_link(link.text, self.urls[page_path])
+        if not has_form:
+            
+
+            for link in links:
+                # get the href from anchor
+                # these are the links in the wysiwyg content (absolute to old site)
+                # /publication/daily-submission-of-flu-vaccination-data-for-healthcare-workers-letter/
+                page_path = '/' + '/'.join(link['href'].split('/')[3:])
+                self.prepare_links(link, page_path, page)
+
+    """
+    how the whole site url paths are cached for the lookup
+    [
+        map[page.url] = {
+            'id': page.id,
+            'slug': page.slug,
+            'title': page.title,
+        },
+        {...}
+    ]
+    '/publication/nhs-england-improvement/the-okay-to-stay-programme/': {
+        'id': 9782, 
+        'slug': 'the-okay-to-stay-programme', 
+        'title': 'The ‘Okay to Stay’ programme'
+    },
+    
+    on a quick interupted runimport mediafiles this is one of the documents
+    documents/LeDeR-death-data-nov-27-2020-easy-read.pdf path
+    d=Document.objects.get(file='documents/LeDeR-death-data-nov-27-2020-easy-read.pdf')
+
+    and this is one of the images
+    original_images/maysa-alsharif.jpg
+    i=Image.objects.get(file='original_images/maysa-alsharif.jpg')
+    """
+
+    def prepare_links(self, link, page_path, page):
+        
+        path_list = page_path.split('/')  # a list of path segments
+        # first is always '' so lets remove it
+        del path_list[0]
+        if not path_list[-1]:  # and remove the past one if none
+            del path_list[-1]
+
+        page_path = '/' + '/'.join(path_list) + '/' # a string of the path
+
+        # some links are anchors
+        # is_anchor_link = False
+        # if '#' in path_list[-1]:
+        #     is_anchor_link = True
+
+        page_path_live = 'https://www.england.nhs.uk' + page_path
+        # print(page_path)
+
+        home_page = Page.objects.filter(title='Home')[0]
+        
+        if not path_list:
+            # home page
+            page_link = self.make_page_link(
+                link.text, home_page.id, home_page.title)
+            self.change_links.append([link, page_link])
+
+        elif path_list and path_list[0] == 'publication' or len(path_list) >= 2 and path_list[1] == 'publication':
+            # find source url for publication ours are all in sub sites but links are not
+            try:
+                publication = Publication.objects.get(wp_link=page_path_live)
+                page_link = self.make_page_link(
+                    link.text, publication.id, publication.title)
                 self.change_links.append([link, page_link])
+            except:
+                with open('importer/log/parse_stream_fields_url_errors.txt', 'a') as log:
+                    log.write('{} | {} | {}\n'.format(link, page_path, page))
+
+        elif path_list and path_list[0] == 'news':
+            # find source url for news ours are all in sub sites
+            try:
+                post = Post.objects.get(wp_link=page_path_live)
+                page_link = self.make_page_link(
+                    link.text, post.id, post.title)
+                self.change_links.append([link, page_link])
+            except:
+                with open('importer/log/parse_stream_fields_url_errors.txt', 'a') as log:
+                    log.write('{} | {} | {}\n'.format(link, page_path, page))
+
+        elif path_list and path_list[0] == 'blog':
+            # find source url for blogs
+            # print(page_path_live)
+            try:
+                blog = Blog.objects.get(wp_link=page_path_live)
+                page_link = self.make_page_link(
+                    link.text, blog.id, blog.title)
+                self.change_links.append([link, page_link])
+            except:
+                with open('importer/log/parse_stream_fields_url_errors.txt', 'a') as log:
+                    log.write('{} | {} | {}\n'.format(link, page_path, page))
+
+        elif path_list and path_list[0] == 'wp-content' or len(path_list) >= 2 and path_list[1] == 'wp-content': # becuse sometimes they are subsite links
+            # a file link these arnt in the self.urls
+            """ problem here is we cant link to a page within a document using #page=2 """
+            if '#' in path_list[-1]:
+                page_path = page_path.split('#')[0]
+            document_id = None
+            file = 'documents/' + path_list[-1]
+            # print(file)
+
+            try:
+                document = Document.objects.get(file=file)
+                document_id = document.id
+
+            except Document.DoesNotExist:
+                with open('importer/log/media_document_not_found.txt', 'a') as the_file:
+                    the_file.write(
+                        '{} | Linked from: {}\n'.format(page_path, page))
+                collection_root = Collection.get_first_root_node()
+                remote_file = requests.get(page_path_live)
+                media_file = File(
+                    BytesIO(remote_file.content), name=path_list[-1])
+                file = Document(
+                    title=path_list[-1], file=media_file, collection=collection_root)
+                file.save()
+                pass
+            
+            if document_id:
+                document_link = self.make_document_link(
+                    link.text, document_id, path_list[-1])
+                self.change_links.append([link, document_link])
+
+        elif page_path in self.url_map_keys and page_path not in SKIP_ANCHOR_URLS:
+            page_link = self.make_page_link(
+                link.text, self.url_map[page_path]['id'], self.url_map[page_path]['title'])
+            self.change_links.append([link, page_link])
+
+        else:
+            # print('using live')
+            response = requests.get('https://www.england.nhs.uk' + page_path)
+            url = ''
+            is_post = False
+            if response:
+                url = response.url.split('/')
+                del url[-1] 
+                del url[:3]
+                # some urls have links to news items that start 2010/09 that needs to removed to find the url
+                if url[0].isdigit() and url[1].isdigit() and not url[2].isdigit(): # is post
+                    try:
+                        page = Post.objects.get(wp_link=response.url)
+                        id = page.id
+                        title = page.title
+                        page_link = self.make_page_link(link.text, id, title)
+                        self.change_links.append([link, page_link])
+                    except Post.DoesNotExist:
+                        pass
+                elif path_list[0].isdigit() and path_list[1].isdigit() and path_list[2].isdigit():
+                    try:
+                        blog = Blog.objects.get(wp_link=response.url)
+                        id = blog.id
+                        title = blog.title
+                        page_link = self.make_page_link(link.text, id, title)
+                        self.change_links.append([link, page_link])
+                    except Blog.DoesNotExist:
+                        pass
+                else: # is page
+                    # print('could be a page')
+                    actual_url = '/' + '/'.join(url) + '/' # a string of the path
+                    if actual_url in self.url_map_keys:
+                        id = self.url_map[actual_url]['id']
+                        title = self.url_map[actual_url]['title']
+                        page_link = self.make_page_link(
+                            link.text, id, title)
+                        self.change_links.append([link, page_link])
+                    else:
+                        print('leaving the link alone')
+
             else:
-                with open('log/parse_stream_fields_url_errors.txt', 'a') as the_file:
-                    the_file.write('{}\n'.format(page_path))
-                print('++++++missing url: {}'.format(page_path))
-        # if self.urls[path]:
-        #     self.change_links.append(self.urls[path]) ####### got to here
+                # print('not found')
+                with open('importer/log/parse_stream_fields_url_errors.txt', 'a') as log:
+                    log.write('{}\n'.format(page_path, page))
 
-    def make_page_link(self, text, page_id):
-        return '<a id="{}" linktype="page">{}</a>'.format(
-            page_id, text)
+    def make_page_link(self, text, page_id, title):
+        return '<a id="{}" linktype="page" class="internal-link" title="{}">{}</a>'.format(
+            page_id, title, text)
 
-    def make_document_link(self, text, document_id):
-        return '<a id="{}" linktype="document">{}</a>'.format(
-            document_id, text)
+    def make_document_link(self, text, document_id, title):
+        return '<a id="{}" linktype="document" class="pdf-link" title="Download a copy of the {}">{}</a>'.format(
+            document_id, title, text)
 
-    def make_image_embed(self, text, image_id, image_alt, image_format):
+    def make_image_embed(self, image_id, image_alt, image_format):
         return '<embed embedtype="image" id="{}" alt="{}" format="{}" />'.format(
             image_id, image_alt, image_format)

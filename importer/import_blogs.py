@@ -73,13 +73,14 @@ class BlogsImporter(Importer):
             obj = Blog(
                 title=blog.get('title'),
                 # excerpt = post.get('excerpt'),
+                # dont preset the slug coming from wordpress some are too long
                 body=blog.get('content'),
                 show_in_menus=True,
                 wp_id=blog.get('wp_id'),
                 author=blog.get('author'),
                 source=blog.get('source'),
-                wp_slug=blog.get('wp_slug'),
-                wp_link=blog.get('wp_link'),
+                wp_slug=blog.get('slug'),
+                wp_link=blog.get('link'),
             )
             blog_index_page.add_child(instance=obj)
             rev = obj.save_revision()  # this needs to run here

@@ -43,7 +43,7 @@ def get_api_url(app):
     if app == 'blogs':
         return 'https://nhsei-scrapy.rkh.co.uk/api/blogs/'
     if app == 'media':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/media_files/'
+        return 'https://nhsei-scrapy.rkh.co.uk/api/media_files?page=349'
 
 
 """
@@ -101,9 +101,9 @@ class Command(BaseCommand):
             self.stdout.write('⌛️ Initialising Blogs Import \n')
             import_blogs(get_api_url('blogs'))
 
-        # if options['app'] == 'media':  # media
-        #     self.stdout.write('⌛️ Initialising Media Files Import \n')
-        #     import_media_files(get_api_url('media'))
+        if options['app'] == 'media':  # media
+            self.stdout.write('⌛️ Initialising Media Files Import \n')
+            import_media_files(get_api_url('media'))
 
         if options['app'] == 'all':
             # the whole lot in specific order
@@ -125,18 +125,35 @@ class Command(BaseCommand):
         if options['app'] == 'build':
             call_command('page_mover')
             call_command('fix_slugs')
-            # call_command('fix_slugs_sub_sites')
             call_command('swap_page_types')
             call_command('fix_component_page_slugs')
             call_command('fix_landing_page_slugs')
             call_command('swap_blogs_page')
-            call_command('parse_stream_fields')
-            call_command('parse_stream_fields_component_pages') # here we have url issue
+
+        # this needs to run before 'fixes' because links go to images and files
+        # as well as pages and also 'documents' needs the files
+        if options['app'] == 'mediafiles': 
+            # there's nothing more than a long process here
+            # that collescts every media file form wordpress
+            # and stores them in collection related to the subsite 
+            # names they come from. They are linked up in later scripts.
+            import_media_files(get_api_url('media'))
+        
+        if options['app'] == 'fixes':
+            # some of the existing pages here get initial content
+            # coming over form word press and when some page
+            # types are changed that content comes with them
+            # it's added to and adjusted in later scripts
+            call_command('parse_stream_fields', 'prod')
+            call_command('parse_stream_fields_component_pages', 'prod') # here we have url issue
+        
+        if options['app'] == 'makes':
             # TODO python manage.py parse_stream_fields_landing_pages  we need the blog autors may be do other stuff here first???
             call_command('make_top_pages')
             call_command('make_alert_banner')
             call_command('make_home_page')
             call_command('make_footer_links')
+
 
         if options['app'] == 'documents':
             call_command('make_documents_list')
@@ -209,28 +226,30 @@ class Command(BaseCommand):
     # sys.stdout.write('\n')
 
 
-# def import_media_files(url):
-#     if not url:
-#         raise Exception('url error')
-#     media_files_importer = MediaFilesImporter()
-#     fetch = media_files_importer.fetch_url(url)
-#     completed_count = 0
-#     api_count = 0
-#     if fetch:
-#         completed_count, api_count = media_files_importer.parse_results()
+def import_media_files(url):
+    if not url:
+        raise Exception('url error')
+    media_files_importer = MediaFilesImporter()
+    fetch = media_files_importer.fetch_url(url)
+    completed_count = 0
+    api_count = 0
+    if fetch:
+        completed_count, api_count = media_files_importer.parse_results()
 
-#     # a final check to report actual imports to be done vs records in the table
-#     if api_count == completed_count:
-#         sys.stdout.write(
-#             '\n✅ {} Media Files imported'.format(completed_count))
-#     elif api_count > completed_count:
-#         sys.stdout.write(
-#             '\n😲 SOMETHING IS WRONG the record count is lower then the available records')
-#     elif api_count < completed_count:
-#         sys.stdout.write(
-#             '\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)')
+    sys.stdout.write(
+            '\n✅ Media Files imported')
+    # a final check to report actual imports to be done vs records in the table
+    # if api_count == completed_count:
+    #     sys.stdout.write(
+    #         '\n✅ {} Media Files imported'.format(completed_count))
+    # elif api_count > completed_count:
+    #     sys.stdout.write(
+    #         '\n😲 SOMETHING IS WRONG the record count is lower then the available records')
+    # elif api_count < completed_count:
+    #     sys.stdout.write(
+    #         '\n😲 SOMETHING IS WRONG the record count is higher then the available records (did you forget the delete option?)')
 
-#     sys.stdout.write('\n')
+    sys.stdout.write('\n')
 
 
 def import_categories(url):

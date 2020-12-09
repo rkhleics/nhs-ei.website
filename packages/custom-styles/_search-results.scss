@@ -21,3 +21,9 @@
     @include nhsuk-responsive-padding(4);
   }
 }
+
+.nhsei-panel-search-result {
+  .nhsuk-tag {
+    @include nhsuk-responsive-margin(2, 'bottom');
+  }
+}

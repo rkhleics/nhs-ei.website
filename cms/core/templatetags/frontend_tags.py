@@ -1,6 +1,7 @@
 from django import template
-from wagtail.core.models import Page
+from wagtail.core.models import Page, PageRevision
 from cms.core.models import UpperFooterLinks, LowerFooterLinks
+from django.contrib.contenttypes.models import ContentType
 
 register = template.Library()
 
@@ -50,3 +51,18 @@ def footer_links(context, location):
         'hidden_title': hidden_title,
         'list_class': list_class,
     }
+
+
+@register.inclusion_tag('tags/content_type_tag.html', takes_context=True)
+def get_content_type_tag(context, page):
+    result_page = Page.objects.get(id=page.id)
+    content_type = result_page.content_type
+    CONTENT_TYPE_LABELS = {
+        'post': 'News',
+        'blog': 'Blog',
+        'publication': 'Publication',
+    }
+    if content_type.model in CONTENT_TYPE_LABELS.keys():
+        return {
+            'type': CONTENT_TYPE_LABELS[content_type.model]
+        }
