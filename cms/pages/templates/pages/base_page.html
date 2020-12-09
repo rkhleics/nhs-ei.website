@@ -56,9 +56,8 @@
         </div>
         <div class="nhsuk-grid-column-one-third">
             {% if children %}
-            <h2>In this section</h2>
-            <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this guide">
-                <h2 class="nhsuk-u-visually-hidden">Contents</h2>
+            <nav class="nhsuk-contents-list" role="navigation" aria-label="Pages in this section" aria-labbeledby="sideNav">
+                <h2 id="sideNav" class="nhsuk-heading-s">Pages in this section</h2>
                 <ol class="nhsuk-contents-list__list">
                     {% for child in children %}
                     <li class="nhsuk-contents-list__item">
