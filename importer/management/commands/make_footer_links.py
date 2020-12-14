@@ -22,7 +22,7 @@ class Command(BaseCommand):
         contact_us = None
         complaints = None
         jobs = None
-        transparency_legal = 'https://nhsei-staging.uksouth.cloudapp.azure.com/transparency-and-legal/'
+        transparency_legal = 'https://staging.nhsei.rkh.co.uk/transparency-and-legal/'
         statistics = 'https://www.england.nhs.uk/statistics'
 
         terms_and_conditions = None
@@ -37,8 +37,8 @@ class Command(BaseCommand):
             if page.get_url() == '/contact-us/':
                 contact_us = page
 
-            if page.get_url() == '/complaint/':
-                complaints = page
+            # if page.get_url() == '/complaint/':
+            #     complaints = page
 
             if page.get_url() == '/about/working-for/':
                 jobs = page
@@ -65,9 +65,9 @@ class Command(BaseCommand):
             {
                 'text': 'Contact us', 'page': contact_us, 'external_url': '', 'setting': settings
             },
-            {
-                'text': 'Complaints', 'page': complaints, 'external_url': '', 'setting': settings
-            },
+            # {
+            #     'text': 'Complaints', 'page': complaints, 'external_url': '', 'setting': settings
+            # },
             {
                 'text': 'Jobs', 'page': jobs, 'external_url': '', 'setting': settings
             },
