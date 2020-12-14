@@ -11,7 +11,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 class HomePage(Page):
     max_num = 1
-    body = RichTextField(blank=True)
+    body = StreamField(CoreBlocks, blank=True)
     # body_image = models.ForeignKey(
     #     'wagtailimages.Image',
     #     related_name='+',
@@ -37,7 +37,7 @@ class HomePage(Page):
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([
-            FieldPanel('body'),
+            StreamFieldPanel('body'),
             # ImageChooserPanel('body_image'),
         ], heading='Main Body'),
         # MultiFieldPanel([
