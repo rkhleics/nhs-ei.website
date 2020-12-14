@@ -36,10 +36,10 @@ class HomePage(Page):
     # all_publications_sub_title = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel([
-            StreamFieldPanel('body'),
+        StreamFieldPanel('body'),
+        # MultiFieldPanel([
             # ImageChooserPanel('body_image'),
-        ], heading='Main Body'),
+        # ], heading='Main Body'),
         # MultiFieldPanel([
             # PageChooserPanel('all_news_page'),
             # FieldPanel('all_news_title'),
