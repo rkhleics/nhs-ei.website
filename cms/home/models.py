@@ -7,9 +7,12 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailnhsukfrontend.mixins import (
+    HeroMixin,
+)
 
 
-class HomePage(Page):
+class HomePage(HeroMixin, Page):
     max_num = 1
     body = StreamField(CoreBlocks, blank=True)
     # body_image = models.ForeignKey(
@@ -35,7 +38,7 @@ class HomePage(Page):
     # all_publications_title = models.CharField(max_length=100, blank=True)
     # all_publications_sub_title = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
+    content_panels = Page.content_panels + HeroMixin.content_panels + [
         StreamFieldPanel('body'),
         # MultiFieldPanel([
             # ImageChooserPanel('body_image'),

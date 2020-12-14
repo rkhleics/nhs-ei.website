@@ -76,7 +76,9 @@
         {% breadcrumb %}
     {% endblock %}
 
+
     {% block main %}
+    {% block outer_content %}{% endblock%}
     {% comment %} <div class="nhsuk-width-container {{ containerClasses }}"> {% endcomment %}
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
         {% block content %}{% endblock %}
