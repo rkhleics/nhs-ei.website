@@ -52,18 +52,18 @@ class PublicationIndexPage(Page):
         # sub_site_categories = Category.objects.filter(
         #     sub_site=self.sub_site_categories.id)
 
-        # if request.GET.get("publication_type"):
-        #     context["publication_type_id"] = int(request.GET.get("publication_type"))
-        #     publications = (
-        #         Publication.objects.child_of(self)
-        #         .live()
-        #         .order_by(publication_ordering)
-        #         .filter(
-        #             publication_publication_type_relationship__publication_type=request.GET.get(
-        #                 "publication_type"
-        #             )
-        #         )
-        #     )
+        if request.GET.get("publication_type"):
+            context["publication_type_id"] = int(request.GET.get("publication_type"))
+            publications = (
+                Publication.objects.child_of(self)
+                .live()
+                .order_by(publication_ordering)
+                .filter(
+                    publication_publication_type_relationship__publication_type=request.GET.get(
+                        "publication_type"
+                    )
+                )
+            )
         # elif request.GET.get("category"):
         #     context["category_id"] = int(request.GET.get("category"))
         #     publications = (
@@ -76,10 +76,10 @@ class PublicationIndexPage(Page):
         #             )
         #         )
         #     )
-        # else:
-        publications = (
-            Publication.objects.child_of(self).live().order_by(publication_ordering)
-        )
+        else:
+            publications = (
+                Publication.objects.child_of(self).live().order_by(publication_ordering)
+            )
 
         paginator = Paginator(publications, 16)
 
