@@ -97,28 +97,28 @@ class Command(BaseCommand):
                         {
                             'url': 'https://staging.nhsei.rkh.co.uk/publication/nhs-england-improvement/',
                             'heading': 'Latest publications',
-                            'description': 'Short description to inform users goes here',
+                            'description': 'View and search for documents in our publications library',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
                             'url': 'https://staging.nhsei.rkh.co.uk/news/nhs-england-improvement/',
                             'heading': 'Latest news',
-                            'description': 'Short description to inform users goes here',
+                            'description': 'Read headline announcements on developments in the NHS',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/ourwork/',
-                            'heading': 'Key topical issue',
-                            'description': 'Short description to inform users goes here',
+                            'url': 'https://staging.nhsei.rkh.co.uk/coronavirus/',
+                            'heading': 'Coronavirus',
+                            'description': 'Guidance for clinicians and NHS managers on COVID-19 and the vaccination programme',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/publication/coronavirus/',
-                            'heading': 'Special topical issue',
-                            'description': 'Short description to inform users goes here',
+                            'url': 'https://staging.nhsei.rkh.co.uk/gp/',
+                            'heading': 'General Practice',
+                            'description': 'Supporting GPs to deliver essential services at the foundation of our health service',
                             'content_image': None,
                             'alt_text': ''
                         },
@@ -137,8 +137,8 @@ class Command(BaseCommand):
 
         home_page.body = json.dumps(home_page_stream_field)
 
-        home_page.hero_heading = 'Supporting the NHS'
-        home_page.hero_text = 'to improve peoples care'
+        home_page.hero_heading = "Supporting the NHS"
+        home_page.hero_text = "to improve people's care"
         home_page.hero_image = image
 
         rev = home_page.save_revision()
