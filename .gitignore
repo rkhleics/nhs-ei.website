@@ -142,3 +142,4 @@ log
 /fixtures
 log/*.txt
 importer/log/*.txt
+Pipfile

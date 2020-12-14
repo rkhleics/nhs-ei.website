@@ -6,6 +6,7 @@ import Radios from './components/radios/radios';
 import Checkboxes from './components/checkboxes/checkboxes';
 import Card from './components/card/card';
 
+import './search-toggle-fix'; //for issue https://github.com/rkhleics/nhs-ei.website/issues/29
 import './polyfills';
 
 // Initialize components
@@ -17,3 +18,4 @@ document.addEventListener('DOMContentLoaded', () => {
   Checkboxes();
   Card();
 });
+
