@@ -104,7 +104,7 @@ class PublicationsImporter(Importer):
                     source='auto-generated-publications-index',
                 )
                 home_page.add_child(instance=publications_index_page)
-                revision = home_page.save_revision()
+                revision = publications_index_page.save_revision()
                 revision.publish()
                 sys.stdout.write('.')
 
