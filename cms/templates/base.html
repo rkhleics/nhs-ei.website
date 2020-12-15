@@ -76,12 +76,14 @@
         {% breadcrumb %}
     {% endblock %}
 
+
     {% block main %}
-    {% comment %} <div class="nhsuk-width-container {{ containerClasses }}"> {% endcomment %}
+    {% block outer_content %}{% endblock%}
+    
     <main class="nhsuk-main-wrapper {{ mainClasses }}" id="maincontent" role="main">
         {% block content %}{% endblock %}
     </main>
-    {% comment %} </div> {% endcomment %}
+    
     {% endblock %}
 
     {% block footer %}

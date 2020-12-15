@@ -3,10 +3,13 @@
 
 {% block body_class %}template-homepage{% endblock %}
 
+{% block outer_content %}
+  {% include "wagtailnhsukfrontend/hero.html" %}
+{% endblock%}
 
 {% block content %}
 
-<div class="nhsuk-width-container">
+<div class="nhsuk-width-container nhsuk-u-margin-top-6">
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
 
@@ -14,11 +17,15 @@
                 NHS England and Improvement Homepage
             </h1>
 
+            {% for block in self.body %}
+                {% include_block block %}
+            {% endfor %}
+
         </div>
     </div>
 </div>
 
-<section class="latest-publications-section">
+{% comment %} <section class="latest-publications-section">
     <div class="nhsuk-width-container">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
@@ -139,6 +146,6 @@
     </div>
 </section>
 
-{% include 'partials/warning-callout.html' %}
+{% include 'partials/warning-callout.html' %} {% endcomment %}
 
 {% endblock content %}

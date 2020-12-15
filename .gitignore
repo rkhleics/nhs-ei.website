@@ -143,3 +143,5 @@ log
 log/*.txt
 importer/log/*.txt
 Pipfile
+Pipfile.lock
+requirements.dev.txt

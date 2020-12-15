@@ -77,7 +77,7 @@ class PostsImporter(Importer):
                     source='auto-generated-news-index',
                 )
                 home_page.add_child(instance=news_index_page)
-                revision = home_page.save_revision()
+                revision = news_index_page.save_revision()
                 revision.publish()
                 sys.stdout.write('.')
 

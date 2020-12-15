@@ -23,7 +23,7 @@ class Command(BaseCommand):
             If you are a member of the public looking for health advice, go to the 
             <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS website</a>. 
             And if you are looking for the latest travel information, and advice about the government response to the outbreak, go to the 
-            <a href="https://www.gov.uk/guidance/wuhan-novel-coronavirus-information-for-the-public">gov.uk website</a>.</p>
+            <a href="https://www.gov.uk/coronavirus">gov.uk website</a>.</p>
         """
         settings.is_visible = True
         settings.save()
