@@ -118,3 +118,11 @@ This will start up the node process. You will see the progress in the terminal. 
 Using this url will make use of the auto reload feature and generally is better to use to avoid frontend assets been cached and showing old styling.
 
 There's also http://localhost:8000 with can be used. It's the port used by the Django develpment server.
+
+# Importer App
+
+The import app is located at /importer
+
+It's a range of django management scripts that need to be run to import all the wordpress website data from Scrapy https://nhsei-scrapy.rkh.co.uk
+
+## View the  <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
