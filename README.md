@@ -74,7 +74,14 @@ pipenv install -r requirements.dev --python 3.8
 ```
 ### Your virtual environment should now be activated and ready to startup Wagtail
 
-notes: when using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
+You should see the virtual environment name before your user account name e.g. (virtual-env-name) user@computer ...
+
+If not run 
+```
+pipenv shell
+```
+
+When using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
 
 ---
 
@@ -97,6 +104,23 @@ To install the node packages (they show up in a folder called node_modules in th
 ---
 
 ## 4. <a name="#runapp"></a> Run the application
+
+Do this only if you are using the [virtual environment](#virtual-environment). If you used the [docker container](#docker-container) install method these commands will be run automatically.
+
+### Migrate the database. 
+
+Run ...
+```
+python manage.py migrate
+```
+
+### Create a superuser login for the cms admin. 
+
+Run ...
+```
+python manage.py createsuperuser
+```
+*** admin access is at http://localhost:3000/admin ***
 
 You need to run 2 applications. One for the Wagtail app and the other for the frontend assets.
 
@@ -126,3 +150,7 @@ The import app is located at /importer
 It's a range of django management scripts that need to be run to import all the wordpress website data from Scrapy https://nhsei-scrapy.rkh.co.uk
 
 ## View the  <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
+
+The scripts in the importer guide need to be run for both install methods. 
+
+Before the data is imported the development site you see will contain no pages other than the home page which will be blank at this stage.
