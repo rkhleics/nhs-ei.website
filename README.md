@@ -1,6 +1,6 @@
 # NHSEI Website
 
-This is the repo for the NHS England & Imporvement website https://england.nhs.uk
+This is the repo for the NHS England & Improvement website https://england.nhs.uk
 
 Currently available at https://nhsei-staging.uksouth.cloudapp.azure.com
 
@@ -8,12 +8,12 @@ Currently available at https://nhsei-staging.uksouth.cloudapp.azure.com
 
 Notes: 
 
-* In production the site runs in a docker container but in developent it can be more conveininet to run the site in your local environment.
+* In production the site runs in a docker container but in development it can be more convenient to run the site in your local environment.
 
 * Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
 
-* You local enviromnent requirements should meet the following:
-Python >= 3.6, but we test and run it on Python >= 3.8
+* You local environment requirements should meet the following:
+Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
 * Your development evironment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
@@ -64,7 +64,7 @@ It mirrors all the services and packages needed to run in production.
 You will need a package on your machine to be able to setup a virual environment such as python -m venv, virtualenv or Pipenv. This example will use Pipenv
 
 Create your virtual environment.
-the python version should be >=3.8 (recommended)
+the python version should be 3.8
 ```
 pipenv install -r requirements.dev
 ```
@@ -85,7 +85,7 @@ When using the virtual environment setup Wagtail runs with a local database usin
 
 ---
 
-You should now be able to run the Wagtail app. If you are using 2. [virtual environment](#virtual-environment) then you will need to install the node packages to compile the frontend assets. If you are going to work only on the python/html files then this isn't required but it does come with the benefit of autorelaod on save when you change files, it's recommended!.
+You should now be able to run the Wagtail app. If you are using 2. [virtual environment](#virtual-environment) then you will need to install the node packages to compile the frontend assets. If you are going to work only on the python/html files then this isn't required but it does come with the benefit of auto-reload on save when you change files, it's recommended!.
 
 ## 3. <a name="front-end"></a>Install NHS.UK Frontend design system
 
@@ -141,7 +141,7 @@ This will start up the node process. You will see the progress in the terminal. 
 
 Using this url will make use of the auto reload feature and generally is better to use to avoid frontend assets been cached and showing old styling.
 
-There's also http://localhost:8000 with can be used. It's the port used by the Django develpment server.
+There's also http://localhost:8000 which can be used. It's the port used by the Django development server.
 
 # Importer App
 
