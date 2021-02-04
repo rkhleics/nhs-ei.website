@@ -154,3 +154,12 @@ It's a range of django management scripts that need to be run to import all the 
 The scripts in the importer guide need to be run for both install methods. 
 
 Before the data is imported the development site you see will contain no pages other than the home page which will be blank at this stage.
+
+# Application Guide
+
+At it core this is a Wagtail app. Wagtail is a package built on the Django framework.
+
+- [Wagtail Developer Documentation](https://docs.wagtail.io/en/v2.10.2/) for the version currently in production
+- [Django Developer Docs](https://docs.djangoproject.com/en/3.1/) for the version currently in production and specified by Wagtail 2.10.2
+
+View the [Application Guide](docs/application.md)
