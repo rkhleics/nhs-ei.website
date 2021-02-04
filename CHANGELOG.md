@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ### Changed
 - README.md
+- docs/application.md
 
 2021-02-03
 ### Added
