@@ -139,9 +139,9 @@ node_modules
 
 robots.txt
 log
-/fixtures
 log/*.txt
 importer/log/*.txt
 Pipfile
 Pipfile.lock
 requirements.dev.txt
+.vscode
