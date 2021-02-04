@@ -1,91 +1,156 @@
-# NHSE/I: Wagtail Test
+# NHSEI Website
 
-This is used to test our IMPORTER app inside a wagtail instance and is were we are collecting the data from SCRAPY and importing it into a Wagtail instance.
+This is the repo for the NHS England & Improvement website https://england.nhs.uk
 
-We expect this app to show us the result of imporing pages, categories, posts and blog  and give us a chance to test out theories etc. It's an ongoing project that will likely chnage many times before production use as we discover data that needs conversion to a more suitable format to Wagtail import.
+Currently available at https://nhsei-staging.uksouth.cloudapp.azure.com
 
-## Running the scripts
+# Developer Install Guide
 
-# Importing
+Notes: 
 
-The data is collected from https://nhsei-scrapy.rkh.co.uk/api/ 
+* In production the site runs in a docker container but in development it can be more convenient to run the site in your local environment.
 
-```
-Collect All Data    | python manage.py runimport all
-Build The Site      | python manage.py runimport build
-Fix some stuff      | python manage.py runimport fixes
-Make some stuff     | python manage.py runimport makes
-Make docuemnts      | python manage.py runimport documents
-```
+* Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
 
-Skipping importing media in its own script, it's too buggy just now. So any media needed for pages or publicaitons gets pulled in as required for now.
+* You local environment requirements should meet the following:
+Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
-Should you want to run the scripts individually then look at the scripts run in importer > management > commands > runimport.py
+* Your development evironment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
-# Last minute code snippets.
+* The frontend styling, layout and components use the NHS.UK fontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
 
-Home page image to replace place holder
-https://drive.google.com/file/d/1_PWTKXe45D2Z0kuAYw3fvsCOSFOLFPbi/view?usp=sharing
+## How to install
+---
 
-
-Analytics, for core settings header extra
+Clone this repo to your local development machine
 
 ```
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-185074252-1"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-185074252-1');
-</script>
+git clone https://github.com/rkhleics/nhs-ei.website [your_folder_name:optional]
 ```
 
-New page to be created after the import.
+then use either 1 or 2 below.
+
+---
+
+## <a name="docker-install"></a>1. Install using a docker container!
+
+You will need 'docker' installed on your development machine. Get Docker: https://docs.docker.com/get-docker/
+
+### Change into the root of the project e.g.
 
 ```
-Transparency and legal
-•••• link in footer
-url = '/transparency-and-legal/'
-Panel:
- Body: It is important we are transparent in all the work we do. The following pages include information on the regulatory action we have taken, decisions made by our Board as well as data on workplace equality and corporate expenditure. You can find all of our Freedom of Information releases here too.
+cd nhs-ei.website
+```
+or use the folder name you set when cloning the project.
 
-Promo Group:
- One half
- Default
- 3
- Promo:
-    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=123
-    heading: Freedom of Information release
-    description: We are legally obliged to release information under the Freedom of Information Act. Here you will find all of our FOI releases.
- Promo:
-    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?category=557
-    heading: Board meeting papers and minutes
-    description: Meeting papers and videos from our all of our Board meetings.
- Promo:
-    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=148
-    heading: Regulatory
-    description: Information on regulatory action we have taken against licensed healthcare providers as well as details on NHS trusts in England.
- Promo:
-    url: https://nhsei-staging.uksouth.cloudapp.azure.com/publication/nhs-england-improvement/?publication_type=164
-    heading: Transparency data
-    description: Here you will find information on how we are kept to account on matters such as workplace equality and corporate expenditure.
-
+### copy .env.example to .env
 ```
-Footer Links
-```
-Complaints. use this url: /contact-us/complaint/complaining-to-nhse/
-```
-# Deleting
-
-```
-1. Delete All  | python manage.py delete_all
+cp .env.example .env
 ```
 
-Delete All runs through each of the delete commands in order which you can run separatly if need be.
+### after you have installed docker...
+```
+docker-compose up
+```
 
-At present delete_all as well as the import actions cause Wagtail to generate history for the site. It's a new feature in Wagtail in the latest version. This table gets very large and we don't need that data going forward. Maybe the imports and deletes can be set to not save history? For now in dev im just starting over with a fresh database every now and then.
+This will take a while to complete and will set up the environment and run the website and database service which you can then use develop on.
 
-But only if you are developing the app. It's nice to have a snapshot at this point so you can move back to it if things go wrong testing scripts etc. We're working with 7500+ pages plus the other tables at this point and I found the dumpdata command to be cumbersome. As I'm using sqlite3 for the DB I make a copy to a fixtures folder which can be quicky restored if needed. Infact i do this before runing the scripts below and again after :)
+It mirrors all the services and packages needed to run in production.
 
-In fixtures i'll have copies of db.sqlite3 as I move through the stages when running indiviual imports so I can restore to an import/processing point.
+---
+
+## 2. Install using a virtual environment [recommended for development work]
+
+You will need a package on your machine to be able to setup a virual environment such as python -m venv, virtualenv or Pipenv. This example will use Pipenv
+
+Create your virtual environment.
+the python version should be 3.8
+```
+pipenv install -r requirements.dev
+```
+depending on your local python setup you may need to specify the verion of python to use for the virtual environment...
+```
+pipenv install -r requirements.dev --python 3.8
+```
+### Your virtual environment should now be activated and ready to startup Wagtail
+
+You should see the virtual environment name before your user account name e.g. (virtual-env-name) user@computer ...
+
+If not run 
+```
+pipenv shell
+```
+
+When using the virtual environment setup Wagtail runs with a local database using sqlite3 and serves static files using the django static files app.
+
+---
+
+You should now be able to run the Wagtail app. If you are using 2. [virtual environment](#virtual-environment) then you will need to install the node packages to compile the frontend assets. If you are going to work only on the python/html files then this isn't required but it does come with the benefit of auto-reload on save when you change files, it's recommended!.
+
+## 3. <a name="front-end"></a>Install NHS.UK Frontend design system
+
+To compile the fontend assets and use autoreload you need to have node and npm available on your local machine.
+
+* Install nodejs https://nodejs.org/en/
+* NPM should be installed along with nodejs but if you need to install it https://www.npmjs.com/get-npm
+
+In the root folder run
+
+```
+npm install
+```
+To install the node packages (they show up in a folder called node_modules in the root folder) and are not commited to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
+
+---
+
+## 4. <a name="#runapp"></a> Run the application
+
+Do this only if you are using the [virtual environment](#virtual-environment). If you used the [docker container](#docker-container) install method these commands will be run automatically.
+
+### Migrate the database. 
+
+Run ...
+```
+python manage.py migrate
+```
+
+### Create a superuser login for the cms admin. 
+
+Run ...
+```
+python manage.py createsuperuser
+```
+*** admin access is at http://localhost:3000/admin ***
+
+You need to run 2 applications. One for the Wagtail app and the other for the frontend assets.
+
+From one terminal and with the virtual environment activated from [virtual environment](#virtual-environment) and form the root folder run ...
+
+```
+python manage.py runserver 0:8000
+```
+
+Then from a second terminal run ...
+```
+npm start
+```
+
+This will start up the node process. You will see the progress in the terminal. The process needs to be left running. 
+
+### Go to http://localhost:3000 to see the site. 
+
+Using this url will make use of the auto reload feature and generally is better to use to avoid frontend assets been cached and showing old styling.
+
+There's also http://localhost:8000 which can be used. It's the port used by the Django development server.
+
+# Importer App
+
+The import app is located at /importer
+
+It's a range of django management scripts that need to be run to import all the wordpress website data from Scrapy https://nhsei-scrapy.rkh.co.uk
+
+## View the  <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
+
+The scripts in the importer guide need to be run for both install methods. 
+
+Before the data is imported the development site you see will contain no pages other than the home page which will be blank at this stage.
