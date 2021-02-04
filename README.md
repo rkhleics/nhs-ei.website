@@ -15,9 +15,9 @@ Notes:
 * You local environment requirements should meet the following:
 Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
-* Your development evironment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
+* Your development environment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
-* The frontend styling, layout and components use the NHS.UK fontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
+* The frontend styling, layout and components use the NHS.UK frontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
 
 ## How to install
 ---
@@ -61,14 +61,14 @@ It mirrors all the services and packages needed to run in production.
 
 ## 2. Install using a virtual environment [recommended for development work]
 
-You will need a package on your machine to be able to setup a virual environment such as python -m venv, virtualenv or Pipenv. This example will use Pipenv
+You will need a package on your machine to be able to setup a virtual environment such as python -m venv, virtualenv or Pipenv. This example will use Pipenv
 
 Create your virtual environment.
 the python version should be 3.8
 ```
 pipenv install -r requirements.dev
 ```
-depending on your local python setup you may need to specify the verion of python to use for the virtual environment...
+depending on your local python setup you may need to specify the version of python to use for the virtual environment...
 ```
 pipenv install -r requirements.dev --python 3.8
 ```
@@ -99,7 +99,7 @@ In the root folder run
 ```
 npm install
 ```
-To install the node packages (they show up in a folder called node_modules in the root folder) and are not commited to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
+To install the node packages (they show up in a folder called node_modules in the root folder) and are not committed to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
 
 ---
 
