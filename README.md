@@ -15,6 +15,8 @@ Notes:
 * You local environment requirements should meet the following:
 Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
+* `sqlite3` we found to run tests sqlite3 --version should not be < 3.26 so you may need to upgrade it. On a mac run brew install sqlite
+
 * Your development evironment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
 * The frontend styling, layout and components use the NHS.UK fontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)

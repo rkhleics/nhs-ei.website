@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup
+from django.http import response
 from django.test import TestCase
 
 
 class TestHomePage(TestCase):
 
-    fixtures = ['testdata.json'] # or load whichever file you piped it to
+    fixtures = ['testdata.json']  # or load whichever file you piped it to
 
     def test_home_page_hero(self):
         '''get a response from a page'''
