@@ -143,6 +143,18 @@ Using this url will make use of the auto reload feature and generally is better 
 
 There's also http://localhost:8000 which can be used. It's the port used by the Django development server.
 
+# Troubleshooting
+
+If you are struggling to build the app (setup method 2) try starting your virtual environment from scratch. 
+Run `pipenv --rm` to remove the virtual environment. Then delete `Pipfile` and `Pipfile.lock`.
+  
+Running `pipenv install -r requirements.dev` will then build a fresh virtual environment.
+
+If you encounter problems with database migrations, remove your virtual environment as above, plus delete `db.sqlite3`. 
+Then rebuild and re-run migrations as before.
+
+TODO: How to upgrade sqlite3 version with python 3.8
+
 # Importer App
 
 The import app is located at /importer
