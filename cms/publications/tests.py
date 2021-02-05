@@ -108,6 +108,7 @@ class TestPublication(TestCase):
     # theres a couple of pages worth testing
 
     def test_oldest_publication(self):
+        # this page is using a PDF document link
         response = self.client.get('/publications-index-page/publication-one/')
         soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -152,3 +153,40 @@ class TestPublication(TestCase):
 
         svg = soup.select_one('main .nhsuk-card svg')
         self.assertEqual(svg.select_one('title').text.strip(), 'PDF')
+
+    def test_newset_publication(self):
+        # this page is using a action link to a page
+        response = self.client.get('/publications-index-page/publication-two/')
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # page title
+        title = soup.select_one('main h1').text.strip()
+        self.assertEqual(title, 'Publication Two')
+
+        # page content
+        content = soup.select_one('main p').text.strip()
+        self.assertEqual(content, 'Publication two content')
+
+        # review date
+        # better to test these actual date objects as unittest I think, one for later
+        date_container = soup.select_one('main .nhsuk-review-date p')
+        self.assertIn(
+            date_container.text.strip()[:30], 'Page first published: 04 Feb 2021')
+
+        # taxonomy links
+        topic_1 = soup.select_one('main a:nth-of-type(1)')
+        self.assertEqual(
+            topic_1['href'], '/publications-index-page/?category=2')
+        self.assertEqual(
+            topic_1.text.strip(), 'Category Two')
+
+        publication_type_1 = soup.select_one('main a:nth-of-type(2)')
+        self.assertEqual(
+            publication_type_1['href'], '/publications-index-page/?publication_type=2')
+        self.assertEqual(
+            publication_type_1.text.strip(), 'Publication Type Two')
+
+        # document card       
+        title = soup.select_one('main .nhsuk-card h2.nhsuk-card__heading')
+        self.assertEqual(title.text.strip(), 'A Document With A Link To A Page')
+        self.assertEqual(title.select_one('a')['href'], '/atlas-case-studies-index-page/atlas-case-study-one/')
