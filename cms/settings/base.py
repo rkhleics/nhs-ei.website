@@ -199,3 +199,49 @@ SERVER_EMAIL = env("SERVER_EMAIL", default="root@localhost")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="root@localhost")
 
 vars().update(EMAIL_CONFIG)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
+    },
+    "formatters": {
+        "simple": {"format": "%(levelname)s %(message)s"},
+        "general": {
+            "format": (
+                "%(process)-5d %(thread)d %(name)-50s %(levelname)-8s " "- %(message)s"
+            ),
+        },
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "filters": ["require_debug_false"],
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "general",
+            "filters": ["require_debug_true"],
+        },
+        "console_debug_false": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["mail_admins", "console_debug_false"],
+        },
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "cms": {"handlers": ["console"], "level": "DEBUG"},
+    },
+}

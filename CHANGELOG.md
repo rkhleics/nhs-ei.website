@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - documentation folder /docs and moved importer docs there
 - requirements.dev to assist with installing dependencies for virtual environments
 - Add dependabot.yml file
+- Add logging config to cms/settings/base.py
 
 ### Changed
 - cms/settings/dev.py to serve local static assets
