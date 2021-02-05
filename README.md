@@ -188,7 +188,7 @@ Testing is functional tests at the moment. E.g. using the known test data import
 The following page types (models) are tested
 - HomePage (cms/home/models.py)
 - PublicationIndexPage and Publication (cms/publications/models.py)
-- AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudeis/models.py)
+- AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudies/models.py)
 - BlogIndexPage and Blog (cms/blog/models.py)
 - PostIndexPage and Post (cms/posts/models.py)
 - BasePage and ComponentsPage (cms/pages/models.py)
