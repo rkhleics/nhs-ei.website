@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - requirements.dev to assist with installing dependencies for virtual environments
 - Add dependabot.yml file
 - Add logging config to cms/settings/base.py
+- Specify the Django settings module to use within the Dockerfile for collectstatic
 
 ### Changed
 - cms/settings/dev.py to serve local static assets
