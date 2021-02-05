@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+2021-02-05
+### Changed
+- updated ingress template to use separate secrets for each tls hostname
+
 2021-02-04
 ### Added
 - docs/application.md
