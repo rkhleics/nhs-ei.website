@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+2021-02-05
+### changed
+- README.md
+- docs/application.md
+
 2021-02-04
 ### Added
 - docs/application.md
