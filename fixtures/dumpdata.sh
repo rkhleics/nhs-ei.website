@@ -13,7 +13,7 @@
 #
 # Pipe this output into the json file: ./dumpdata.sh > initialdata.json
 
-python manage.py dumpdata \
+python ../manage.py dumpdata \
   --format=json \
   --indent=2 \
   --natural-foreign \

@@ -165,3 +165,34 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 - [Django Developer Docs](https://docs.djangoproject.com/en/3.1/) for the version currently in production and specified by Wagtail 2.10.2
 
 View the [Application Guide](docs/application.md)
+
+---
+
+# Developer Testing
+There are tests in place for each app in the cms (/cms/[appname]). The tests are inside the tests.py files.
+
+Testing is functional tests at the moment. E.g. using the known test data imported check that each test page renders and the content from blocks is rendered as expected.
+
+The following page types (models) are tested
+- HomePage (cms/home/models.py)
+- PublicationIndexPage and Publication (cms/publications/models.py)
+- AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudeis/models.py)
+- BlogIndexPage and Blog (cms/blog/models.py)
+- PostIndexPage and Post (cms/posts/models.py)
+- BasePage and ComponentsPage (cms/pages/models.py)
+
+To run the test you need to prepare both the database and media files.
+
+Move to the fixtures folder and run
+```
+./copy_media.sh
+```
+
+Then from the root of the project run
+```
+./manage.py loaddata fixtures/testdata.json
+```
+
+After loading testdata.json you will see sample pages available in the frontend and admin area.
+
+A superuser login is created. Username: `admin` with password: `password123` which you can use at `http://localhost:8000/admin`

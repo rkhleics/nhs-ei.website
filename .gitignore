@@ -130,8 +130,8 @@ dmypy.json
 
 # local
 local.py
-/static/
-/media/
+/static
+/media
 node_modules
 # Terraform
 *.tfstate

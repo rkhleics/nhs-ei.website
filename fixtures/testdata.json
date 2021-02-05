@@ -395,7 +395,7 @@
   "model": "auth.user",
   "fields": {
     "password": "pbkdf2_sha256$216000$lrxNu0P4pjTp$sBNCY+AnUgXcsT94Zg12STCYz4bRJWV+9h5ZYew6Oho=",
-    "last_login": "2021-02-04T17:08:59.437Z",
+    "last_login": "2021-02-05T10:30:42.288Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -1879,6 +1879,174 @@
   }
 },
 {
+  "model": "wagtailcore.pagelogentry",
+  "pk": 71,
+  "fields": {
+    "content_type": [
+      "home",
+      "homepage"
+    ],
+    "label": "Home",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2021-02-05T09:52:16.794Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 3,
+    "revision": 37
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 72,
+  "fields": {
+    "content_type": [
+      "home",
+      "homepage"
+    ],
+    "label": "Home",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2021-02-05T09:52:16.824Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 3,
+    "revision": 37
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 73,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication One",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2021-02-05T09:55:00.090Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 14,
+    "revision": 38
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 74,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication One",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2021-02-05T09:55:00.130Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 14,
+    "revision": 38
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 75,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication Two",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2021-02-05T09:56:46.330Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 15,
+    "revision": 39
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 76,
+  "fields": {
+    "content_type": [
+      "publications",
+      "publication"
+    ],
+    "label": "Publication Two",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2021-02-05T09:56:46.392Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 15,
+    "revision": 39
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 77,
+  "fields": {
+    "content_type": [
+      "home",
+      "homepage"
+    ],
+    "label": "Home",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2021-02-05T10:35:23.849Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 3,
+    "revision": 40
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 78,
+  "fields": {
+    "content_type": [
+      "home",
+      "homepage"
+    ],
+    "label": "Home",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2021-02-05T10:35:23.876Z",
+    "user": [
+      "admin"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 3,
+    "revision": 40
+  }
+},
+{
   "model": "wagtailcore.groupapprovaltask",
   "pk": 1,
   "fields": {
@@ -2367,6 +2535,62 @@
   }
 },
 {
+  "model": "wagtailcore.pagerevision",
+  "pk": 37,
+  "fields": {
+    "page": 3,
+    "submitted_for_moderation": false,
+    "created_at": "2021-02-05T09:52:16.780Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 3, \"path\": \"00010001\", \"depth\": 2, \"numchild\": 6, \"title\": \"Home\", \"draft_title\": \"Home\", \"slug\": \"home\", \"content_type\": 4, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/\", \"owner\": null, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T13:53:16.604Z\", \"last_published_at\": \"2021-02-04T18:01:25.478Z\", \"latest_revision_created_at\": \"2021-02-04T18:01:25.457Z\", \"live_revision\": 31, \"hero_text\": \"Hero text content\", \"hero_heading\": \"Hero Heading\", \"hero_image\": 2, \"body\": \"[{\\\"type\\\": \\\"promo_group\\\", \\\"value\\\": {\\\"column\\\": \\\"one-half\\\", \\\"size\\\": \\\"\\\", \\\"heading_level\\\": 3, \\\"promos\\\": [{\\\"url\\\": \\\"http://www.example.com\\\", \\\"heading\\\": \\\"Promo One Heading\\\", \\\"description\\\": \\\"Promo one content\\\", \\\"content_image\\\": null, \\\"alt_text\\\": \\\"\\\"}, {\\\"url\\\": \\\"http://www.example.com\\\", \\\"heading\\\": \\\"Promo Two Heading\\\", \\\"description\\\": \\\"Promo two content has an image\\\", \\\"content_image\\\": 2, \\\"alt_text\\\": \\\"promo two alt text\\\"}]}, \\\"id\\\": \\\"648916d9-0507-4db9-b4e6-94211cd921fe\\\"}, {\\\"type\\\": \\\"text\\\", \\\"value\\\": \\\"<p>We cant test blocks that should lead to a wagtail page until the wagtail-nhs-frontend package is updated</p><p><a id=\\\\\\\"13\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Publications</a></p><p><a id=\\\\\\\"8\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Atlas Case Studies</a></p><p><a id=\\\\\\\"4\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Blogs</a></p><p><a id=\\\\\\\"10\\\\\\\" linktype=\\\\\\\"page\\\\\\\">News (posts)</a></p><p><a id=\\\\\\\"17\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Base Page (test this for all block types)</a></p>\\\", \\\"id\\\": \\\"9e13d127-cce8-45ba-b5cb-aa0a101bf08e\\\"}, {\\\"type\\\": \\\"warning_callout\\\", \\\"value\\\": {\\\"title\\\": \\\"Callout title?\\\", \\\"heading_level\\\": 3, \\\"body\\\": \\\"<p>Callout content</p><p><a id=\\\\\\\"3\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Callout Link</a></p>\\\"}, \\\"id\\\": \\\"b77dcb0a-4e82-4df6-bf33-f3f99155f342\\\"}]\"}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 38,
+  "fields": {
+    "page": 14,
+    "submitted_for_moderation": false,
+    "created_at": "2021-02-05T09:55:00.076Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 14, \"path\": \"0001000100040001\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication One\", \"draft_title\": \"Publication One\", \"slug\": \"publication-one\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-one/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:10.802Z\", \"last_published_at\": \"2021-02-04T17:49:10.802Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:10.774Z\", \"live_revision\": 20, \"body\": \"<p>Publication one content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>Document Title</p>\\\", \\\"document\\\": 1, \\\"summary\\\": \\\"<p>Document Summary</p>\\\"}, \\\"id\\\": \\\"f23e858b-2ae6-4232-921a-4d347bfb3125\\\"}], \\\"id\\\": \\\"28f8d4eb-a922-4686-82da-a25cbee489db\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 1, \"publication\": 14, \"publication_type\": 1}], \"publication_category_relationship\": [{\"pk\": 1, \"publication\": 14, \"category\": 1}]}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 39,
+  "fields": {
+    "page": 15,
+    "submitted_for_moderation": false,
+    "created_at": "2021-02-05T09:56:46.303Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 15, \"path\": \"0001000100040002\", \"depth\": 4, \"numchild\": 0, \"title\": \"Publication Two\", \"draft_title\": \"Publication Two\", \"slug\": \"publication-two\", \"content_type\": 23, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/publications-index-page/publication-two/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T17:49:52.030Z\", \"last_published_at\": \"2021-02-04T17:49:52.030Z\", \"latest_revision_created_at\": \"2021-02-04T17:49:52.007Z\", \"live_revision\": 21, \"body\": \"<p>Publication two content</p>\", \"documents\": \"[{\\\"type\\\": \\\"document_group\\\", \\\"value\\\": [{\\\"type\\\": \\\"document_link\\\", \\\"value\\\": {\\\"title\\\": \\\"<p>A Document With A Link To A Page</p>\\\", \\\"external_url\\\": \\\"\\\", \\\"page\\\": 9, \\\"summary\\\": \\\"\\\"}, \\\"id\\\": \\\"4aa4218d-a5df-4f3f-8880-d6e34651d297\\\"}], \\\"id\\\": \\\"32f28605-6db3-4edd-bf99-7a53574b0557\\\"}]\", \"wp_id\": 0, \"source\": \"root\", \"wp_slug\": \"\", \"wp_link\": \"\", \"component_fields\": \"\", \"author\": \"\", \"publication_publication_type_relationship\": [{\"pk\": 2, \"publication\": 15, \"publication_type\": 2}], \"publication_category_relationship\": [{\"pk\": 2, \"publication\": 15, \"category\": 2}]}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 40,
+  "fields": {
+    "page": 3,
+    "submitted_for_moderation": false,
+    "created_at": "2021-02-05T10:35:23.835Z",
+    "user": [
+      "admin"
+    ],
+    "content_json": "{\"pk\": 3, \"path\": \"00010001\", \"depth\": 2, \"numchild\": 6, \"title\": \"Home\", \"draft_title\": \"Home\", \"slug\": \"home\", \"content_type\": 4, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/\", \"owner\": null, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2021-02-04T13:53:16.604Z\", \"last_published_at\": \"2021-02-05T09:52:16.804Z\", \"latest_revision_created_at\": \"2021-02-05T09:52:16.780Z\", \"live_revision\": 37, \"hero_text\": \"Hero text content\", \"hero_heading\": \"Hero Heading\", \"hero_image\": 2, \"body\": \"[{\\\"type\\\": \\\"promo_group\\\", \\\"value\\\": {\\\"column\\\": \\\"one-half\\\", \\\"size\\\": \\\"\\\", \\\"heading_level\\\": 3, \\\"promos\\\": [{\\\"url\\\": \\\"http://www.example.com\\\", \\\"heading\\\": \\\"Promo One Heading\\\", \\\"description\\\": \\\"Promo one content\\\", \\\"content_image\\\": null, \\\"alt_text\\\": \\\"\\\"}, {\\\"url\\\": \\\"http://www.example.com\\\", \\\"heading\\\": \\\"Promo Two Heading\\\", \\\"description\\\": \\\"Promo two content has an image\\\", \\\"content_image\\\": 2, \\\"alt_text\\\": \\\"promo two alt text\\\"}]}, \\\"id\\\": \\\"648916d9-0507-4db9-b4e6-94211cd921fe\\\"}, {\\\"type\\\": \\\"text\\\", \\\"value\\\": \\\"<p>We cant test blocks that should lead to a wagtail page until the wagtail-nhs-frontend package is updated</p><p><a id=\\\\\\\"13\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Publications</a></p><p><a id=\\\\\\\"8\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Atlas Case Studies</a></p><p><a id=\\\\\\\"4\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Blogs</a></p><p><a id=\\\\\\\"10\\\\\\\" linktype=\\\\\\\"page\\\\\\\">News (posts)</a></p><p><a id=\\\\\\\"17\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Base Page (test this for all block types)</a></p><p><a id=\\\\\\\"16\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Component Page</a></p>\\\", \\\"id\\\": \\\"9e13d127-cce8-45ba-b5cb-aa0a101bf08e\\\"}, {\\\"type\\\": \\\"warning_callout\\\", \\\"value\\\": {\\\"title\\\": \\\"Callout title?\\\", \\\"heading_level\\\": 3, \\\"body\\\": \\\"<p>Callout content</p><p><a id=\\\\\\\"3\\\\\\\" linktype=\\\\\\\"page\\\\\\\">Callout Link</a></p>\\\"}, \\\"id\\\": \\\"b77dcb0a-4e82-4df6-bf33-f3f99155f342\\\"}]\"}",
+    "approved_go_live_at": null
+  }
+},
+{
   "model": "wagtailcore.page",
   "pk": 1,
   "fields": {
@@ -2427,9 +2651,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2021-02-04T13:53:16.604Z",
-    "last_published_at": "2021-02-04T18:01:25.478Z",
-    "latest_revision_created_at": "2021-02-04T18:01:25.457Z",
-    "live_revision": 31
+    "last_published_at": "2021-02-05T10:35:23.859Z",
+    "latest_revision_created_at": "2021-02-05T10:35:23.835Z",
+    "live_revision": 40
   }
 },
 {
@@ -2777,9 +3001,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2021-02-04T17:49:10.802Z",
-    "last_published_at": "2021-02-04T17:49:10.802Z",
-    "latest_revision_created_at": "2021-02-04T17:49:10.774Z",
-    "live_revision": 20
+    "last_published_at": "2021-02-05T09:55:00.106Z",
+    "latest_revision_created_at": "2021-02-05T09:55:00.076Z",
+    "live_revision": 38
   }
 },
 {
@@ -2812,9 +3036,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2021-02-04T17:49:52.030Z",
-    "last_published_at": "2021-02-04T17:49:52.030Z",
-    "latest_revision_created_at": "2021-02-04T17:49:52.007Z",
-    "live_revision": 21
+    "last_published_at": "2021-02-05T09:56:46.353Z",
+    "latest_revision_created_at": "2021-02-05T09:56:46.303Z",
+    "live_revision": 39
   }
 },
 {
@@ -2889,14 +3113,14 @@
 },
 {
   "model": "wagtailimages.image",
-  "pk": 1,
+  "pk": 2,
   "fields": {
     "collection": 1,
     "title": "homepage-hero-image.original.jpg",
     "file": "original_images/homepage-hero-image.original.jpg",
     "width": 1450,
     "height": 325,
-    "created_at": "2021-02-04T13:52:41.325Z",
+    "created_at": "2021-02-05T09:51:52.969Z",
     "uploaded_by_user": [
       "admin"
     ],
@@ -2906,6 +3130,21 @@
     "focal_point_height": null,
     "file_size": 54603,
     "file_hash": "e6c1ad3768e27abd367bd085c0e5f46a02d9bbf4"
+  }
+},
+{
+  "model": "wagtaildocs.document",
+  "pk": 1,
+  "fields": {
+    "collection": 1,
+    "title": "A sample PDF",
+    "file": "documents/sample-pdf-file.pdf",
+    "created_at": "2021-02-05T09:54:43.427Z",
+    "uploaded_by_user": [
+      "admin"
+    ],
+    "file_size": 7760,
+    "file_hash": "35023b7b6aaf7c81edbccb66d03ba35e12e6dee7"
   }
 },
 {
@@ -2933,7 +3172,7 @@
   "fields": {
     "page_ptr": 14,
     "body": "<p>Publication one content</p>",
-    "documents": "[]",
+    "documents": "[{\"type\": \"document_group\", \"value\": [{\"type\": \"document\", \"value\": {\"title\": \"<p>Document Title</p>\", \"document\": 1, \"summary\": \"<p>Document Summary</p>\"}, \"id\": \"f23e858b-2ae6-4232-921a-4d347bfb3125\"}], \"id\": \"28f8d4eb-a922-4686-82da-a25cbee489db\"}]",
     "wp_id": 0,
     "source": "root",
     "wp_slug": "",
@@ -2948,7 +3187,7 @@
   "fields": {
     "page_ptr": 15,
     "body": "<p>Publication two content</p>",
-    "documents": "[]",
+    "documents": "[{\"type\": \"document_group\", \"value\": [{\"type\": \"document_link\", \"value\": {\"title\": \"<p>A Document With A Link To A Page</p>\", \"external_url\": \"\", \"page\": 9, \"summary\": \"\"}, \"id\": \"4aa4218d-a5df-4f3f-8880-d6e34651d297\"}], \"id\": \"32f28605-6db3-4edd-bf99-7a53574b0557\"}]",
     "wp_id": 0,
     "source": "root",
     "wp_slug": "",
@@ -3095,8 +3334,8 @@
     "page_ptr": 3,
     "hero_text": "Hero text content",
     "hero_heading": "Hero Heading",
-    "hero_image": 1,
-    "body": "[{\"type\": \"promo_group\", \"value\": {\"column\": \"one-half\", \"size\": \"\", \"heading_level\": 3, \"promos\": [{\"url\": \"http://www.example.com\", \"heading\": \"Promo One Heading\", \"description\": \"Promo one content\", \"content_image\": null, \"alt_text\": \"\"}, {\"url\": \"http://www.example.com\", \"heading\": \"Promo Two Heading\", \"description\": \"Promo two content has an image\", \"content_image\": 1, \"alt_text\": \"promo two alt text\"}]}, \"id\": \"648916d9-0507-4db9-b4e6-94211cd921fe\"}, {\"type\": \"text\", \"value\": \"<p>We cant test blocks that should lead to a wagtail page until the wagtail-nhs-frontend package is updated</p><p><a id=\\\"13\\\" linktype=\\\"page\\\">Publications</a></p><p><a id=\\\"8\\\" linktype=\\\"page\\\">Atlas Case Studies</a></p><p><a id=\\\"4\\\" linktype=\\\"page\\\">Blogs</a></p><p><a id=\\\"10\\\" linktype=\\\"page\\\">News (posts)</a></p><p><a id=\\\"17\\\" linktype=\\\"page\\\">Base Page (test this for all block types)</a></p>\", \"id\": \"9e13d127-cce8-45ba-b5cb-aa0a101bf08e\"}, {\"type\": \"warning_callout\", \"value\": {\"title\": \"Callout title?\", \"heading_level\": 3, \"body\": \"<p>Callout content</p><p><a id=\\\"3\\\" linktype=\\\"page\\\">Callout Link</a></p>\"}, \"id\": \"b77dcb0a-4e82-4df6-bf33-f3f99155f342\"}]"
+    "hero_image": 2,
+    "body": "[{\"type\": \"promo_group\", \"value\": {\"column\": \"one-half\", \"size\": \"\", \"heading_level\": 3, \"promos\": [{\"url\": \"http://www.example.com\", \"heading\": \"Promo One Heading\", \"description\": \"Promo one content\", \"content_image\": null, \"alt_text\": \"\"}, {\"url\": \"http://www.example.com\", \"heading\": \"Promo Two Heading\", \"description\": \"Promo two content has an image\", \"content_image\": 2, \"alt_text\": \"promo two alt text\"}]}, \"id\": \"648916d9-0507-4db9-b4e6-94211cd921fe\"}, {\"type\": \"text\", \"value\": \"<p>We cant test blocks that should lead to a wagtail page until the wagtail-nhs-frontend package is updated</p><p><a id=\\\"13\\\" linktype=\\\"page\\\">Publications</a></p><p><a id=\\\"8\\\" linktype=\\\"page\\\">Atlas Case Studies</a></p><p><a id=\\\"4\\\" linktype=\\\"page\\\">Blogs</a></p><p><a id=\\\"10\\\" linktype=\\\"page\\\">News (posts)</a></p><p><a id=\\\"17\\\" linktype=\\\"page\\\">Base Page (test this for all block types)</a></p><p><a id=\\\"16\\\" linktype=\\\"page\\\">Component Page</a></p>\", \"id\": \"9e13d127-cce8-45ba-b5cb-aa0a101bf08e\"}, {\"type\": \"warning_callout\", \"value\": {\"title\": \"Callout title?\", \"heading_level\": 3, \"body\": \"<p>Callout content</p><p><a id=\\\"3\\\" linktype=\\\"page\\\">Callout Link</a></p>\"}, \"id\": \"b77dcb0a-4e82-4df6-bf33-f3f99155f342\"}]"
   }
 }
 ]
