@@ -1,3 +1,4 @@
 #!/bin/bash
 
-cp -R media/ ..
+cp -R media ..
+

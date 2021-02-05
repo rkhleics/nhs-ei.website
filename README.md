@@ -195,12 +195,15 @@ The following page types (models) are tested
 
 To run the tests you should prepare both the database and media files.
 
-Move to the `fixtures` folder and run
+To copy the media files, you can either:
+
+Move to the fixtures folder and run
 ```
 ./copy_media.sh
 ```
+or, simply copy `fixtures/media` into a new folder called `media` at the root of the project
 
-Then from the `project root` run
+Then from the root of the project run
 ```
 python manage.py loaddata fixtures/testdata.json
 ```
