@@ -12,6 +12,7 @@ EXPOSE 8000
 # 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
 #    command.
 ENV PYTHONUNBUFFERED=1 \
+    DJANGO_SETTINGS_MODULE=cms.settings.base \
     PORT=8000
 
 
