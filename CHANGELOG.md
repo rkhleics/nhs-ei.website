@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
+
+2021-02-04
+### Added
+- docs/application.md
+
+### Changed
+- README.md
+- docs/application.md
+
+2021-02-03
 ### Added
 - developer documentation in /README.md
 - documentation folder /docs and moved importer docs there
