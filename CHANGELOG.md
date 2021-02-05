@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+2021-02-05
+### Added
+- cms/publications/tests.py
+- cms/atlascasestudies/tests.py
+
+### Changed
+- docs where referencing fixtures
+
 2021-02-04
 ### Added
 - docs/application.md
