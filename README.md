@@ -193,18 +193,51 @@ The following page types (models) are tested
 - PostIndexPage and Post (cms/posts/models.py)
 - BasePage and ComponentsPage (cms/pages/models.py)
 
-To run the test you need to prepare both the database and media files.
+To run the tests you should prepare both the database and media files.
 
-Move to the fixtures folder and run
+Move to the `fixtures` folder and run
 ```
 ./copy_media.sh
 ```
 
-Then from the root of the project run
+Then from the `project root` run
 ```
-./manage.py loaddata fixtures/testdata.json
+python manage.py loaddata fixtures/testdata.json
 ```
 
 After loading testdata.json you will see sample pages available in the frontend and admin area.
 
 A superuser login is created. Username: `admin` with password: `password123` which you can use at `http://localhost:8000/admin`
+
+---
+
+Making new testdata if you change the pages that are been tested and your test are been changed
+
+### 1. Open a python shell thats aware of django
+Wagtail pre renders all images and we need to remove them, we don't want them to be included in the test data. The original images will stay in place. When the page is next viewed new renders will be created from the originals. Testing doesn't test for the actual image used, just the presence of the image tag in the correct place in the HTML
+```
+python manage.py shell
+```
+Then run the flowing commands
+```
+from wagtail.images.models import Rendition
+```
+and 
+```
+Rendition.objects.all().delete()
+```
+You can close the shell now with quit()
+
+### 2. Copy the project root media folder (/media)
+
+Copy the media folder from your project root and replace the one in /fixtures
+
+Now the media folder is a fixture that will represent the data when `./dumpdata.sh` is run next
+
+### 3. Create a new testdata.json file
+
+From the `fixtures` folder run
+```
+./dumpdata.sh > testdata.json
+```
+Now the data for all the pages in your development project has been written to `testdata.json` which you can later load again.

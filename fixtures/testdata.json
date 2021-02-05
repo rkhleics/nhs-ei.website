@@ -395,7 +395,7 @@
   "model": "auth.user",
   "fields": {
     "password": "pbkdf2_sha256$216000$lrxNu0P4pjTp$sBNCY+AnUgXcsT94Zg12STCYz4bRJWV+9h5ZYew6Oho=",
-    "last_login": "2021-02-05T10:30:42.288Z",
+    "last_login": "2021-02-05T13:26:37.396Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
