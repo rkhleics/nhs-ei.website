@@ -29,6 +29,6 @@
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-sass": "^4.1.0",
-    "webpack-stream": "^5.2.1"
+    "webpack-stream": "^6.1.2"
   }
 }
