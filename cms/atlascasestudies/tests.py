@@ -106,9 +106,17 @@ class TestAtlasCaseStudy(TestCase):
         title = soup.select_one('main h1').text.strip()
         self.assertEqual(title, 'Atlas Case Study One')
 
+    def test_page_content(self):
+        response = self.client.get('/atlas-case-studies-index-page/atlas-case-study-one/')
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
         # page content
         content = soup.select_one('main p').text.strip()
         self.assertEqual(content, 'Atlas case study one content')
+
+    def test_taxonomy_link(self):
+        response = self.client.get('/atlas-case-studies-index-page/atlas-case-study-one/')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         # taxonomy links        
         topic_1 = soup.select_one('main a:nth-of-type(1)')
