@@ -34,5 +34,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - cms/settings/dev.py to serve local static assets
 - Update browser-sync to address 3 security advisories
 
+- Document release process for staging
+
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

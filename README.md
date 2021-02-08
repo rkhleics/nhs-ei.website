@@ -198,3 +198,7 @@ is [here](deployment/).
 The application is installed on Kubernetes using [Helm](https://helm.sh/).
 
 View the [Helm chart](deployment/helm).
+
+# Release process
+
+See [Release process](docs/release_process.md)
