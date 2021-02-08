@@ -15,7 +15,9 @@ Notes:
 - You local environment requirements should meet the following:
   Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
-- Your development environment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
+* `sqlite3` we found to run tests sqlite3 --version should not be < 3.26 so you may need to upgrade it. On a mac run brew install sqlite
+
+* Your development environment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
 - The frontend styling, layout and components use the NHS.UK frontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
 
@@ -190,6 +192,74 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 
 View the [Application Guide](docs/application.md)
 
+<<<<<<< HEAD
+---
+
+# Developer Testing
+There are tests in place for each app in the cms (/cms/[appname]). The tests are inside the tests.py files.
+
+Testing is functional tests at the moment. E.g. using the known test data imported check that each test page renders and the content from blocks is rendered as expected.
+
+The following page types (models) are tested
+- HomePage (cms/home/models.py)
+- PublicationIndexPage and Publication (cms/publications/models.py)
+- AtlasCaseStudyIndexPage and AtlasCaseStudy (cms/atlascasestudies/models.py)
+- BlogIndexPage and Blog (cms/blog/models.py)
+- PostIndexPage and Post (cms/posts/models.py)
+- BasePage and ComponentsPage (cms/pages/models.py)
+
+To run the tests you should prepare both the database and media files.
+
+To copy the media files, you can either:
+
+Move to the fixtures folder and run
+```
+./copy_media.sh
+```
+or, simply copy `fixtures/media` into a new folder called `media` at the root of the project
+
+Then from the root of the project run
+```
+python manage.py loaddata fixtures/testdata.json
+```
+
+After loading testdata.json you will see sample pages available in the frontend and admin area.
+
+A superuser login is created. Username: `admin` with password: `password123` which you can use at `http://localhost:8000/admin`
+
+---
+
+Making new testdata if you change the pages that are been tested and your test are been changed
+
+### 1. Open a python shell thats aware of django
+Wagtail pre renders all images and we need to remove them, we don't want them to be included in the test data. The original images will stay in place. When the page is next viewed new renders will be created from the originals. Testing doesn't test for the actual image used, just the presence of the image tag in the correct place in the HTML
+```
+python manage.py shell
+```
+Then run the flowing commands
+```
+from wagtail.images.models import Rendition
+```
+and 
+```
+Rendition.objects.all().delete()
+```
+You can close the shell now with quit()
+
+### 2. Copy the project root media folder (/media)
+
+Copy the media folder from your project root and replace the one in /fixtures
+
+Now the media folder is a fixture that will represent the data when `./dumpdata.sh` is run next
+
+### 3. Create a new testdata.json file
+
+From the `fixtures` folder run
+```
+./dumpdata.sh > testdata.json
+```
+Now the data for all the pages in your development project has been written to `testdata.json` which you can later load again.
+=======
 # Deployment
 
 The Kubernetes infrastructure deployment is handled by Terraform, documentation relating to this
@@ -202,3 +272,4 @@ View the [Helm chart](deployment/helm).
 # Release process
 
 See [Release process](docs/release_process.md)
+>>>>>>> 0e2f44d795266cd7438815c41e37b482a8f85ce2

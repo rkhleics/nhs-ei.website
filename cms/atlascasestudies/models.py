@@ -27,7 +27,7 @@ class AtlasCaseStudyIndexPage(Page):
         FieldPanel("body"),
     ]
 
-    def get_latest_atlas_case_studies(num):
+    def get_latest_atlas_case_studies(self, num):
         return AtlasCaseStudy.objects.all().order_by("-first_published_at")[:num]
 
     def get_context(self, request, *args, **kwargs):

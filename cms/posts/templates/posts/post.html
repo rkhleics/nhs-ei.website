@@ -17,8 +17,10 @@
 
         {% endif %}
 
-        <div class="nhsuk-body-s">
-          <b>Published: </b>{{ self.first_published_at|date:'d M Y g:i a' }}
+        <div class="nhsuk-review-date">
+            <div class="nhsuk-body-s">
+            Published: {{ self.first_published_at|date:'d M Y g:i a' }}
+            </div>
             {% comment %}
              | Author: {{ self.author }} <i>we are missing the ability to match ID to
                 a name</i>
