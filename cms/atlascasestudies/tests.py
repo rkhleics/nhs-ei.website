@@ -110,18 +110,15 @@ class TestAtlasCaseStudy(TestCase):
         content = soup.select_one('main p').text.strip()
         self.assertEqual(content, 'Atlas case study one content')
 
-        # taxonomy links
-        '''there are failures here that need fixing, the links are not right'''
-        """
+        # taxonomy links        
         topic_1 = soup.select_one('main a:nth-of-type(1)')
         self.assertEqual(topic_1['href'], '/atlas-case-studies-index-page/?category=1')
         self.assertEqual(topic_1.text.strip(), 'Category One')
 
         setting_1 = soup.select_one('main a:nth-of-type(2)')
-        self.assertEqual(setting_1['href'], '/atlas-case-studies-index-page/?category=2')
-        self.assertEqual(setting_1.text.strip(), 'Category Two')
+        self.assertEqual(setting_1['href'], '/atlas-case-studies-index-page/?setting=1')
+        self.assertEqual(setting_1.text.strip(), 'Setting One')
 
-        region_1 = soup.select_one('main a:nth-of-type(2)')
-        self.assertEqual(region_1['href'], '/atlas-case-studies-index-page/?category=3')
-        self.assertEqual(region_1.text.strip(), 'Category Three')
-        """
+        region_1 = soup.select_one('main a:nth-of-type(3)')
+        self.assertEqual(region_1['href'], '/atlas-case-studies-index-page/?region=1')
+        self.assertEqual(region_1.text.strip(), 'Region One')

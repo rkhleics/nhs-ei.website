@@ -3,27 +3,23 @@
 
 {% block content %}
 <article class="nhsuk-width-container">
-
     <div class="nhsuk-u-reading-width">
         {% if self.atlas_case_study_category_relationship %}
         <div class="nhsuk-body-s">
             Topics:
             {% for category in self.atlas_case_study_category_relationship.all %}
-            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category.name }}</a>
             {% endfor %} <br>
             Settings:
             {% for setting in self.atlas_case_study_setting_relationship.all %}
-            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            <a href="{{ self.get_parent.url }}?setting={{ setting.setting.id }}">{{ setting.setting.name }}</a>
             {% endfor %} <br>
             Regions:
-            {% for category in self.atlas_case_study_category_relationship.all %}
-            <a href="{{ self.get_parent.url }}?category={{ category.category.id }}">{{ category.category }}</a>
+            {% for region in self.atlas_case_study_region_relationship.all %}
+            <a href="{{ self.get_parent.url }}?region={{ region.region.id }}">{{ region.region.name }}</a>
             {% endfor %}
         </div>
-
-
         {% endif %}
-
         <div class="nhsuk-body-s">
             {{ self.first_published_at|date }}
             {% comment %}
