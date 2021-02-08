@@ -1,6 +1,5 @@
-from unittest import case
 from bs4 import BeautifulSoup
-from django.http import response
+from cms.atlascasestudies.models import AtlasCaseStudyIndexPage
 from django.test import TestCase
 
 
@@ -74,7 +73,8 @@ class TestAtlasCaseStudyIndexPage(TestCase):
             'div.nhsuk-u-margin-bottom-3').text.strip(), 'Atlas case study one content')
 
         # dates
-        self.assertIn(case_list.select_one('p.nhsuk-body-s').text.strip()[:30], 'Published:  04 February 2021 -')
+        self.assertIn(case_list.select_one(
+            'p.nhsuk-body-s').text.strip()[:30], 'Published:  04 February 2021 -')
 
         # links
         self.assertEqual(case_list.select_one(
@@ -92,6 +92,22 @@ class TestAtlasCaseStudyIndexPage(TestCase):
         self.assertEqual(case_list.select_one(
             'p.nhsuk-body-s a:nth-of-type(3)')['href'], '?region=1')
 
+    def test_get_latest_atlas_case_studies(self):
+        index_page = AtlasCaseStudyIndexPage.objects.get(
+            slug='atlas-case-studies-index-page')
+        latest = index_page.get_latest_atlas_case_studies(1)
+        self.assertEqual(latest.count(), 1)
+
+    def test_get_context(self):
+        response = self.client.get('/atlas-case-studies-index-page/')
+        context = response.context
+
+        self.assertEqual(context['title'], 'Atlas Case Studies Index Page')
+        self.assertEqual(len(context['atlas_case_studies']), 1)
+        self.assertEqual(len(context['categories']), 2)
+        self.assertEqual(len(context['setting']), 2)
+        self.assertEqual(len(context['regions']), 2)
+
 
 class TestAtlasCaseStudy(TestCase):
 
@@ -99,7 +115,8 @@ class TestAtlasCaseStudy(TestCase):
     fixtures = ['fixtures/testdata.json']
 
     def test_page_title(self):
-        response = self.client.get('/atlas-case-studies-index-page/atlas-case-study-one/')
+        response = self.client.get(
+            '/atlas-case-studies-index-page/atlas-case-study-one/')
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # page title
@@ -107,26 +124,31 @@ class TestAtlasCaseStudy(TestCase):
         self.assertEqual(title, 'Atlas Case Study One')
 
     def test_page_content(self):
-        response = self.client.get('/atlas-case-studies-index-page/atlas-case-study-one/')
+        response = self.client.get(
+            '/atlas-case-studies-index-page/atlas-case-study-one/')
         soup = BeautifulSoup(response.content, 'html.parser')
-        
+
         # page content
         content = soup.select_one('main p').text.strip()
         self.assertEqual(content, 'Atlas case study one content')
 
     def test_taxonomy_link(self):
-        response = self.client.get('/atlas-case-studies-index-page/atlas-case-study-one/')
+        response = self.client.get(
+            '/atlas-case-studies-index-page/atlas-case-study-one/')
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # taxonomy links        
+        # taxonomy links
         topic_1 = soup.select_one('main a:nth-of-type(1)')
-        self.assertEqual(topic_1['href'], '/atlas-case-studies-index-page/?category=1')
+        self.assertEqual(
+            topic_1['href'], '/atlas-case-studies-index-page/?category=1')
         self.assertEqual(topic_1.text.strip(), 'Category One')
 
         setting_1 = soup.select_one('main a:nth-of-type(2)')
-        self.assertEqual(setting_1['href'], '/atlas-case-studies-index-page/?setting=1')
+        self.assertEqual(setting_1['href'],
+                         '/atlas-case-studies-index-page/?setting=1')
         self.assertEqual(setting_1.text.strip(), 'Setting One')
 
         region_1 = soup.select_one('main a:nth-of-type(3)')
-        self.assertEqual(region_1['href'], '/atlas-case-studies-index-page/?region=1')
+        self.assertEqual(region_1['href'],
+                         '/atlas-case-studies-index-page/?region=1')
         self.assertEqual(region_1.text.strip(), 'Region One')
