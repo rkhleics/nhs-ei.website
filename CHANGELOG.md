@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+2021-02-08
+### Added
+- cms/blogs/tests.py
+- cms/posts/tests.py
+- cms/pages/tests.py
+
+### Changed
+- cms/atlascasestudies/tests.py
+- cms/atlascasestudies/templates/atlascasestudies/atlas_case_study.html
+- cms/atlascasestudies/models.py
+- cms/blogs/models.py
+- cms/blogs/templates/blogs/blog.html
+- cms/posts/templates/posts/post.html
+- fixtures/testdata.json
+
 2021-02-05
 ### Added
 - cms/publications/tests.py
