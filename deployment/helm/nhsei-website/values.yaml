@@ -73,10 +73,8 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt
   #hostnames:
   #- www.england.nhs.uk
-  #tls:
-  #- secretName: tls-secret
-  #hosts:
-  #- load_balancer_url
+  #tlshosts:
+  #- staging.england.nhs.uk
 
 resources:
   {}

@@ -28,6 +28,9 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ### Changed
 - docs where referencing fixtures
+2021-02-05
+### Changed
+- updated ingress template to use separate secrets for each tls hostname
 
 2021-02-04
 ### Added

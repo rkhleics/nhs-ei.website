@@ -63,8 +63,7 @@ jobs:
             --set-string imageCredentials.registry=${{ secrets.ACR_URL }} \
             --set-string imageCredentials.username=${{ secrets.AZURE_CLIENTID }} \
             --set-string imageCredentials.password=${{ secrets.AZURE_SECRET }} \
-            --set ingress.tls[0].hosts="{${HOSTNAMES}}" \
-            --set ingress.tls[0].secretName="tls-secret" \
+            --set ingress.tlshosts="{${HOSTNAMES}}" \
             --set ingress.hostnames="{${HOSTNAMES}}" \
             --set-string environment.allowed_hosts="${ALLOWED_HOSTS}" \
             --set-string environment.database_url="${{ secrets.DATABASE_URL }}" \
