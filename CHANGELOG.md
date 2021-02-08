@@ -30,7 +30,10 @@ The format is based on [Keep a Changelog 1.0.0].
 - docs where referencing fixtures
 2021-02-05
 ### Changed
+- README.md
+- docs/application.md
 - updated ingress template to use separate secrets for each tls hostname
+
 
 2021-02-04
 ### Added
@@ -53,7 +56,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - cms/settings/dev.py to serve local static assets
 - Update browser-sync to address 3 security advisories
 
-- Added base page component tests
+- Document release process for staging
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

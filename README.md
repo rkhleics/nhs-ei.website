@@ -6,22 +6,23 @@ Currently available at https://nhsei-staging.uksouth.cloudapp.azure.com
 
 # Developer Install Guide
 
-Notes: 
+Notes:
 
-* In production the site runs in a docker container but in development it can be more convenient to run the site in your local environment.
+- In production the site runs in a docker container but in development it can be more convenient to run the site in your local environment.
 
-* Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
+- Our ultimate aim is to have a development environment thats closer to the production environment and we should work on that ASAP
 
-* You local environment requirements should meet the following:
-Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
+- You local environment requirements should meet the following:
+  Python >= 3.6, but we test and run it on Python 3.8 (the app is currently not compatible with v3.9)
 
 * `sqlite3` we found to run tests sqlite3 --version should not be < 3.26 so you may need to upgrade it. On a mac run brew install sqlite
 
 * Your development environment will be simpler to manage if you install it in a virtual environment or as a docker container. There are instructions below for setting up either a [docker container](#docker-container) or [virtual environment](#virtual-environment).
 
-* The frontend styling, layout and components use the NHS.UK frontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
+- The frontend styling, layout and components use the NHS.UK frontend design system: https://github.com/nhsuk/nhsuk-frontend. There's a [separate installation step](#front-end) required to install these using the node package manager (npm)
 
 ## How to install
+
 ---
 
 Clone this repo to your local development machine
@@ -43,14 +44,17 @@ You will need 'docker' installed on your development machine. Get Docker: https:
 ```
 cd nhs-ei.website
 ```
+
 or use the folder name you set when cloning the project.
 
 ### copy .env.example to .env
+
 ```
 cp .env.example .env
 ```
 
 ### after you have installed docker...
+
 ```
 docker-compose up
 ```
@@ -67,18 +71,23 @@ You will need a package on your machine to be able to setup a virtual environmen
 
 Create your virtual environment.
 the python version should be 3.8
+
 ```
 pipenv install -r requirements.dev
 ```
+
 depending on your local python setup you may need to specify the version of python to use for the virtual environment...
+
 ```
 pipenv install -r requirements.dev --python 3.8
 ```
+
 ### Your virtual environment should now be activated and ready to startup Wagtail
 
 You should see the virtual environment name before your user account name e.g. (virtual-env-name) user@computer ...
 
-If not run 
+If not run
+
 ```
 pipenv shell
 ```
@@ -93,14 +102,15 @@ You should now be able to run the Wagtail app. If you are using 2. [virtual envi
 
 To compile the fontend assets and use autoreload you need to have node and npm available on your local machine.
 
-* Install nodejs https://nodejs.org/en/
-* NPM should be installed along with nodejs but if you need to install it https://www.npmjs.com/get-npm
+- Install nodejs https://nodejs.org/en/
+- NPM should be installed along with nodejs but if you need to install it https://www.npmjs.com/get-npm
 
 In the root folder run
 
 ```
 npm install
 ```
+
 To install the node packages (they show up in a folder called node_modules in the root folder) and are not committed to the repo as they are development only requirements. npm start compiles all assets to the static assets folder at cms/static ...
 
 ---
@@ -109,20 +119,23 @@ To install the node packages (they show up in a folder called node_modules in th
 
 Do this only if you are using the [virtual environment](#virtual-environment). If you used the [docker container](#docker-container) install method these commands will be run automatically.
 
-### Migrate the database. 
+### Migrate the database.
 
 Run ...
+
 ```
 python manage.py migrate
 ```
 
-### Create a superuser login for the cms admin. 
+### Create a superuser login for the cms admin.
 
 Run ...
+
 ```
 python manage.py createsuperuser
 ```
-*** admin access is at http://localhost:3000/admin ***
+
+**_ admin access is at http://localhost:3000/admin _**
 
 You need to run 2 applications. One for the Wagtail app and the other for the frontend assets.
 
@@ -133,13 +146,14 @@ python manage.py runserver 0:8000
 ```
 
 Then from a second terminal run ...
+
 ```
 npm start
 ```
 
-This will start up the node process. You will see the progress in the terminal. The process needs to be left running. 
+This will start up the node process. You will see the progress in the terminal. The process needs to be left running.
 
-### Go to http://localhost:3000 to see the site. 
+### Go to http://localhost:3000 to see the site.
 
 Using this url will make use of the auto reload feature and generally is better to use to avoid frontend assets been cached and showing old styling.
 
@@ -147,12 +161,12 @@ There's also http://localhost:8000 which can be used. It's the port used by the 
 
 # Troubleshooting
 
-If you are struggling to build the app (setup method 2) try starting your virtual environment from scratch. 
+If you are struggling to build the app (setup method 2) try starting your virtual environment from scratch.
 Run `pipenv --rm` to remove the virtual environment. Then delete `Pipfile` and `Pipfile.lock`.
-  
+
 Running `pipenv install -r requirements.dev` will then build a fresh virtual environment.
 
-If you encounter problems with database migrations, remove your virtual environment as above, plus delete `db.sqlite3`. 
+If you encounter problems with database migrations, remove your virtual environment as above, plus delete `db.sqlite3`.
 Then rebuild and re-run migrations as before.
 
 TODO: How to upgrade sqlite3 version with python 3.8
@@ -163,9 +177,9 @@ The import app is located at /importer
 
 It's a range of django management scripts that need to be run to import all the wordpress website data from Scrapy https://nhsei-scrapy.rkh.co.uk
 
-## View the  <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
+## View the <a href="https://github.com/rkhleics/nhs-ei.website/tree/main/docs/importer_app.md">Importer Guide</a>
 
-The scripts in the importer guide need to be run for both install methods. 
+The scripts in the importer guide need to be run for both install methods.
 
 Before the data is imported the development site you see will contain no pages other than the home page which will be blank at this stage.
 
@@ -178,6 +192,7 @@ At it core this is a Wagtail app. Wagtail is a package built on the Django frame
 
 View the [Application Guide](docs/application.md)
 
+<<<<<<< HEAD
 ---
 
 # Developer Testing
@@ -244,3 +259,17 @@ From the `fixtures` folder run
 ./dumpdata.sh > testdata.json
 ```
 Now the data for all the pages in your development project has been written to `testdata.json` which you can later load again.
+=======
+# Deployment
+
+The Kubernetes infrastructure deployment is handled by Terraform, documentation relating to this
+is [here](deployment/).
+
+The application is installed on Kubernetes using [Helm](https://helm.sh/).
+
+View the [Helm chart](deployment/helm).
+
+# Release process
+
+See [Release process](docs/release_process.md)
+>>>>>>> 0e2f44d795266cd7438815c41e37b482a8f85ce2
