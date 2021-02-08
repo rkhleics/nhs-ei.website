@@ -21,14 +21,12 @@ metadata:
     nginx.ingress.kubernetes.io/auth-realm: {{ .Values.ingress.auth.realm }}
   {{- end }}
 spec:
-  {{- if .Values.ingress.tls }}
+  {{- if .Values.ingress.tlshosts }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- range .Values.ingress.tlshosts }}
     - hosts:
-        {{- range .hosts }}
         - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
+      secretName: tls-secret-{{ . | replace "." "_" }}
     {{- end }}
   {{- end }}
   rules:
