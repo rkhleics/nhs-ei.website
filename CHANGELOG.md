@@ -8,7 +8,10 @@ The format is based on [Keep a Changelog 1.0.0].
 
 2021-02-05
 ### Changed
+- README.md
+- docs/application.md
 - updated ingress template to use separate secrets for each tls hostname
+
 
 2021-02-04
 ### Added
