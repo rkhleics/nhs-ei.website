@@ -7,9 +7,11 @@ The format is based on [Keep a Changelog 1.0.0].
 ## [Unreleased]
 
 2021-02-05
-### changed
+### Changed
 - README.md
 - docs/application.md
+- updated ingress template to use separate secrets for each tls hostname
+
 
 2021-02-04
 ### Added
@@ -26,6 +28,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - requirements.dev to assist with installing dependencies for virtual environments
 - Add dependabot.yml file
 - Add logging config to cms/settings/base.py
+- Specify the Django settings module to use within the Dockerfile for collectstatic
 
 ### Changed
 - cms/settings/dev.py to serve local static assets
