@@ -3,7 +3,7 @@ import sys
 from django.core.management.base import BaseCommand
 from wagtail.core.models import Page
 from cms.core.models import CoreSettings, UpperFooterLinks, LowerFooterLinks
-
+from importer.websites import STAGING
 
 class Command(BaseCommand):
     help = 'Creates the footer links'
@@ -22,7 +22,7 @@ class Command(BaseCommand):
         contact_us = None
         complaints = None
         jobs = None
-        transparency_legal = 'https://staging.nhsei.rkh.co.uk/transparency-and-legal/'
+        transparency_legal = STAGING + 'transparency-and-legal/'
         statistics = 'https://www.england.nhs.uk/statistics'
 
         terms_and_conditions = None

@@ -18,32 +18,33 @@ from importer.import_publications import PublicationsImporter
 from importer.import_regions import RegionsImporter
 from importer.import_settings import SettingsImporter
 
+from importer.websites import SCRAPY
 # from nhsei_wagtail.importer.import_tags import TagsImporter
 
 
 def get_api_url(app):
     if app == 'categories':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/categories/'
+        return SCRAPY + 'api/categories/'
     if app == 'publication_types':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/publication_types/'
+        return SCRAPY + 'api/publication_types/'
     if app == 'settings':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/settings/'
+        return SCRAPY + 'api/settings/'
     if app == 'regions':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/regions/'
+        return SCRAPY + 'api/regions/'
     if app == 'tags':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/tags/'
+        return SCRAPY + 'api/tags/'
     if app == 'pages':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/pages/'
+        return SCRAPY + 'api/pages/'
     if app == 'posts':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/posts/'
+        return SCRAPY + 'api/posts/'
     if app == 'publications':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/publications/'
+        return SCRAPY + 'api/publications/'
     if app == 'atlas_case_studies':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/atlas_case_studies/'
+        return SCRAPY + 'api/atlas_case_studies/'
     if app == 'blogs':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/blogs/'
+        return SCRAPY + 'api/blogs/'
     if app == 'media':
-        return 'https://nhsei-scrapy.rkh.co.uk/api/media_files?page=349'
+        return SCRAPY + 'api/media_files?page=349'
 
 
 """
