@@ -6,7 +6,7 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from wagtail.core.models import Collection
 from wagtail.images.models import Image
-
+from importer.webpages import STAGING
 
 class Command(BaseCommand):
     help = 'Creates the home page content'
@@ -41,28 +41,28 @@ class Command(BaseCommand):
                     'heading_level': '3',
                     'promos': [
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/publication/nhs-england-improvement/',
+                            'url': STAGING + 'publication/nhs-england-improvement/',
                             'heading': 'Latest publications',
                             'description': 'See our most recent publications and search for documents in our publications library',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/news/nhs-england-improvement/',
+                            'url': STAGING + 'news/nhs-england-improvement/',
                             'heading': 'News',
                             'description': 'Our headline announcements',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/gp/',
+                            'url': STAGING + 'gp/',
                             'heading': 'General Practice',
                             'description': 'Supporting GPs and GP-led services across our local communities ',
                             'content_image': None,
                             'alt_text': ''
                         },
                         {
-                            'url': 'https://staging.nhsei.rkh.co.uk/diabetes/',
+                            'url': STAGING + 'diabetes/',
                             'heading': 'Diabetes',
                             'description': 'Improving outcomes for people with diabetes',
                             'content_image': None,
