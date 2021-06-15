@@ -22,3 +22,8 @@ services:
   db:
     image: postgres:11 # match Azure version
     env_file: ./.env
+
+networks:
+  default:
+    external: true
+    name: nhsei
