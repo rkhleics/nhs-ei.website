@@ -44,7 +44,7 @@ def get_api_url(app):
     if app == 'blogs':
         return SCRAPY + 'api/blogs/'
     if app == 'media':
-        return SCRAPY + 'api/media_files?page=349'
+        return SCRAPY + 'api/media_files'
 
 
 """
