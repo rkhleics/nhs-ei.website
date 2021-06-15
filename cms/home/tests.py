@@ -81,7 +81,7 @@ class TestHomePage(TestCase):
         promo2_header = promo2.find('h3', 'nhsuk-promo__heading')
         self.assertEqual(promo2_header.string, 'Promo Two Heading')
         promo2_image = promo2.find('img', 'nhsuk-promo__img')
-        self.assertTrue('homepage-hero-image' in promo2_image['src'])
+        self.assertTrue('homepage-hero-image' in promo2_image['src'], f"src was {promo2_image['src']} which doesn't contain homepage-hero-image")
 
     def test_home_page_callout(self):
         response = self.client.get('/')
