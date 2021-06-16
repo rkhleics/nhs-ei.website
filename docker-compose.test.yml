@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  # Application
+  test:
+    image: nhsei:latest
+    environment:
+      - DJANGO_SECRET_KEY=entersecretkeyhere
+      - SERVER_ENV=test
+    restart: always
+    build:
+      context: ./
+      target: app
+      args:
+        - SERVER_ENV=test
+    volumes:
+      - ./:/usr/srv/app:Z
+      - ./media:/usr/srv/app/media:Z
+    command:
+      - /bin/bash
+      - -c
+      - |
+        black --check .
+        python manage.py assets clean
+        python manage.py assets build
+        python manage.py collectstatic --no-input -i node_modules
+        cd fixtures
+        ./copy_media.sh
+        cd ..
+        python manage.py test cms
