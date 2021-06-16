@@ -148,3 +148,4 @@ requirements.dev.txt
 .vscode
 *.swp
 compiledassets
+.DS_Store

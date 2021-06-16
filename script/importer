@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+echo "Please note: the import process will take many hours"
+echo "and as such is not yet fully tested, and will slowly"
+echo "delete the existing database"
+echo ""
+echo "It might be wise to run it one step at a time"
+read -p "Press Enter to continue, CTRL-C to stop"
+echo "Importing..."
+docker-compose run --service-ports --rm web bash -c "
+   python manage.py delete_all && \
+   python manage.py runimport media && \
+   python manage.py runimport all && \
+   python manage.py runimport build && \
+   python manage.py runimport fixes && \
+   python manage.py runimport makes && \
+   python manage.py runimport documents && \
+"
+
+echo "Currently there are two scripts that might not have been run"
+echo "streams_make_base_page"
+echo "parse_stream_fields_landing_page"
+echo "Not quite sure what to make of that."
