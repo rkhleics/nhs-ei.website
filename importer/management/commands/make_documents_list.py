@@ -14,20 +14,27 @@ from importer.richtextbuilder import RichTextBuilder
 from wagtail.documents.models import Document
 
 DOCUMENT_TYPES = [
-    'heading',
-    'document',
-    'documentlink',
-    'audiovideo',
-    'freetext',
+    "heading",
+    "document",
+    "documentlink",
+    "audiovideo",
+    "freetext",
 ]
 
 
 class Command(BaseCommand):
-    help = 'Creates the documents for each publication page'
+    help = "Creates the documents for each publication page"
 
     def __init__(self):
-        models = [BasePage, ComponentsPage, Blog,
-                  Post, AtlasCaseStudy, Publication, LandingPage]
+        models = [
+            BasePage,
+            ComponentsPage,
+            Blog,
+            Post,
+            AtlasCaseStudy,
+            Publication,
+            LandingPage,
+        ]
         url_ids = {}  # cached
 
         for model in models:
@@ -38,12 +45,12 @@ class Command(BaseCommand):
         self.urls = url_ids
         self.block_builder = RichTextBuilder(self.urls)
 
-        with open('importer/log/make_documents_list_errors.txt', 'w') as the_file:
-            the_file.write('make documents list missing media url\n')
+        with open("importer/log/make_documents_list_errors.txt", "w") as the_file:
+            the_file.write("make documents list missing media url\n")
 
     def handle(self, *args, **options):
 
-        """ now not deleteing docuemnts they need to be found instead """
+        """now not deleteing docuemnts they need to be found instead"""
         # documents = Document.objects.all()
         # if documents:
         #     sys.stdout.write(
@@ -53,15 +60,15 @@ class Command(BaseCommand):
         publications = Publication.objects.all()
 
         for publication in publications:
-            sys.stdout.write('\n⌛️ {} processing...'.format(publication))
+            sys.stdout.write("\n⌛️ {} processing...".format(publication))
             component_fields = ast.literal_eval(publication.component_fields)
-            introduction = ''
+            introduction = ""
             docs = []
             document_list = []
             for row in component_fields:
                 items = row.items()
                 for k, v in items:
-                    if k == 'introduction':
+                    if k == "introduction":
                         # self.block_builder.extract_links(row[k])
                         # item_detail = row[k]
                         # for link in self.block_builder.change_links:
@@ -70,18 +77,18 @@ class Command(BaseCommand):
                         # introduction = item_detail
                         introduction = row[k]
 
-                    if k == 'documents':
+                    if k == "documents":
                         # some docs have no document !!!! whaaaat wp_id 1115
                         docs = ast.literal_eval(row[k]) or []
 
             for document in docs:
-                if document and document['type_of_publication'] in DOCUMENT_TYPES:
+                if document and document["type_of_publication"] in DOCUMENT_TYPES:
                     documents_builder = DocumentsBuilder(publication, document)
                     item = documents_builder.make_documents()
                     if item:
                         document_list.append(item)
                 else:
-                    print('document type not found')
+                    print("document type not found")
                     sys.exit()
 
             # make the jump menu after by looking for headings in final document_list[]
@@ -89,21 +96,18 @@ class Command(BaseCommand):
             jump_menu_links = []
 
             for document in document_list:
-                if document['type'] == 'named_anchor':
+                if document["type"] == "named_anchor":
                     jump_menu_links.append(document)
 
-            jump_menu = {
-                'type': 'jump_menu',
-                'value': {
-                    'menu': []
-                }
-            }
+            jump_menu = {"type": "jump_menu", "value": {"menu": []}}
 
             for item in jump_menu_links:
-                jump_menu['value']['menu'].append({
-                    'title': item['value']['heading'],
-                    'menu_id': slugify(item['value']['heading'])
-                })
+                jump_menu["value"]["menu"].append(
+                    {
+                        "title": item["value"]["heading"],
+                        "menu_id": slugify(item["value"]["heading"]),
+                    }
+                )
 
             new_stream_value = []
 
@@ -112,24 +116,24 @@ class Command(BaseCommand):
             docs = []
 
             for i in range(0, len(document_list)):
-                if document_list[i]['type'] == 'named_anchor':
-                    mapped_type_postitions.append('anchor')
+                if document_list[i]["type"] == "named_anchor":
+                    mapped_type_postitions.append("anchor")
 
-                elif document_list[i]['type'] != 'named_anchor':
-                    mapped_type_postitions.append('doc')
+                elif document_list[i]["type"] != "named_anchor":
+                    mapped_type_postitions.append("doc")
 
                 last_item = mapped_type_postitions[-1]
 
-                if last_item != 'anchor':
+                if last_item != "anchor":
                     # append to docs and remove last
                     del mapped_type_postitions[-1]
 
-                    docs.append('doc')
+                    docs.append("doc")
 
-                elif last_item == 'anchor' and len(docs):
+                elif last_item == "anchor" and len(docs):
                     del mapped_type_postitions[-1]
                     mapped_type_postitions.append(docs)
-                    mapped_type_postitions.append('anchor')
+                    mapped_type_postitions.append("anchor")
                     docs = []
 
                 if i == len(document_list) - 1:
@@ -147,30 +151,24 @@ class Command(BaseCommand):
             may be problem as very different layout
             """
 
-            block_group = {
-                'type': 'document_group',
-                'value': []
-            }
+            block_group = {"type": "document_group", "value": []}
 
-            if not 'anchor' in mapped_type_postitions:
+            if not "anchor" in mapped_type_postitions:
 
                 for i in range(0, len(mapped_type_postitions)):
-                    block_group['value'].append(document_list[i])
+                    block_group["value"].append(document_list[i])
                 new_stream_value.append(block_group)
-                
+
             else:
                 pos = 0  # some items are list but need to keep track to get document_list index
                 docs = []
                 for item in mapped_type_postitions:
 
                     if isinstance(item, list):  # deal with docs
-                        block_group = {
-                            'type': 'document_group',
-                            'value': []
-                        }
+                        block_group = {"type": "document_group", "value": []}
 
                         for doc in item:
-                            block_group['value'].append(document_list[pos])
+                            block_group["value"].append(document_list[pos])
                             pos += 1
                         new_stream_value.append(block_group)
 
@@ -179,7 +177,7 @@ class Command(BaseCommand):
                         new_stream_value.append(document_list[pos])
                         pos += 1
 
-            if jump_menu['value']['menu']:
+            if jump_menu["value"]["menu"]:
                 new_stream_value.insert(0, jump_menu)
 
             publication.body = introduction
@@ -187,10 +185,13 @@ class Command(BaseCommand):
             rev = publication.save_revision()
             publication.first_published_at = publication.first_published_at
             publication.last_published_at = publication.last_published_at
-            publication.latest_revision_created_at = publication.latest_revision_created_at
+            publication.latest_revision_created_at = (
+                publication.latest_revision_created_at
+            )
             publication.save()
             rev.publish()
-            sys.stdout.write('\n✅ {} processing...'.format(publication))
+            sys.stdout.write("\n✅ {} processing...".format(publication))
+
 
 """
 exmaple URL https://www.england.nhs.uk/wp-json/wp/v2/documents/144645

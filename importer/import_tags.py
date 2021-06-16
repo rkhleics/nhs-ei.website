@@ -2,6 +2,7 @@ import sys
 import time
 
 from django.core.management import call_command
+
 # from nhsei_wagtail.tags.models import Tag
 
 # from .importer_cls import Importer

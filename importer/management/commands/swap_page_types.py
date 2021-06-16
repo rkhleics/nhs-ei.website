@@ -11,7 +11,7 @@ from cms.blogs.models import BlogIndexPage
 
 
 class Command(BaseCommand):
-    help = 'Swap page types'
+    help = "Swap page types"
 
     def __init__(self):
         # uniqufy urls to start with so we can deal with altering them later
@@ -20,18 +20,19 @@ class Command(BaseCommand):
         self.random_strings = []
 
     def handle(self, *args, **options):
-        """ 
+        """
         Process: We need to change some pages from a base page to another page type
         based on it's page type from wordpress
 
         Component pages: have a different layout better catered for with a separate page type
         """
 
-        base_pages = BasePage.objects.filter(wp_template='page-components.php') | BasePage.objects.filter(wp_template='page-blog-landing.php')
+        base_pages = BasePage.objects.filter(
+            wp_template="page-components.php"
+        ) | BasePage.objects.filter(wp_template="page-blog-landing.php")
         # first create the new Components Pages
 
         for page in base_pages:
-
 
             # print(page)
             # make a new page and place it under the same parent page
@@ -42,7 +43,7 @@ class Command(BaseCommand):
 
             slug = URLParser(page.wp_link).find_slug()
             # sometimes there's external links with params so fall back to the slug fomr wordpress
-            if not slug_re.match(slug): 
+            if not slug_re.match(slug):
                 slug = page.slug
 
             # the body field is left blank for now
@@ -81,7 +82,7 @@ class Command(BaseCommand):
 
             obj.save()
             rev.publish()
-        
+
         components_pages = ComponentsPage.objects.all()
 
         for component_page in components_pages:
@@ -93,8 +94,8 @@ class Command(BaseCommand):
             children = old_base_page.get_children()
 
             for child in children:
-                child.move(component_page, pos='last-child')
-            old_base_page.delete() 
+                child.move(component_page, pos="last-child")
+            old_base_page.delete()
 
         # sys.exit()
 
@@ -104,14 +105,13 @@ class Command(BaseCommand):
 
         # for child in children:
         #     child.move(new_blogs_page, pos='last-child')
-        # blog_items_base.delete() 
-        
+        # blog_items_base.delete()
 
     def unique_slug(self, slug):
         # 8 characters, only digits.
-        random_string = get_random_string(8, '0123456789')
+        random_string = get_random_string(8, "0123456789")
         if not random_string in self.random_strings:
             self.random_strings.append(random_string)
-            return str(slug) + '----' + str(random_string)
+            return str(slug) + "----" + str(random_string)
         else:
             self.unique_slug(slug)

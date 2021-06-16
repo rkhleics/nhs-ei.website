@@ -77,21 +77,21 @@ body = json.dumps([{
 
 
 class Command(BaseCommand):
-    help = 'stream fields in base pages for expander blocks'
+    help = "stream fields in base pages for expander blocks"
 
     def __init__(self):
-        # we need to loop though all the page models to generate and cache a list of 
+        # we need to loop though all the page models to generate and cache a list of
         # page url_paths to page.id to use in page chooser blocks and richtext fields.
         # seemed to be an efficient way to make the list (12,000+ pages) and use it over
         # and over later on
 
         models = [
-            BasePage, 
-            # ComponentsPage, 
+            BasePage,
+            # ComponentsPage,
             # Blog,
-            # Post, 
-            # AtlasCaseStudy, 
-            # Publication, 
+            # Post,
+            # AtlasCaseStudy,
+            # Publication,
             # LandingPage
         ]
 
@@ -103,7 +103,9 @@ class Command(BaseCommand):
                 url_ids[page.url] = page.id
 
         self.urls = url_ids
-        self.block_builder = RichTextBuilder(self.urls) # passing the url_ids along to the RichTextBuilder
+        self.block_builder = RichTextBuilder(
+            self.urls
+        )  # passing the url_ids along to the RichTextBuilder
         # print(self.urls)
         # sys.exit()
 
@@ -121,7 +123,7 @@ class Command(BaseCommand):
             # get this to make a stream field
             raw_content = page.raw_content
 
-            print('⚙️ {} parsed'.format(page.title))
+            print("⚙️ {} parsed".format(page.title))
             # deal first with wysiwyg from wordpress
             if raw_content:
                 raw_content_block = self.make_panel_block(raw_content)
@@ -133,7 +135,7 @@ class Command(BaseCommand):
                 for field in content_fields:
                     keys = field.keys()
                     for key in keys:
-                        if key == 'default_template_hidden_text_blocks':
+                        if key == "default_template_hidden_text_blocks":
                             print(page)
                             if len(ast.literal_eval(page.content_field_blocks)) > 0:
                                 content_blocks = self.make_expander_group_block(
@@ -141,7 +143,6 @@ class Command(BaseCommand):
                                 )
                                 body.append(content_blocks)
 
-            
                 page.body = json.dumps(body)
 
                 # dealing with unicode in title
@@ -181,19 +182,22 @@ class Command(BaseCommand):
 
         print(page)
         block_group = {
-            'type': 'expander_group', 'value': {'expanders': []},
+            "type": "expander_group",
+            "value": {"expanders": []},
         }
         for field in content:
             # pass
             # a title needed if present field['title']
-            for item in field['items']:
-                self.block_builder.extract_links(item['detail'], page)
-                item_detail = item['detail']
+            for item in field["items"]:
+                self.block_builder.extract_links(item["detail"], page)
+                item_detail = item["detail"]
                 for link in self.block_builder.change_links:
                     item_detail = item_detail.replace(str(link[0]), str(link[1]))
-                block_item = {'title': item['summary'], 'body': [
-                    {'type': 'richtext', 'value': item_detail}]}
-                block_group['value']['expanders'].append(block_item)
+                block_item = {
+                    "title": item["summary"],
+                    "body": [{"type": "richtext", "value": item_detail}],
+                }
+                block_group["value"]["expanders"].append(block_item)
 
         return block_group
 
@@ -213,14 +217,14 @@ class Command(BaseCommand):
         for link in self.block_builder.change_links:
             content = content.replace(str(link[0]), str(link[1]))
         block = {
-            'type': 'panel',
-            'value': {
-                'label': '',
+            "type": "panel",
+            "value": {
+                "label": "",
                 # this is the default, might want to change it...
-                'heding_level': '3',
+                "heding_level": "3",
                 # after it's been parsed for links
-                'body': content
-            }
+                "body": content,
+            },
         }
 
         return block

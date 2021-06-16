@@ -43,10 +43,18 @@ from importer.richtextbuilder import RichTextBuilder
 
 
 class Command(BaseCommand):
-    help = 'parsing stream fields component pages'
+    help = "parsing stream fields component pages"
 
     def __init__(self):
-        models = [BasePage, ComponentsPage, Blog, Post, AtlasCaseStudy, Publication, LandingPage]
+        models = [
+            BasePage,
+            ComponentsPage,
+            Blog,
+            Post,
+            AtlasCaseStudy,
+            Publication,
+            LandingPage,
+        ]
 
         self.url_map = {}  # cached
 
@@ -54,33 +62,37 @@ class Command(BaseCommand):
             pages = model.objects.all()
             for page in pages:
                 self.url_map[page.url] = {
-                    'id': page.id,
-                    'slug': page.slug,
-                    'title': page.title,
+                    "id": page.id,
+                    "slug": page.slug,
+                    "title": page.title,
                 }
 
         # self.rich_text_builder = RichTextBuilder(self.url_map)
 
     def add_arguments(self, parser):
-        parser.add_argument('mode', type=str, help='Run as development with reduced recordsets')
-        
+        parser.add_argument(
+            "mode", type=str, help="Run as development with reduced recordsets"
+        )
+
     def handle(self, *args, **options):
         pages = []
-        if options['mode'] == 'dev':
+        if options["mode"] == "dev":
             """# dev get a small set of pages"""
             # components_parent = BasePage.objects.get(wp_id=62659, source='pages')
-            components_parent = ComponentsPage.objects.get(wp_id=78673, source='pages')
-            pages = ComponentsPage.objects.descendant_of(components_parent, inclusive=True)
-            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
+            components_parent = ComponentsPage.objects.get(wp_id=78673, source="pages")
+            pages = ComponentsPage.objects.descendant_of(
+                components_parent, inclusive=True
+            )
+            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True)
             # pages = []
             # for page in base_pages:
             #     pages.append(page)
             # for page in base_pages_under_components_page:
             #     pages.append(page)
-            
-        if options['mode'] == 'prod':
-            """ get all the pages """
-            pages = ComponentsPage.objects.all() 
+
+        if options["mode"] == "prod":
+            """get all the pages"""
+            pages = ComponentsPage.objects.all()
         # pages = ComponentsPage.objects.all()
         component_types = []  # just for dev to check we have them all
         """
@@ -95,7 +107,7 @@ class Command(BaseCommand):
         """
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
         for page in pages:
-            sys.stdout.write('⌛️ {} processing...\n'.format(page))
+            sys.stdout.write("⌛️ {} processing...\n".format(page))
             # keep the dates as when imported
             first_published_at = page.first_published_at
             last_published_at = page.last_published_at
@@ -119,7 +131,9 @@ class Command(BaseCommand):
             if page.component_fields:
                 print(page, page.id)
                 components = ast.literal_eval(page.component_fields)[0]
-                builder = ComponentsBuilder(ast.literal_eval(components['components']), self.url_map)
+                builder = ComponentsBuilder(
+                    ast.literal_eval(components["components"]), self.url_map
+                )
                 blocks = builder.make_blocks()
                 body = blocks
 
@@ -135,7 +149,7 @@ class Command(BaseCommand):
             page.save()
             rev.publish()
 
-            sys.stdout.write('✅ {} done\n'.format(page))
+            sys.stdout.write("✅ {} done\n".format(page))
 
             # if page.title == 'About us':
             #     sys.exit()

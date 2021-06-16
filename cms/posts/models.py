@@ -4,8 +4,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
-                                         MultiFieldPanel)
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page

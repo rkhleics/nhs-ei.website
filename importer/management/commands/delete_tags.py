@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+
 # from nhsei_wagtail.tags.models import Tag
 from django.core.management import call_command
 import time

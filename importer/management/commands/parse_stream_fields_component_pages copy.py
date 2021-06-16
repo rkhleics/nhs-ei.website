@@ -79,45 +79,58 @@ https://www.england.nhs.uk/ig/ig-resources/
 
 
 class Command(BaseCommand):
-    help = 'parsing stream fields'
+    help = "parsing stream fields"
 
     def __init__(self):
-        models = [BasePage, ComponentsPage, Blog,
-                  Post, AtlasCaseStudy, Publication, LandingPage]
+        models = [
+            BasePage,
+            ComponentsPage,
+            Blog,
+            Post,
+            AtlasCaseStudy,
+            Publication,
+            LandingPage,
+        ]
         map = {}  # cached
 
         for model in models:
             pages = model.objects.all()
             for page in pages:
                 map[page.url] = {
-                    'id': page.id,
-                    'slug': page.slug,
-                    'title': page.title,
+                    "id": page.id,
+                    "slug": page.slug,
+                    "title": page.title,
                 }
 
         self.url_map = map
         self.block_builder = RichTextBuilder(self.url_map)
 
     def add_arguments(self, parser):
-        parser.add_argument('mode', type=str, help='Run as development with reduced recordsets')
+        parser.add_argument(
+            "mode", type=str, help="Run as development with reduced recordsets"
+        )
 
     def handle(self, *args, **options):
         pages = []
-        if options['mode'] == 'dev':
+        if options["mode"] == "dev":
             """# dev get a small set of pages"""
             # components_parent = BasePage.objects.get(wp_id=62659, source='pages')
-            components_parent = ComponentsPage.objects.get(wp_id=5, source='pages-coronavirus')
-            pages = ComponentsPage.objects.descendant_of(components_parent, inclusive=True)
-            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True) 
+            components_parent = ComponentsPage.objects.get(
+                wp_id=5, source="pages-coronavirus"
+            )
+            pages = ComponentsPage.objects.descendant_of(
+                components_parent, inclusive=True
+            )
+            # base_pages_under_components_page = BasePage.objects.descendant_of(components_parent, inclusive=True)
             # pages = []
             # for page in base_pages:
             #     pages.append(page)
             # for page in base_pages_under_components_page:
             #     pages.append(page)
-            
-        if options['mode'] == 'prod':
-            """ get all the pages """
-            pages = ComponentsPage.objects.all() 
+
+        if options["mode"] == "prod":
+            """get all the pages"""
+            pages = ComponentsPage.objects.all()
         # pages = BasePage.objects.all()  # the poroper one to run
         # pages = ComponentsPage.objects.filter(id=1420) # dev just to get one page
         # loop though each page look for the content_fields with default_template_hidden_text_blocks
@@ -133,7 +146,7 @@ class Command(BaseCommand):
             # get this to make a stream field
             raw_content = page.raw_content
 
-            print('⚙️  {} parsed'.format(page.title))
+            print("⚙️  {} parsed".format(page.title))
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
             # no_forms = True
@@ -142,9 +155,9 @@ class Command(BaseCommand):
             # if raw_content and no_forms:
             if raw_content:
                 # line breaks mess up bs4 parsing, we dont need them anyway :)
-                raw_content = raw_content.replace('\n', '')
+                raw_content = raw_content.replace("\n", "")
                 raw_content_block = self.make_text_block(raw_content, page)
-                
+
                 for row in raw_content_block:
                     body.append(row)
 
@@ -155,10 +168,11 @@ class Command(BaseCommand):
                 for field in content_fields:
                     keys = field.keys()
                     for key in keys:
-                        if key == 'default_template_hidden_text_blocks':
+                        if key == "default_template_hidden_text_blocks":
                             if len(ast.literal_eval(page.content_field_blocks)) > 0:
                                 content_blocks = self.make_expander_group_block(
-                                    ast.literal_eval(page.content_field_blocks), page)
+                                    ast.literal_eval(page.content_field_blocks), page
+                                )
                                 body.append(content_blocks)
 
             # print(body)
@@ -184,26 +198,51 @@ class Command(BaseCommand):
         # so far TABLE https://service-manual.nhs.uk/design-system/components/table
 
         block_group = self.find_content_types_to_make_blocks(
-            content, page)  # all the elements pulled out as we find them
+            content, page
+        )  # all the elements pulled out as we find them
 
         return block_group
 
     def find_content_types_to_make_blocks(self, content, page):
 
-        TAGS_TO_BLOCKS = ['table', 'iframe']
+        TAGS_TO_BLOCKS = ["table", "iframe"]
 
         REMOVE_ATTRIBUTES = [
-            'lang', 'language', 'onmouseover', 'onmouseout', 'script', 'style', 'font',
-            'dir', 'face', 'size', 'color', 'style', 'class', 'width', 'height', 'hspace',
-            'border', 'valign', 'align', 'background', 'bgcolor', 'text', 'link', 'vlink',
-            'alink', 'cellpadding', 'cellspacing']
+            "lang",
+            "language",
+            "onmouseover",
+            "onmouseout",
+            "script",
+            "style",
+            "font",
+            "dir",
+            "face",
+            "size",
+            "color",
+            "style",
+            "class",
+            "width",
+            "height",
+            "hspace",
+            "border",
+            "valign",
+            "align",
+            "background",
+            "bgcolor",
+            "text",
+            "link",
+            "vlink",
+            "alink",
+            "cellpadding",
+            "cellspacing",
+        ]
 
         soup = BeautifulSoup(content, "lxml", exclude_encodings=True)
 
-        iframes = soup.find_all('iframe')
+        iframes = soup.find_all("iframe")
 
         # '[document]' means leave it alone
-        IFRAME_POSSIBLE_PARENTS = ['p', 'div', 'span']
+        IFRAME_POSSIBLE_PARENTS = ["p", "div", "span"]
 
         for iframe in iframes:
             parent = iframe.previous_element
@@ -215,10 +254,10 @@ class Command(BaseCommand):
             for tag in soup.find_all(attrs={attribute: True}):
                 del tag[attribute]
 
-        soup = soup.find('body').findChildren(recursive=False)
+        soup = soup.find("body").findChildren(recursive=False)
 
         blocks = []
-        block_value = ''
+        block_value = ""
         counter = 0
 
         for tag in soup:
@@ -236,8 +275,7 @@ class Command(BaseCommand):
                 self.block_builder.extract_links(str(tag), page)
                 linked_html = str(tag)
                 for link in self.block_builder.change_links:
-                    linked_html = linked_html.replace(
-                        str(link[0]), str(link[1]))
+                    linked_html = linked_html.replace(str(link[0]), str(link[1]))
                 block_value += linked_html
                 # if counter == len(soup) and len(block_value) > 0:
                 # when we reach the end and somehing is in the
@@ -248,41 +286,33 @@ class Command(BaseCommand):
                 # })
                 # block_value = ''
 
-            if tag.name == 'table':
+            if tag.name == "table":
 
                 if len(block_value) > 0:
-                    blocks.append({
-                        'type': 'text',
-                        'value': block_value
-                    })
-                    block_value = ''
-                blocks.append({
-                    'type': 'html',
-                    'value': str(tag)
-                })
+                    blocks.append({"type": "text", "value": block_value})
+                    block_value = ""
+                blocks.append({"type": "html", "value": str(tag)})
 
-            if tag.name == 'iframe':
+            if tag.name == "iframe":
 
                 if len(block_value) > 0:
-                    blocks.append({
-                        'type': 'text',
-                        'value': block_value
-                    })
-                    block_value = ''
-                blocks.append({
-                    'type': 'html',
-                    'value': '<div class="core-custom"><div class="responsive-iframe">{}</div></div>'.format(str(tag))
-                })
+                    blocks.append({"type": "text", "value": block_value})
+                    block_value = ""
+                blocks.append(
+                    {
+                        "type": "html",
+                        "value": '<div class="core-custom"><div class="responsive-iframe">{}</div></div>'.format(
+                            str(tag)
+                        ),
+                    }
+                )
 
             if counter == len(soup) and len(block_value) > 0:
                 # when we reach the end and somehing is in the
                 # block_value just output and clear
 
-                blocks.append({
-                    'type': 'text',
-                    'value': block_value
-                })
-                block_value = ''
+                blocks.append({"type": "text", "value": block_value})
+                block_value = ""
 
         return blocks
 
@@ -312,19 +342,21 @@ class Command(BaseCommand):
         # block_title = {}
 
         block_group = {
-            'type': 'expander_group', 'value': {'expanders': []},
+            "type": "expander_group",
+            "value": {"expanders": []},
         }
         for field in content:
 
-            for item in field['items']:
-                self.block_builder.extract_links(item['detail'], page)
-                item_detail = item['detail']
+            for item in field["items"]:
+                self.block_builder.extract_links(item["detail"], page)
+                item_detail = item["detail"]
                 for link in self.block_builder.change_links:
-                    item_detail = item_detail.replace(
-                        str(link[0]), str(link[1]))
-                block_item = {'title': item['summary'], 'body': [
-                    {'type': 'richtext', 'value': item_detail}]}
-                block_group['value']['expanders'].append(block_item)
+                    item_detail = item_detail.replace(str(link[0]), str(link[1]))
+                block_item = {
+                    "title": item["summary"],
+                    "body": [{"type": "richtext", "value": item_detail}],
+                }
+                block_group["value"]["expanders"].append(block_item)
 
         return block_group
 
@@ -344,14 +376,14 @@ class Command(BaseCommand):
         for link in self.block_builder.change_links:
             content = content.replace(str(link[0]), str(link[1]))
         block = {
-            'type': 'panel',
-            'value': {
-                'label': '',
+            "type": "panel",
+            "value": {
+                "label": "",
                 # this is the default, might want to change it...
-                'heding_level': '3',
+                "heding_level": "3",
                 # after it's been parsed for links
-                'body': content
-            }
+                "body": content,
+            },
         }
 
         return block

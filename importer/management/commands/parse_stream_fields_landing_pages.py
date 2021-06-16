@@ -39,8 +39,10 @@ from wagtail.images.models import Image
 ########
 
 """TODO TODO TODO TODO TODO TODO TODO TODO TODO """
+
+
 class Command(BaseCommand):
-    help = 'parsing stream fields component pages'
+    help = "parsing stream fields component pages"
 
     def handle(self, *args, **options):
         pages = LandingPage.objects.all()
@@ -80,8 +82,7 @@ class Command(BaseCommand):
             if page.content_fields:
                 print(page, page.id)
                 components = ast.literal_eval(page.content_fields)[0]
-                builder = ComponentsBuilder(
-                    ast.literal_eval(components))
+                builder = ComponentsBuilder(ast.literal_eval(components))
                 blocks = builder.make_blocks()
                 body = blocks
 

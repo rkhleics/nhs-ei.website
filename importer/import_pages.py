@@ -20,21 +20,19 @@ class PagesImporter(Importer):
         self.random_strings = []
         pages = BasePage.objects.all()
         if pages:
-            sys.stdout.write(
-                '⚠️  Run delete_pages before running this command\n')
+            sys.stdout.write("⚠️  Run delete_pages before running this command\n")
             sys.exit()
 
     def parse_results(self):
 
-        home_page = Page.objects.filter(title='Home')[0]
+        home_page = Page.objects.filter(title="Home")[0]
         pages = self.results  # this is json result set
 
-
         for page in pages:
-            
-            first_published_at = page.get('date')
-            last_published_at = page.get('modified')
-            latest_revision_created_at = page.get('modified')
+
+            first_published_at = page.get("date")
+            last_published_at = page.get("modified")
+            latest_revision_created_at = page.get("modified")
 
             """ 
             Process: We need to import the pages at the top level under the home page as we don't know the 
@@ -48,43 +46,43 @@ class PagesImporter(Importer):
             """
             # these are fields that are meta data to be saved
             model_fields = {
-                'owner': '',
-                'description': '',
-                'gateway_ref': '',
-                'pcc_reference': ''
+                "owner": "",
+                "description": "",
+                "gateway_ref": "",
+                "pcc_reference": "",
             }
-            for item in page.get('model_fields'):
+            for item in page.get("model_fields"):
                 for k, v in item.items():
                     model_fields[k] = v
 
-            slug = URLParser(page.get('link')).find_slug()
+            slug = URLParser(page.get("link")).find_slug()
             # sometimes there's external links with params so fall back to the slug fomr wordpress
-            if not slug_re.match(slug): 
-                slug = page.get('slug')
+            if not slug_re.match(slug):
+                slug = page.get("slug")
 
             obj = BasePage(
-                title=page.get('title'),
+                title=page.get("title"),
                 slug=self.unique_slug(slug),
-                excerpt=strip_tags(page.get('excerpt')),
-                raw_content=page.get('content'),
+                excerpt=strip_tags(page.get("excerpt")),
+                raw_content=page.get("content"),
                 show_in_menus=True,
-                author=page.get('author'),
-                md_owner=model_fields['owner'],
-                md_description=model_fields['description'],
-                md_gateway_ref=model_fields['gateway_ref'],
-                md_pcc_reference=model_fields['pcc_reference'],
+                author=page.get("author"),
+                md_owner=model_fields["owner"],
+                md_description=model_fields["description"],
+                md_gateway_ref=model_fields["gateway_ref"],
+                md_pcc_reference=model_fields["pcc_reference"],
                 # start wordpress fields we can delete later
-                wp_id=page.get('wp_id'),
-                parent=page.get('parent'),
-                source=page.get('source'),
-                wp_template=page.get('template'),
-                wp_slug=page.get('slug'),
-                real_parent=page.get('real_parent') or 0,
-                wp_link=page.get('link'),
-                model_fields=page.get('model_fields'),
-                content_fields=page.get('content_fields'),
-                content_field_blocks=page.get('content_fields_blocks'),
-                component_fields=page.get('component_fields'),
+                wp_id=page.get("wp_id"),
+                parent=page.get("parent"),
+                source=page.get("source"),
+                wp_template=page.get("template"),
+                wp_slug=page.get("slug"),
+                real_parent=page.get("real_parent") or 0,
+                wp_link=page.get("link"),
+                model_fields=page.get("model_fields"),
+                content_fields=page.get("content_fields"),
+                content_field_blocks=page.get("content_fields_blocks"),
+                component_fields=page.get("component_fields"),
             )
 
             home_page.add_child(instance=obj)
@@ -96,7 +94,7 @@ class PagesImporter(Importer):
             # probably not the best way to do this but need to update the dates on the page record.
             obj.save()
             rev.publish()
-            sys.stdout.write('.')
+            sys.stdout.write(".")
 
         if self.next:
             time.sleep(self.sleep_between_fetches)
@@ -106,9 +104,9 @@ class PagesImporter(Importer):
 
     def unique_slug(self, slug):
         # 8 characters, only digits.
-        random_string = get_random_string(8, '0123456789')
+        random_string = get_random_string(8, "0123456789")
         if not random_string in self.random_strings:
             self.random_strings.append(random_string)
-            return str(slug) + '----' + str(random_string)
+            return str(slug) + "----" + str(random_string)
         else:
             self.unique_slug(slug)
