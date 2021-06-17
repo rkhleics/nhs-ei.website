@@ -7,23 +7,25 @@ from cms.pages.models import BasePage
 
 
 class Command(BaseCommand):
-    help = 'Deletes base pages (bulk action)'
+    help = "Deletes base pages (bulk action)"
 
     def handle(self, *args, **options):
         # depth order to start at deepest pages, seems sensible
-        pages = BasePage.objects.all().order_by('-depth')
+        pages = BasePage.objects.all().order_by("-depth")
 
         if not pages:
-            sys.stdout.write('✅ Pages is empty\n')
+            sys.stdout.write("✅ Pages is empty\n")
         else:
             pages_length = pages.count()
 
-            sys.stdout.write('Pages to delete: {} this can take a while to complete\n'.format(
-                pages_length))
-            
+            sys.stdout.write(
+                "Pages to delete: {} this can take a while to complete\n".format(
+                    pages_length
+                )
+            )
+
             for page in pages:
                 page.delete()
-                sys.stdout.write('-')
+                sys.stdout.write("-")
 
-            sys.stdout.write('\n✅ Pages is now empty\n')
-            
+            sys.stdout.write("\n✅ Pages is now empty\n")

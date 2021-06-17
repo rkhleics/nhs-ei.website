@@ -14,7 +14,6 @@ urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
-    
     # views to show helpful dev info
     path("importer/", include(importer_urls)),
 ]
@@ -30,6 +29,7 @@ if settings.DEBUG:
 
     # views for testing 404 and 500 templates
     from django.views.generic import TemplateView
+
     urlpatterns += [
         path("test-404/", TemplateView.as_view(template_name="404.html")),
         path("test-500/", TemplateView.as_view(template_name="500.html")),

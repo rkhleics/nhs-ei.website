@@ -29,43 +29,45 @@ case studies</a> provide examples of the work of some providers to make the FFT 
 £101 million for 2017/18</a>.</p>
 """
 
-# some urls dont need to be rewritten as they are 
+# some urls dont need to be rewritten as they are
 # not in scope
 SKIP_ANCHOR_URLS = [
-    '/east-of-england/',
-    '/london/',
-    '/midlands/',
-    '/north-east-yorkshire/',
-    '/north-west/',
-    '/south-east/',
-    '/south/',
-    '/statistics/statistical-work-areas/rtt-waiting-times/rtt-guidance/',
+    "/east-of-england/",
+    "/london/",
+    "/midlands/",
+    "/north-east-yorkshire/",
+    "/north-west/",
+    "/south-east/",
+    "/south/",
+    "/statistics/statistical-work-areas/rtt-waiting-times/rtt-guidance/",
 ]
 
 MEDIA_FILE_EXTENSIONS = {
-    'images': ['jpg','gif','png'],
-    'documents': ['doc','pdf','xlsx','docx']
+    "images": ["jpg", "gif", "png"],
+    "documents": ["doc", "pdf", "xlsx", "docx"],
 }
+
 
 class RichTextBuilder:
 
     """
-    The purpose of this class is to sort out what 
-    blocks may be needed to represent the wysiwyg content 
+    The purpose of this class is to sort out what
+    blocks may be needed to represent the wysiwyg content
     from wordpress. There's wysiwyg content in both content fields
     and custom fields.
     Internal Page Links, Internal Media Links, Internal Image Sources
     """
+
     # <a id="3" linktype="page">Contact us</a> PAGE
     # <a id="1" linktype="document">link</a> DOCUMENT
     # <embed embedtype="image" id="10" alt="A pied wagtail" format="left" /> IMAGE
 
-    def __init__(self, all_pages=None, html_content=''):
+    def __init__(self, all_pages=None, html_content=""):
         # theres are log files to record url problems, clean it out first
-        with open('log/parse_stream_fields_url_errors.txt', 'w') as log:
-                    log.write('parse_stream_field missing urls\n')
-        with open('log/parse_stream_fields_media_errors.txt', 'a') as the_file:
-                the_file.write('parse_stream_field missing media\n')
+        with open("log/parse_stream_fields_url_errors.txt", "w") as log:
+            log.write("parse_stream_field missing urls\n")
+        with open("log/parse_stream_fields_media_errors.txt", "a") as the_file:
+            the_file.write("parse_stream_field missing media\n")
         self.html_content = TEST_CONTENT
         if not all_pages:
             self.urls = self.all_pages()
@@ -74,8 +76,7 @@ class RichTextBuilder:
         self.change_links = []
 
     def all_pages(self):
-        models = [BasePage, ComponentsPage, Blog,
-                  Post, AtlasCaseStudy, Publication]
+        models = [BasePage, ComponentsPage, Blog, Post, AtlasCaseStudy, Publication]
         url_ids = {}  # cached
 
         for model in models:
@@ -93,39 +94,37 @@ class RichTextBuilder:
             html_content = content
         soup = BeautifulSoup(html_content, features="html5lib")
 
-        links = soup.find_all('a', href=re.compile(
-            r"^https://www.england.nhs.uk/"))
+        links = soup.find_all("a", href=re.compile(r"^https://www.england.nhs.uk/"))
 
         for link in links:
-            page_path = '/' + '/'.join(link['href'].split('/')[3:])
+            page_path = "/" + "/".join(link["href"].split("/")[3:])
             self.prepare_links(link, page_path)
 
     def prepare_links(self, link, page_path):
-        path_list = page_path.split('/')
+        path_list = page_path.split("/")
         if len(path_list[-1]):
             pass
             # with open('log/parse_stream_fields_media_errors.txt', 'a') as the_file:
             #     the_file.write('{}\n'.format(page_path))
             #     print('++++++missing media: {}'.format(page_path))
-        else: ############ GOT TO HERE just run ./manage.py parse_stream_fields
+        else:  ############ GOT TO HERE just run ./manage.py parse_stream_fields
             if page_path in self.urls and page_path not in SKIP_ANCHOR_URLS:
                 page_link = self.make_page_link(link.text, self.urls[page_path])
                 self.change_links.append([link, page_link])
             else:
-                with open('log/parse_stream_fields_url_errors.txt', 'a') as the_file:
-                    the_file.write('{}\n'.format(page_path))
-                print('++++++missing url: {}'.format(page_path))
+                with open("log/parse_stream_fields_url_errors.txt", "a") as the_file:
+                    the_file.write("{}\n".format(page_path))
+                print("++++++missing url: {}".format(page_path))
         # if self.urls[path]:
         #     self.change_links.append(self.urls[path]) ####### got to here
 
     def make_page_link(self, text, page_id):
-        return '<a id="{}" linktype="page">{}</a>'.format(
-            page_id, text)
+        return '<a id="{}" linktype="page">{}</a>'.format(page_id, text)
 
     def make_document_link(self, text, document_id):
-        return '<a id="{}" linktype="document">{}</a>'.format(
-            document_id, text)
+        return '<a id="{}" linktype="document">{}</a>'.format(document_id, text)
 
     def make_image_embed(self, text, image_id, image_alt, image_format):
         return '<embed embedtype="image" id="{}" alt="{}" format="{}" />'.format(
-            image_id, image_alt, image_format)
+            image_id, image_alt, image_format
+        )

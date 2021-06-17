@@ -1,4 +1,3 @@
-
 import sys
 
 from django.core.management.base import BaseCommand
@@ -7,12 +6,12 @@ from cms.core.models import CoreSettings
 
 
 class Command(BaseCommand):
-    help = 'Creates the alert banner'
+    help = "Creates the alert banner"
 
     def handle(self, *args, **options):
         settings = CoreSettings.objects.all().first()
         # delete first
-        settings.alert_banner = ''
+        settings.alert_banner = ""
         settings.is_visible = False
         settings.save()
 
@@ -28,4 +27,4 @@ class Command(BaseCommand):
         settings.is_visible = True
         settings.save()
 
-        sys.stdout.write('Alert Banner Created\n')
+        sys.stdout.write("Alert Banner Created\n")

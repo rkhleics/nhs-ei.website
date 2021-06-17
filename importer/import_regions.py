@@ -25,7 +25,7 @@ class RegionsImporter(Importer):
         regions = Region.objects.all()
         # category_sub_sites = CategorySubSite.objects.all()
         if regions:
-            sys.stdout.write('⚠️  Run delete_regions before running this command\n')
+            sys.stdout.write("⚠️  Run delete_regions before running this command\n")
             sys.exit()
 
     def parse_results(self):
@@ -44,15 +44,15 @@ class RegionsImporter(Importer):
             #     category_sub_site.save()
 
             region = Region(
-                name=r.get('name'),
-                slug=r.get('slug'),
-                description=r.get('description'),
-                wp_id=r.get('wp_id'),
+                name=r.get("name"),
+                slug=r.get("slug"),
+                description=r.get("description"),
+                wp_id=r.get("wp_id"),
                 # source = r.get('source'),
                 # sub_site = category_sub_site
             )
             region.save()
-            sys.stdout.write('.')
+            sys.stdout.write(".")
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

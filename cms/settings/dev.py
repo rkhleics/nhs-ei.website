@@ -19,8 +19,8 @@ DATABASES = {
 }
 
 WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wagtail.search.backends.db',
+    "default": {
+        "BACKEND": "wagtail.search.backends.db",
     }
 }
 

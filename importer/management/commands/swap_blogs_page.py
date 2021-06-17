@@ -11,7 +11,7 @@ from cms.blogs.models import BlogIndexPage
 
 
 class Command(BaseCommand):
-    help = 'Swap blogs page'
+    help = "Swap blogs page"
 
     def __init__(self):
         # uniqufy urls to start with so we can deal with altering them later
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         self.random_strings = []
 
     def handle(self, *args, **options):
-        """ 
+        """
         Process: We need to change the blogs landing page from a Components Page here to a Landing Page type
 
         Landing pages: have a different layout better catered for with a separate page type
@@ -28,7 +28,9 @@ class Command(BaseCommand):
 
         # its title here it 'Blogs' its slug is 'blogs' and it's a component page type
         # there should only be one...
-        blog_landing_page = ComponentsPage.objects.get(wp_template='page-blog-landing.php')
+        blog_landing_page = ComponentsPage.objects.get(
+            wp_template="page-blog-landing.php"
+        )
         # first create the new Components Pages
 
         # make a new page and place it under the same parent page
@@ -39,7 +41,7 @@ class Command(BaseCommand):
         slug = URLParser(blog_landing_page.wp_link).find_slug()
 
         # sometimes there's external links with params so fall back to the slug fomr wordpress
-        if not slug_re.match(slug): 
+        if not slug_re.match(slug):
             slug = blog_landing_page.slug
 
         # the body field is left blank for now
@@ -77,34 +79,32 @@ class Command(BaseCommand):
 
         obj.save()
         rev.publish()
-        
-        blogs_page = LandingPage.objects.get(wp_template='page-blog-landing.php')
-        print('Moving all blog posts to new parent page, Takes a while...')
 
+        blogs_page = LandingPage.objects.get(wp_template="page-blog-landing.php")
+        print("Moving all blog posts to new parent page, Takes a while...")
 
         # find base page with that wp_id and source so we can move it's children
-        old_blog_index_base_page = BlogIndexPage.objects.get(slug='blog')
+        old_blog_index_base_page = BlogIndexPage.objects.get(slug="blog")
         # blog_pages = old_blog_index_base_page.get_children()
 
         # for blog in blog_pages:
-        old_blog_index_base_page.move(blogs_page, pos='last-child')
-        
+        old_blog_index_base_page.move(blogs_page, pos="last-child")
+
         # delete the old blog-items-index now dont need it
         blog_landing_page.delete()
 
         # rename the slug for the new blogs page now we deleted the old one
-        blogs_page.slug = 'blogs'
+        blogs_page.slug = "blogs"
         rev = blogs_page.save_revision()
         blogs_page.save()
         rev.publish()
-        sys.stdout.write('\n✅  Blogs Page Now Set Up\n')
-    
+        sys.stdout.write("\n✅  Blogs Page Now Set Up\n")
 
     def unique_slug(self, slug):
         # 8 characters, only digits.
-        random_string = get_random_string(8, '0123456789')
+        random_string = get_random_string(8, "0123456789")
         if not random_string in self.random_strings:
             self.random_strings.append(random_string)
-            return str(slug) + '----' + str(random_string)
+            return str(slug) + "----" + str(random_string)
         else:
             self.unique_slug(slug)

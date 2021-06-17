@@ -12,7 +12,7 @@ from cms.pages.models import BasePage
 
 
 def search(request):
-    query = request.GET.get('query', None)
+    query = request.GET.get("query", None)
     """
     sample query
     ?
@@ -23,8 +23,8 @@ def search(request):
     date_to=2020-11-29
     """
 
-    page = request.GET.get('page', 1)
-    
+    page = request.GET.get("page", 1)
+
     """
     possible ordering
     'first_published_at'
@@ -32,78 +32,132 @@ def search(request):
     'latest_revision_created_at'
     '-latest_revision_created_at'
     """
-    search_ordering = '-first_published_at'
-    
-    if request.GET.get('order'):
-        search_ordering = request.GET.get('order')
+    search_ordering = "-first_published_at"
 
-    search_type = ''
+    if request.GET.get("order"):
+        search_ordering = request.GET.get("order")
+
+    search_type = ""
     search_results_count = None
-    date_from = request.GET.get('date_from', '')
-    date_to = request.GET.get('date_to', '')
+    date_from = request.GET.get("date_from", "")
+    date_to = request.GET.get("date_to", "")
 
     # Search
     if query:
-        if request.GET.get('content_type') == 'news':
-            """ searching news only """
-            if request.GET.get('date_from') and request.GET.get('date_to'):
-                objs = Post.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+        if request.GET.get("content_type") == "news":
+            """searching news only"""
+            if request.GET.get("date_from") and request.GET.get("date_to"):
+                objs = (
+                    Post.objects.live()
+                    .order_by(search_ordering)
+                    .filter(
+                        first_published_at__range=[
+                            request.GET.get("date_from"),
+                            request.GET.get("date_to"),
+                        ]
+                    )
+                )
                 search_results = objs.search(query)
-                date_from = request.GET.get('date_from')
-                date_to = request.GET.get('date_to')
+                date_from = request.GET.get("date_from")
+                date_to = request.GET.get("date_to")
             else:
-                search_results = Post.objects.live().order_by(search_ordering).search(query)
-            
-            search_type = 'news'
+                search_results = (
+                    Post.objects.live().order_by(search_ordering).search(query)
+                )
 
-        elif request.GET.get('content_type') == 'blogs':
-            """ searching blogs only """
-            if request.GET.get('date_from') and request.GET.get('date_to'):
-                objs = Blog.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
-                search_results = objs.search(query)
-                date_from = request.GET.get('date_from')
-                date_to = request.GET.get('date_to')
-            else:
-                search_results = Blog.objects.live().order_by(search_ordering).search(query)
-            
-            search_type = 'blogs'
+            search_type = "news"
 
-        elif request.GET.get('content_type') == 'pages':
-            """ searching pages only """
-            if request.GET.get('date_from') and request.GET.get('date_to'):
-                objs = BasePage.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+        elif request.GET.get("content_type") == "blogs":
+            """searching blogs only"""
+            if request.GET.get("date_from") and request.GET.get("date_to"):
+                objs = (
+                    Blog.objects.live()
+                    .order_by(search_ordering)
+                    .filter(
+                        first_published_at__range=[
+                            request.GET.get("date_from"),
+                            request.GET.get("date_to"),
+                        ]
+                    )
+                )
                 search_results = objs.search(query)
-                date_from = request.GET.get('date_from')
-                date_to = request.GET.get('date_to')
+                date_from = request.GET.get("date_from")
+                date_to = request.GET.get("date_to")
             else:
-                search_results = BasePage.objects.live().order_by(search_ordering).search(query)
-            
-            search_type = 'pages'
+                search_results = (
+                    Blog.objects.live().order_by(search_ordering).search(query)
+                )
 
-        elif request.GET.get('content_type') == 'publications':
-            """ searching publications only """
-            if request.GET.get('date_from') and request.GET.get('date_to'):
-                objs = Publication.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+            search_type = "blogs"
+
+        elif request.GET.get("content_type") == "pages":
+            """searching pages only"""
+            if request.GET.get("date_from") and request.GET.get("date_to"):
+                objs = (
+                    BasePage.objects.live()
+                    .order_by(search_ordering)
+                    .filter(
+                        first_published_at__range=[
+                            request.GET.get("date_from"),
+                            request.GET.get("date_to"),
+                        ]
+                    )
+                )
                 search_results = objs.search(query)
-                date_from = request.GET.get('date_from')
-                date_to = request.GET.get('date_to')
+                date_from = request.GET.get("date_from")
+                date_to = request.GET.get("date_to")
             else:
-                search_results = Publication.objects.live().order_by(search_ordering).search(query)
-            
-            search_type = 'publications'
+                search_results = (
+                    BasePage.objects.live().order_by(search_ordering).search(query)
+                )
+
+            search_type = "pages"
+
+        elif request.GET.get("content_type") == "publications":
+            """searching publications only"""
+            if request.GET.get("date_from") and request.GET.get("date_to"):
+                objs = (
+                    Publication.objects.live()
+                    .order_by(search_ordering)
+                    .filter(
+                        first_published_at__range=[
+                            request.GET.get("date_from"),
+                            request.GET.get("date_to"),
+                        ]
+                    )
+                )
+                search_results = objs.search(query)
+                date_from = request.GET.get("date_from")
+                date_to = request.GET.get("date_to")
+            else:
+                search_results = (
+                    Publication.objects.live().order_by(search_ordering).search(query)
+                )
+
+            search_type = "publications"
 
         else:
-            if request.GET.get('date_from') and request.GET.get('date_to'):
-                objs = Page.objects.live().order_by(search_ordering).filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
+            if request.GET.get("date_from") and request.GET.get("date_to"):
+                objs = (
+                    Page.objects.live()
+                    .order_by(search_ordering)
+                    .filter(
+                        first_published_at__range=[
+                            request.GET.get("date_from"),
+                            request.GET.get("date_to"),
+                        ]
+                    )
+                )
                 search_results = objs.search(query)
-                date_from = request.GET.get('date_from')
-                date_to = request.GET.get('date_to')
+                date_from = request.GET.get("date_from")
+                date_to = request.GET.get("date_to")
             else:
-                search_results = Page.objects.live().order_by(search_ordering).search(query)
+                search_results = (
+                    Page.objects.live().order_by(search_ordering).search(query)
+                )
 
         # if request.GET.get('date_from') and request.GET.get('date_to'):
         #     search_results.filter(first_published_at__range=[request.GET.get('date_from'), request.GET.get('date_to')])
-        
 
         search_results_count = search_results.count()
 
@@ -112,7 +166,6 @@ def search(request):
         query.add_hit()
     else:
         search_results = Page.objects.none()
-
 
     # Pagination
     paginator = Paginator(search_results, 10)
@@ -123,16 +176,22 @@ def search(request):
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
 
-    search_params = '&query={}&order={}&content_type={}&date_from={}&date_to={}'.format(query, search_ordering, search_type, date_from, date_to)
+    search_params = "&query={}&order={}&content_type={}&date_from={}&date_to={}".format(
+        query, search_ordering, search_type, date_from, date_to
+    )
 
-    return TemplateResponse(request, 'search/search.html', {
-        'query': query,
-        'search_results': search_results,
-        'results_count': search_results_count,
-        'page': page,
-        'search_params': search_params,
-        'content_type': search_type,
-        'order': search_ordering,
-        'date_from': date_from,
-        'date_to': date_to,
-    })
+    return TemplateResponse(
+        request,
+        "search/search.html",
+        {
+            "query": query,
+            "search_results": search_results,
+            "results_count": search_results_count,
+            "page": page,
+            "search_params": search_params,
+            "content_type": search_type,
+            "order": search_ordering,
+            "date_from": date_from,
+            "date_to": date_to,
+        },
+    )

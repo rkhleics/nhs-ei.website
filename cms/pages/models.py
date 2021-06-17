@@ -9,10 +9,10 @@ from cms.core.blocks import CoreBlocks
 class BasePage(Page):
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField('Owner', blank=True)
-    md_description = models.TextField('Description', blank=True)
-    md_gateway_ref = models.TextField('Gateway Ref', blank=True)
-    md_pcc_reference = models.TextField('PCC Reference', blank=True)
+    md_owner = models.TextField("Owner", blank=True)
+    md_description = models.TextField("Description", blank=True)
+    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
+    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     """
     title already in the Page class
@@ -43,51 +43,59 @@ class BasePage(Page):
 
     content_panels = Page.content_panels + [
         # StreamFieldPanel('body2'),
-        StreamFieldPanel('body'),
-        FieldPanel('excerpt'),
-        MultiFieldPanel([
-            FieldPanel('md_owner'),
-            FieldPanel('md_description'),
-            FieldPanel('md_gateway_ref'),
-            FieldPanel('md_pcc_reference'),
-        ], heading='Meta Data', classname='collapsed collapsible'),
-        MultiFieldPanel([
-            FieldPanel('wp_id'),
-            FieldPanel('author'),
-            FieldPanel('parent'),
-            FieldPanel('source'),
-            FieldPanel('wp_template'),
-            FieldPanel('wp_slug'),
-            FieldPanel('real_parent'),
-            FieldPanel('wp_link'),
-            FieldPanel('model_fields'),
-            FieldPanel('raw_content'),
-            FieldPanel('content_fields'),
-            FieldPanel('content_field_blocks'),
-            FieldPanel('component_fields'),
-        ], heading='wordpress data we dont need in the end', classname='collapsed collapsible'),
+        StreamFieldPanel("body"),
+        FieldPanel("excerpt"),
+        MultiFieldPanel(
+            [
+                FieldPanel("md_owner"),
+                FieldPanel("md_description"),
+                FieldPanel("md_gateway_ref"),
+                FieldPanel("md_pcc_reference"),
+            ],
+            heading="Meta Data",
+            classname="collapsed collapsible",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("wp_id"),
+                FieldPanel("author"),
+                FieldPanel("parent"),
+                FieldPanel("source"),
+                FieldPanel("wp_template"),
+                FieldPanel("wp_slug"),
+                FieldPanel("real_parent"),
+                FieldPanel("wp_link"),
+                FieldPanel("model_fields"),
+                FieldPanel("raw_content"),
+                FieldPanel("content_fields"),
+                FieldPanel("content_field_blocks"),
+                FieldPanel("component_fields"),
+            ],
+            heading="wordpress data we dont need in the end",
+            classname="collapsed collapsible",
+        ),
     ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['children'] = self.get_children()
+        context["children"] = self.get_children()
         return context
 
     def get_wp_api_link(self):
-        wp_source = self.source.replace('pages-', '')
+        wp_source = self.source.replace("pages-", "")
         wp_id = self.wp_id
-        if wp_source != 'pages':
-            api_url = 'https://www.england.nhs.uk/{}/wp-json/wp/v2/pages/{}'.format(
-                wp_source, wp_id)
+        if wp_source != "pages":
+            api_url = "https://www.england.nhs.uk/{}/wp-json/wp/v2/pages/{}".format(
+                wp_source, wp_id
+            )
         else:
-            api_url = 'https://www.england.nhs.uk/wp-json/wp/v2/pages/{}'.format(
-                wp_id)
+            api_url = "https://www.england.nhs.uk/wp-json/wp/v2/pages/{}".format(wp_id)
         return api_url
 
     def get_wp_live_link(self):
         self_url_path = self.url
         live_url_path = urlparse(self.wp_link).path
-        live_url = 'https://www.england.nhs.uk{}'.format(live_url_path)
+        live_url = "https://www.england.nhs.uk{}".format(live_url_path)
         print(self_url_path)
         print(live_url_path)
         return live_url
@@ -108,10 +116,10 @@ class LandingPage(Page):
 
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField('Owner', blank=True)
-    md_description = models.TextField('Description', blank=True)
-    md_gateway_ref = models.TextField('Gateway Ref', blank=True)
-    md_pcc_reference = models.TextField('PCC Reference', blank=True)
+    md_owner = models.TextField("Owner", blank=True)
+    md_description = models.TextField("Description", blank=True)
+    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
+    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     # we may not need this???
     excerpt = models.TextField(blank=True)
@@ -137,33 +145,41 @@ class LandingPage(Page):
 
     content_panels = Page.content_panels + [
         # StreamFieldPanel('body2'),
-        StreamFieldPanel('body'),
-        FieldPanel('excerpt'),
-        MultiFieldPanel([
-            FieldPanel('md_owner'),
-            FieldPanel('md_description'),
-            FieldPanel('md_gateway_ref'),
-            FieldPanel('md_pcc_reference'),
-        ], heading='Meta Data', classname='collapsed collapsible'),
-        MultiFieldPanel([
-            FieldPanel('wp_id'),
-            FieldPanel('author'),
-            FieldPanel('parent'),
-            FieldPanel('source'),
-            FieldPanel('wp_template'),
-            FieldPanel('wp_slug'),
-            FieldPanel('real_parent'),
-            FieldPanel('wp_link'),
-            FieldPanel('model_fields'),
-            FieldPanel('content_fields'),
-            FieldPanel('content_field_blocks'),
-            FieldPanel('component_fields'),
-        ], heading='wordpress data we dont need in the end', classname='collapsed collapsible'),
+        StreamFieldPanel("body"),
+        FieldPanel("excerpt"),
+        MultiFieldPanel(
+            [
+                FieldPanel("md_owner"),
+                FieldPanel("md_description"),
+                FieldPanel("md_gateway_ref"),
+                FieldPanel("md_pcc_reference"),
+            ],
+            heading="Meta Data",
+            classname="collapsed collapsible",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("wp_id"),
+                FieldPanel("author"),
+                FieldPanel("parent"),
+                FieldPanel("source"),
+                FieldPanel("wp_template"),
+                FieldPanel("wp_slug"),
+                FieldPanel("real_parent"),
+                FieldPanel("wp_link"),
+                FieldPanel("model_fields"),
+                FieldPanel("content_fields"),
+                FieldPanel("content_field_blocks"),
+                FieldPanel("component_fields"),
+            ],
+            heading="wordpress data we dont need in the end",
+            classname="collapsed collapsible",
+        ),
     ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['children'] = self.get_children()
+        context["children"] = self.get_children()
         return context
 
     @property
@@ -182,10 +198,10 @@ class ComponentsPage(Page):
 
     # parent_page_types = ['home.HomePage'] # not sure about this yet
     # these fields are meta data we dont display but helps content publishers
-    md_owner = models.TextField('Owner', blank=True)
-    md_description = models.TextField('Description', blank=True)
-    md_gateway_ref = models.TextField('Gateway Ref', blank=True)
-    md_pcc_reference = models.TextField('PCC Reference', blank=True)
+    md_owner = models.TextField("Owner", blank=True)
+    md_description = models.TextField("Description", blank=True)
+    md_gateway_ref = models.TextField("Gateway Ref", blank=True)
+    md_pcc_reference = models.TextField("PCC Reference", blank=True)
 
     """
     title already in the Page class
@@ -216,33 +232,41 @@ class ComponentsPage(Page):
 
     content_panels = Page.content_panels + [
         # StreamFieldPanel('body2'),
-        StreamFieldPanel('body'),
-        FieldPanel('excerpt'),
-        MultiFieldPanel([
-            FieldPanel('md_owner'),
-            FieldPanel('md_description'),
-            FieldPanel('md_gateway_ref'),
-            FieldPanel('md_pcc_reference'),
-        ], heading='Meta Data', classname='collapsed collapsible'),
-        MultiFieldPanel([
-            FieldPanel('wp_id'),
-            FieldPanel('author'),
-            FieldPanel('parent'),
-            FieldPanel('source'),
-            FieldPanel('wp_template'),
-            FieldPanel('wp_slug'),
-            FieldPanel('real_parent'),
-            FieldPanel('wp_link'),
-            FieldPanel('model_fields'),
-            FieldPanel('content_fields'),
-            FieldPanel('content_field_blocks'),
-            FieldPanel('component_fields'),
-        ], heading='wordpress data we dont need in the end', classname='collapsed collapsible'),
+        StreamFieldPanel("body"),
+        FieldPanel("excerpt"),
+        MultiFieldPanel(
+            [
+                FieldPanel("md_owner"),
+                FieldPanel("md_description"),
+                FieldPanel("md_gateway_ref"),
+                FieldPanel("md_pcc_reference"),
+            ],
+            heading="Meta Data",
+            classname="collapsed collapsible",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("wp_id"),
+                FieldPanel("author"),
+                FieldPanel("parent"),
+                FieldPanel("source"),
+                FieldPanel("wp_template"),
+                FieldPanel("wp_slug"),
+                FieldPanel("real_parent"),
+                FieldPanel("wp_link"),
+                FieldPanel("model_fields"),
+                FieldPanel("content_fields"),
+                FieldPanel("content_field_blocks"),
+                FieldPanel("component_fields"),
+            ],
+            heading="wordpress data we dont need in the end",
+            classname="collapsed collapsible",
+        ),
     ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['children'] = self.get_children()
+        context["children"] = self.get_children()
         return context
 
     @property
@@ -259,15 +283,15 @@ class HoldingPage(Page):
     a temporary holding page for wordpress pages that so far are left as immediate children of the home page
     """
 
-    parent_page_types = ['home.HomePage']
-    subpage_types = ['pages.BasePage']
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["pages.BasePage"]
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('body'),
+        FieldPanel("body"),
     ]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['children'] = self.get_children()
+        context["children"] = self.get_children()
         return context

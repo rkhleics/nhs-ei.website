@@ -1,14 +1,22 @@
 from urllib.parse import urlparse
 
-from cms.categories.models import (Category, CategorySubSite, PublicationType,
-                                   PublicationTypeSubSite)
+from cms.categories.models import (
+    Category,
+    CategorySubSite,
+    PublicationType,
+    PublicationTypeSubSite,
+)
 from cms.core.blocks import PublicationsBlocks
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
-                                         MultiFieldPanel, StreamFieldPanel)
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    StreamFieldPanel,
+)
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 
@@ -46,8 +54,8 @@ class PublicationIndexPage(Page):
         result sets but we will need a decision made on that.
         """
         publication_ordering = "-first_published_at"
-        if request.GET.get('order'):
-            publication_ordering = request.GET.get('order')
+        if request.GET.get("order"):
+            publication_ordering = request.GET.get("order")
         context = super().get_context(request, *args, **kwargs)
         # sub_site_categories = Category.objects.filter(
         #     sub_site=self.sub_site_categories.id)
