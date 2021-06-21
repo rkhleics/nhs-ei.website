@@ -48,9 +48,6 @@ class Command(BaseCommand):
         self.urls = url_ids
         self.block_builder = RichTextBuilder(self.urls)
 
-        with open("importer/log/make_documents_list_errors.txt", "w") as the_file:
-            the_file.write("make documents list missing media url\n")
-
     def handle(self, *args, **options):
 
         """now not deleteing docuemnts they need to be found instead"""
