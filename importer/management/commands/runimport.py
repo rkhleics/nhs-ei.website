@@ -16,8 +16,6 @@ from importer.import_settings import SettingsImporter
 
 from importer.websites import SCRAPY
 
-# from nhsei_wagtail.importer.import_tags import TagsImporter
-
 
 def get_api_url(app):
     if app == "categories":

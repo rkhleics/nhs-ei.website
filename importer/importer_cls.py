@@ -145,17 +145,6 @@ class ComponentsBuilder:
             if article_component:
                 self.layouts.append(article_component)
 
-        # print(self.layouts)
-
-    def build_recent_posts_block(self, layout):
-        pass
-        # block_group = {
-        #     'type': 'recent_posts',
-        #     'value': {
-        #         'title': layout['section_title']
-        #     }
-        # }
-
     def build_article_component(self, layout):
 
         if layout["article_image"]:
@@ -627,70 +616,3 @@ class DocumentsBuilder:
 
     def create_free_text(self, document):
         return {"type": "free_text", "value": document["free_text"]}
-
-    #     self.component_keys = ['a_to_z_index_component', 'article_component', 'in_this_section_component',
-    #                            'priorities_component', 'recent_posts_component', 'promos_component', 'topic_section_component']
-    #     self.layouts = []
-    #     if not isinstance(self.data, list):
-    #         print('data is not a list')
-    #         print(self.data)
-    #         # good to go as each item represents a layout
-    #     # print(self.layouts)
-
-    # def make_blocks(self):
-    #     block = None
-
-    #     for layout in self.data:  # for each acf_fc_layout for a page
-    #         block = self.get_block_type(layout)
-    #     if block:
-    #         self.layouts.append(block)
-    #     # print(self.layouts)
-    #     return self.layouts
-
-    # def get_block_type(self, layout):
-    #     if layout['acf_fc_layout'] == 'a_to_z_index_component':
-    #         print('found a to z section')
-
-    #     if layout['acf_fc_layout'] == 'topic_section_component':
-    #         # this page: https://www.england.nhs.uk/about/
-    #         topic_section_component = self.build_topic_section_component(
-    #             layout)
-    #         # print(topic_section_component)
-    #         if topic_section_component:
-    #             self.layouts.append(topic_section_component)
-
-    #     if layout['acf_fc_layout'] == 'priorities_component':
-    #         # this can return a list, needs to be flattened
-    #         priorities_component = self.build_priorities_component(layout)
-    #         if priorities_component and isinstance(priorities_component, list):
-    #             for item in priorities_component:
-    #                 self.layouts.append(item)
-    #         elif priorities_component:  # can get nothing back used in wordpress but nothing added
-    #             self.layouts.append(priorities_component)
-
-    #     if layout['acf_fc_layout'] == 'in_this_section_component':
-    #         in_this_section_component = self.build_in_this_section_component(
-    #             layout)
-    #         if in_this_section_component and isinstance(in_this_section_component, list):
-    #             for item in in_this_section_component:
-    #                 self.layouts.append(item)
-    #         elif in_this_section_component:  # can get nothing back used in wordpress but nothing added
-    #             self.layouts.append(in_this_section_component)
-
-    #     if layout['acf_fc_layout'] == 'recent_posts_component':
-    #         # self.layouts.append(self.build_recent_posts_component(layout))
-    #         recent_posts_component = self.build_recent_posts_component(layout)
-    #         if recent_posts_component:
-    #             self.layouts.append(recent_posts_component)
-
-    #     if layout['acf_fc_layout'] == 'promos_component':
-    #         promos_component = self.build_promos_component(layout)
-    #         if promos_component:
-    #             self.layouts.append(promos_component)
-
-    #     if layout['acf_fc_layout'] == 'article_component':
-    #         article_component = self.build_article_component(layout)
-    #         if article_component:
-    #             self.layouts.append(article_component)
-
-    # print(self.layouts)

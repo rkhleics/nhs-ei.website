@@ -41,10 +41,7 @@ class Command(BaseCommand):
                 last_published = page.last_published_at
                 latest_revision_created = page.latest_revision_created_at
 
-                source = page.source
-                # slug = page.wp_slug
                 page.slug = page.slug.split("----")[0]
-                # page.slug = slug
                 sys.stdout.write("\n⚙️ {} SLUG updated".format(page))
 
                 """
