@@ -15,6 +15,7 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import Collection
+from .httpcache import session
 
 logger = logging.getLogger("importer")
 TEST_CONTENT = """
@@ -235,7 +236,7 @@ class RichTextBuilder:
             except Document.DoesNotExist:
                 logger.warn("Media %s not found, linked from %s", page_path, page)
                 collection_root = Collection.get_first_root_node()
-                remote_file = requests.get(page_path_live)
+                remote_file = session.get(page_path_live)
                 media_file = File(BytesIO(remote_file.content), name=path_list[-1])
                 file = Document(
                     title=path_list[-1], file=media_file, collection=collection_root
@@ -259,7 +260,7 @@ class RichTextBuilder:
 
         else:
             # print('using live')
-            response = requests.get("https://www.england.nhs.uk" + page_path)
+            response = session.get("https://www.england.nhs.uk" + page_path)
             url = ""
             is_post = False
             try:

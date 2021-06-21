@@ -149,3 +149,4 @@ requirements.dev.txt
 *.swp
 compiledassets
 .DS_Store
+requests_cache.sqlite

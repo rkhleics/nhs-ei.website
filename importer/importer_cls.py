@@ -20,6 +20,7 @@ from requests.api import head, post
 from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
+from .httpcache import session
 
 logger = logging.getLogger("importer")
 
@@ -535,7 +536,7 @@ class DocumentsBuilder:
             document = self.document["document"]
             if document:
                 # lets get the file here, saves cluttering the block builder
-                response = requests.get(document["url"])
+                response = session.get(document["url"])
                 if response:
                     media_file = File(
                         BytesIO(response.content), name=document["filename"]

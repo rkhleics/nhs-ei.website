@@ -14,6 +14,8 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from .importer_cls import Importer
+from .httpcache import session
+
 logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
@@ -61,7 +63,7 @@ class MediaFilesImporter(Importer):
             source_url = r.get("source_url")
             media_type = r.get("media_type")
             media_name = source_url.split("/")[-1]
-            response = requests.get(source_url)
+            response = session.get(source_url)
             title = r.get("title")  # if the title id blank it causes an error
             if not title:
                 title = "No title was available"
