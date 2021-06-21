@@ -160,15 +160,10 @@ class Command(BaseCommand):
             # get this to make a stream field
             raw_content = page.raw_content
 
-            # print('⚙️  {}'.format(page.title))
             # deal first with wysiwyg from wordpress
             # """ cant deal with forms, needs investigating """
-            # no_forms = True
             if raw_content and "<form action=" in raw_content:
-                with open("importer/log/forms_found.txt", "a") as the_file:
-                    the_file.write("{} | {} | {}\n".format(page, page.id, page.wp_link))
-            #     no_forms = False
-            # if raw_content and no_forms:
+                logger.critical("FORM FOUND: %s | %s | %s", page, page.id, page.wp_link)
             if raw_content:
                 # line breaks mess up bs4 parsing, we dont need them anyway :)
                 raw_content = raw_content.replace("\n", "")
@@ -325,13 +320,9 @@ class Command(BaseCommand):
                         )
                         linked_html = linked_html.replace(img_string, new_image)
                     except Image.DoesNotExist:
-                        # print('missing image')
-                        with open(
-                            "importer/log/media_document_not_found.txt", "a"
-                        ) as the_file:
-                            the_file.write(
-                                "{} | {} | {}\n".format(img["src"], page, page.id)
-                            )
+                        logger.warn(
+                            "Missing image: %s | %s | %s", img["src"], page, page.id
+                        )
                     if not new_image:
                         linked_html = (
                             linked_html + '<h3 style="color:red">missing image</h3>'

@@ -552,12 +552,11 @@ class DocumentsBuilder:
                     file.save()
                     return self.create_document_type(file, document, self.document)
                 else:
-                    with open(
-                        "importer/log/make_documents_list_errors.txt", "a"
-                    ) as the_file:
-                        the_file.write(
-                            "{}: {}\n".format(self.publication, self.publication.id)
-                        )
+                    logger.warn(
+                        "make_document_list_error: %s (%s)",
+                        self.publication,
+                        self.publication.id,
+                    )
 
         elif self.document["type_of_publication"] == "documentlink":
             # pass

@@ -31,8 +31,6 @@ SOURCES = {
 
 class MediaFilesImporter(Importer):
     def __init__(self):
-        with open("importer/log/import_media_files.txt", "w") as log:
-            log.write("errors found while importing media files\n")
         images = Image.objects.all()
         documents = Document.objects.all()
         if images or documents:
@@ -86,11 +84,9 @@ class MediaFilesImporter(Importer):
                     image.save()
 
             else:
-                sys.stdout.write(
-                    "⚠️ Got no response. Error has been logged importer/log/import_media_files.txt\n"
+                logger.warn(
+                    "Got no response and no file has been saved: %s, %s", source_url, r
                 )
-                with open("importer/log/import_media_files.txt", "a") as the_file:
-                    the_file.write("{}\n".format(r))
 
         if self.next:
             time.sleep(self.sleep_between_fetches)

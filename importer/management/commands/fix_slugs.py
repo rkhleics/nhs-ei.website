@@ -60,11 +60,6 @@ class Command(BaseCommand):
                     page.save()
                     rev.publish()
                 except ValidationError:
-                    print(
-                        "⚠️ {} slug cannot be updated... we should log theses problems!!!".format(
-                            page
-                        )
-                    )
-                    time.sleep(2)
+                    logger.warn("Slug for page %s cannot be updated!", page)
 
         sys.stdout.write("\n✅  All slugs fixed\n")
