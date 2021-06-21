@@ -489,6 +489,7 @@ class ComponentsBuilder:
                 page = Page.objects.get(id=self.url_map[page_path]["id"])
                 page_path = page.get_full_url()
             if "http://coding.nickmoreton.co.uk/" in page_path:
+                logger.warn("nickmoreton.co.uk url found: %s", url)
                 page_path = page_path.replace(
                     "http://coding.nickmoreton.co.uk/",
                     "http://coding.nickmoreton.co.uk:8000/",

@@ -66,6 +66,7 @@ class MediaFilesImporter(Importer):
             response = session.get(source_url)
             title = r.get("title")  # if the title id blank it causes an error
             if not title:
+                logger.warn("No title was available for %s, %s", source_url, r)
                 title = "No title was available"
             if response:
 

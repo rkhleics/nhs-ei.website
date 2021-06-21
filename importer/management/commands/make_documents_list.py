@@ -83,6 +83,8 @@ class Command(BaseCommand):
                     if k == "documents":
                         # some docs have no document !!!! whaaaat wp_id 1115
                         docs = ast.literal_eval(row[k]) or []
+                        if not docs:
+                            logger.warn("No document in doc %s", publication)
 
             for document in docs:
                 if document and document["type_of_publication"] in DOCUMENT_TYPES:
