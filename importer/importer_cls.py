@@ -7,6 +7,7 @@ from cms.publications.models import Publication
 import random
 import sys
 from io import BytesIO
+import logging
 
 import dateutil.parser
 import requests
@@ -19,6 +20,8 @@ from requests.api import head, post
 from wagtail.core.models import Collection, Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
+
+logger = logging.getLogger("importer")
 
 
 class Importer:

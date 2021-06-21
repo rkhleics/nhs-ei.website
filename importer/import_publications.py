@@ -2,6 +2,7 @@ import json
 import sys
 import time
 from urllib.parse import urlparse
+import logging
 
 from bs4 import BeautifulSoup
 from django.core.management import call_command
@@ -23,6 +24,8 @@ from cms.publications.models import (
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
+
+logger = logging.getLogger("importer")
 
 # so we can match the subsite categories for the publication index page
 PUBLICATION_SOURCES_TO_PUBLICATION_TYPE_SOURCES = {

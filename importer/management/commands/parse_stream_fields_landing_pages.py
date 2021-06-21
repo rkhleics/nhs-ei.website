@@ -6,6 +6,7 @@ from io import BytesIO
 from os import link
 import sys
 from django.utils.html import strip_tags
+import logging
 
 import requests
 from bs4 import BeautifulSoup
@@ -17,6 +18,11 @@ from importer.importer_cls import ComponentsBuilder
 from wagtail.core.models import Collection
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
+
+logger = logging.getLogger("importer")
+logger.critical(
+    "Entered parse_stream_fields_landing_pages: here be TODO dragons stacked nine high."
+)
 
 """TODO TODO TODO TODO TODO TODO TODO TODO TODO """
 

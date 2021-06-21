@@ -11,6 +11,7 @@ from django.core.files.base import File
 from django.core.files.images import ImageFile
 import requests
 from html import unescape
+import logging
 
 
 from django.core.management import call_command
@@ -24,6 +25,8 @@ from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
 from importer.richtextbuilder import RichTextBuilder
+
+logger = logging.getLogger("importer")
 
 # https://www.caktusgroup.com/blog/2019/09/12/wagtail-data-migrations/
 

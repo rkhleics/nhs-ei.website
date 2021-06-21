@@ -19,6 +19,9 @@ from cms.posts.models import Post, PostCategoryRelationship, PostIndexPage
 from wagtail.core.models import Page
 
 from .importer_cls import Importer
+import logging
+
+logger = logging.getLogger("importer")
 
 
 class AtlasCaseStudiesImporter(Importer):

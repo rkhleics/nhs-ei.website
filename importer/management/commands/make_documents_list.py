@@ -1,6 +1,7 @@
 import ast
 import json
 import sys
+import logging
 
 from cms.atlascasestudies.models import AtlasCaseStudy
 from cms.blogs.models import Blog
@@ -12,6 +13,8 @@ from django.utils.text import slugify
 from importer.importer_cls import DocumentsBuilder
 from importer.richtextbuilder import RichTextBuilder
 from wagtail.documents.models import Document
+
+logger = logging.getLogger("importer")
 
 DOCUMENT_TYPES = [
     "heading",

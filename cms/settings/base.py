@@ -214,6 +214,9 @@ LOGGING = {
                 "%(process)-5d %(thread)d %(name)-50s %(levelname)-8s " "- %(message)s"
             ),
         },
+        "tailored": {
+            "format": "%(asctime)s %(name)-5s %(levelname)-8s %(funcName)s:%(lineno)d %(message)s"
+        },
     },
     "handlers": {
         "mail_admins": {
@@ -232,6 +235,13 @@ LOGGING = {
             "filters": ["require_debug_false"],
             "class": "logging.StreamHandler",
         },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "logger.log",
+            "filters": ["require_debug_true"],
+            "formatter": "tailored",
+        },
     },
     "loggers": {
         "django": {
@@ -243,5 +253,6 @@ LOGGING = {
             "propagate": True,
         },
         "cms": {"handlers": ["console"], "level": "DEBUG"},
+        "importer": {"handlers": ["file", "console"], "level": "INFO"},
     },
 }

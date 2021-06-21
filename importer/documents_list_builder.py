@@ -1,11 +1,14 @@
 from os import unlink
 import re
+import logging
 from bs4 import BeautifulSoup
 from cms.pages.models import BasePage, ComponentsPage
 from cms.posts.models import Post
 from cms.blogs.models import Blog
 from cms.publications.models import Publication
 from cms.atlascasestudies.models import AtlasCaseStudy
+
+logger = logging.getLogger("importer")
 
 TEST_CONTENT = """
 <h2>Tips and examples</h2>

@@ -2,6 +2,7 @@ from os import PRIO_USER, unlink
 import requests
 import re
 import sys
+import logging
 from io import BytesIO
 from django.core.files import File
 from bs4 import BeautifulSoup
@@ -15,6 +16,7 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import Collection
 
+logger = logging.getLogger("importer")
 TEST_CONTENT = """
 <h2>Tips and examples</h2>
 <p>

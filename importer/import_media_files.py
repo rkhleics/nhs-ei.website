@@ -4,6 +4,7 @@ import ast
 import os
 from io import BytesIO
 from pathlib import Path
+import logging
 
 import requests
 from django.core.files import File
@@ -13,6 +14,7 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from .importer_cls import Importer
+logger = logging.getLogger("importer")
 
 # the indiators from wordpress aren't nice so map them to better titles
 SOURCES = {
