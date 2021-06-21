@@ -147,15 +147,17 @@ class PublicationsImporter(Importer):
             last_published_at = publication.get("modified")
             latest_revision_created_at = publication.get("modified")
 
-            """REMOVE THIS BEFORE BETA!!!!!!"""
-            truncated_title = publication.get("title")[:255]
-            if len(truncated_title) == 0:
-                truncated_title = "page has no title"
+            page_title = publication.get("title")
+            if not page_title:
+                page_title = "page has no title"
+                logger.warn("page %s has no title", page)
+            elif len(page_title) > 250:
+                logger.warn("long page title: %s %s", page_title, page)
             obj = Publication(
-                title=truncated_title,
+                title=page_title,
                 # excerpt = post.get('excerpt'),
                 # dont preset the slug coming from wordpress some are too long
-                body="",  # poulate later from field_57ed4101bec1c
+                body="",  # TODO populate later from field_57ed4101bec1c
                 show_in_menus=True,
                 wp_id=publication.get("wp_id"),
                 author=publication.get("author"),

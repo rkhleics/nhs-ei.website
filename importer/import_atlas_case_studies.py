@@ -76,13 +76,17 @@ class AtlasCaseStudiesImporter(Importer):
             first_published_at = atlas_case_study.get("date")
             last_published_at = atlas_case_study.get("modified")
             latest_revision_created_at = atlas_case_study.get("modified")
-            # print(atlas_case_study.get('wp_id'))
-            """REMOVE THIS BEFORE BETA!!!!!!"""
-            truncated_title = atlas_case_study.get("title")[:255]
-            if len(truncated_title) == 0:
-                truncated_title = "page has no title"
+            page_title = atlas_case_study.get("title")
+            if not page_title:
+                page_title = "page has no title"
+                logger.warn(
+                    "Page with wp_id %s has no title", atlas_case_study.get("wp_id")
+                )
+            elif len(page_title)>250:
+                logger.warn("Long page_title, %s", page_title)
+                
             obj = AtlasCaseStudy(
-                title=truncated_title,
+                title=page_title,
                 body=atlas_case_study.get("content"),
                 show_in_menus=True,
                 wp_id=atlas_case_study.get("wp_id"),

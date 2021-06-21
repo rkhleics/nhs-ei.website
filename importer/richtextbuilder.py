@@ -262,13 +262,22 @@ class RichTextBuilder:
             response = requests.get("https://www.england.nhs.uk" + page_path)
             url = ""
             is_post = False
+            try:
+                response.raise_for_status()
+            except:
+                logging.warn(
+                    "HTTP Error %s when scraping %s", response.status_code, response.url
+                )
             if response:
                 url = response.url.split("/")
                 del url[-1]
                 del url[:3]
                 # some urls have links to news items that start 2010/09 that needs to removed to find the url
                 if (
-                    url[0].isdigit() and url[1].isdigit() and not url[2].isdigit()
+                    len(url) >= 3
+                    and url[0].isdigit()
+                    and url[1].isdigit()
+                    and not url[2].isdigit()
                 ):  # is post
                     try:
                         page = Post.objects.get(wp_link=response.url)
